@@ -1,0 +1,7 @@
+*.install
+*.merlin
+_esy
+node_modules
+
+# add this if we plan on publishing to npm
+.npmignore

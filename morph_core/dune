@@ -1,0 +1,4 @@
+(library
+    (name morph_core)
+    (public_name morph_core)
+    (libraries lwt opium_core hmap)) 

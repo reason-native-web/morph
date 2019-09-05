@@ -1,0 +1,9 @@
+(executables
+    (libraries morph morph_core mtime mtime.clock.os
+    routes logs logs.fmt fmt.tty)
+    (names with_router)) 
+
+(alias
+ (name examples)
+ (deps with_router.exe)
+)
