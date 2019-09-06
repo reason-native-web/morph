@@ -3,3 +3,7 @@
     (public_name morph)
     (libraries lwt logs httpaf httpaf-lwt-unix h2
         h2-lwt-unix opium_core hmap morph_core)) 
+
+(documentation
+    (package morph)
+    (mld_files (:standard)))

@@ -1,0 +1,32 @@
+{0 Morph}
+
+A web framework built ontop of Httpaf and H2 and leverages {{: https://rgrinberg.github.io/opium/opium_core/index.html} Opium_core} to build reusable middlewares.
+
+The entry point of this library is the module:
+{!module-Morph}.
+
+{1 Core concepts}
+
+Morph is built on top of Opium_core that provides us with Filters and Services.
+When you start a Morph server you can provide a list of middlewares to be run on every request and a handler.
+The middleware/handler chain will be provided with a {!module-Morph_core.Request.t} and expects it to return a {!module-Morph_core.Response.t} that it will use to send a response.
+
+To read more about Filters and Services I recommend going to the {{: https://rgrinberg.github.io/opium/opium_core/index.html} Opium_core} documentation.
+
+{e I will use Filter/Middleware and Service/Handler interchangeably in the documentation.}
+
+{1 Goals}
+
+The main goal for Morph is to be a simpler way of writing web servers in OCaml than using Cohttp and Httpaf/H2 but still be flexible enough to handle most usecases.
+If you can find a usecase that we don't satisfy in the current implementation please open a issue or ping \@ulrikstrid on Discord to see if we can figure it out.
+
+{1 Examples}
+
+A simple "Hello world!" can be built as follows:
+
+{[
+    Morph.start_server(_request => Morph.Response.text("Hello world!"))
+    |> Lwt_main.run;
+]}
+
+For more examples go to the {{: https://reason-native-web.github.io/docs/http/with-routes-package} reason-native-web homepage} or look in the {{: https://github.com/reason-native-web/morph/tree/master/examples} examples folder} of this project.

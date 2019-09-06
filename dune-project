@@ -1,5 +1,8 @@
 (lang dune 1.11)
 (name morph)
+(source (github reason-native-web/morph))
+(homepage https://reason-native-web.github.io)
+(documentation https://reason-native-web.github.io/morph)
 (generate_opam_files true)
 
 (using fmt 1.2 (enabled_for reason))

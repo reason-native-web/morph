@@ -355,6 +355,7 @@ let to_string = function (* don't allocate *)
   | `Expectation_failed -> "417"
   | `I_m_a_teapot -> "418"
   | `Enhance_your_calm -> "420"
+  | `Misdirected_request -> "421"
   | `Upgrade_required -> "426"
  (* Server error *)
   | `Internal_server_error -> "500"

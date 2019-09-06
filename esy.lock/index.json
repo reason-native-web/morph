@@ -117,7 +117,7 @@
       "dependencies": [
         "ocaml@4.7.1004@d41d8cd9", "@opam/uri@opam:3.0.0@08fba7ee",
         "@opam/ssl@opam:0.5.9@e04b0c17",
-        "@opam/opium_core@github:rgrinberg/opium:opium_core.opam#6d888ef88a38e101dc4f279c7bbd09b07fd73f5a@d41d8cd9",
+        "@opam/opium_core@github:rgrinberg/opium:opium_core.opam#1767ce612bc69a2ecd569404cb37f4a2c0e93e05@d41d8cd9",
         "@opam/lwt_ssl@opam:1.1.3@9d044ebe", "@opam/lwt@opam:4.3.0@3f2cb6e0",
         "@opam/logs@opam:0.7.0@1d03143e",
         "@opam/httpaf-lwt-unix@github:anmonteiro/httpaf:httpaf-lwt-unix.opam#5dff1b4@d41d8cd9",
@@ -524,27 +524,26 @@
         "ocaml@4.7.1004@d41d8cd9", "@opam/dune@opam:1.11.3@9894df55"
       ]
     },
-    "@opam/opium_core@github:rgrinberg/opium:opium_core.opam#6d888ef88a38e101dc4f279c7bbd09b07fd73f5a@d41d8cd9": {
+    "@opam/opium_core@github:rgrinberg/opium:opium_core.opam#1767ce612bc69a2ecd569404cb37f4a2c0e93e05@d41d8cd9": {
       "id":
-        "@opam/opium_core@github:rgrinberg/opium:opium_core.opam#6d888ef88a38e101dc4f279c7bbd09b07fd73f5a@d41d8cd9",
+        "@opam/opium_core@github:rgrinberg/opium:opium_core.opam#1767ce612bc69a2ecd569404cb37f4a2c0e93e05@d41d8cd9",
       "name": "@opam/opium_core",
       "version":
-        "github:rgrinberg/opium:opium_core.opam#6d888ef88a38e101dc4f279c7bbd09b07fd73f5a",
+        "github:rgrinberg/opium:opium_core.opam#1767ce612bc69a2ecd569404cb37f4a2c0e93e05",
       "source": {
         "type": "install",
         "source": [
-          "github:rgrinberg/opium:opium_core.opam#6d888ef88a38e101dc4f279c7bbd09b07fd73f5a"
+          "github:rgrinberg/opium:opium_core.opam#1767ce612bc69a2ecd569404cb37f4a2c0e93e05"
         ]
       },
       "overrides": [],
       "dependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/md2mld@opam:0.3.0@ba063da1",
-        "@opam/lwt@opam:4.3.0@3f2cb6e0", "@opam/dune@opam:1.11.3@9894df55",
-        "@esy-ocaml/substs@0.0.1@d41d8cd9"
+        "ocaml@4.7.1004@d41d8cd9", "@opam/lwt@opam:4.3.0@3f2cb6e0",
+        "@opam/dune@opam:1.11.3@9894df55", "@esy-ocaml/substs@0.0.1@d41d8cd9"
       ],
       "devDependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/md2mld@opam:0.3.0@ba063da1",
-        "@opam/lwt@opam:4.3.0@3f2cb6e0", "@opam/dune@opam:1.11.3@9894df55"
+        "ocaml@4.7.1004@d41d8cd9", "@opam/lwt@opam:4.3.0@3f2cb6e0",
+        "@opam/dune@opam:1.11.3@9894df55"
       ]
     },
     "@opam/open@opam:0.2.2@ed0a4118": {
@@ -570,35 +569,6 @@
       ],
       "devDependencies": [
         "ocaml@4.7.1004@d41d8cd9", "@opam/dune@opam:1.11.3@9894df55"
-      ]
-    },
-    "@opam/omd@opam:1.3.1@a0702cc6": {
-      "id": "@opam/omd@opam:1.3.1@a0702cc6",
-      "name": "@opam/omd",
-      "version": "opam:1.3.1",
-      "source": {
-        "type": "install",
-        "source": [
-          "archive:https://opam.ocaml.org/cache/md5/84/845fc38e86ec0e85721130f2dd044d00#md5:845fc38e86ec0e85721130f2dd044d00",
-          "archive:https://github.com/Chris00/omd/releases/download/1.3.1/omd-1.3.1.tar.gz#md5:845fc38e86ec0e85721130f2dd044d00"
-        ],
-        "opam": {
-          "name": "omd",
-          "version": "1.3.1",
-          "path": "esy.lock/opam/omd.1.3.1"
-        }
-      },
-      "overrides": [],
-      "dependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/ocamlfind@opam:1.8.1@ff07b0f9",
-        "@opam/ocamlbuild@opam:0.14.0@427a2331",
-        "@opam/base-bytes@opam:base@19d0c2ff",
-        "@opam/base-bigarray@opam:base@b03491b0",
-        "@esy-ocaml/substs@0.0.1@d41d8cd9"
-      ],
-      "devDependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/base-bytes@opam:base@19d0c2ff",
-        "@opam/base-bigarray@opam:base@b03491b0"
       ]
     },
     "@opam/odoc@opam:1.4.1@7b0020a6": {
@@ -847,35 +817,6 @@
         "@esy-ocaml/substs@0.0.1@d41d8cd9"
       ],
       "devDependencies": [ "ocaml@4.7.1004@d41d8cd9" ]
-    },
-    "@opam/md2mld@opam:0.3.0@ba063da1": {
-      "id": "@opam/md2mld@opam:0.3.0@ba063da1",
-      "name": "@opam/md2mld",
-      "version": "opam:0.3.0",
-      "source": {
-        "type": "install",
-        "source": [
-          "archive:https://opam.ocaml.org/cache/md5/3b/3b3833921d67f0fe66da6a03e422abf1#md5:3b3833921d67f0fe66da6a03e422abf1",
-          "archive:https://github.com/mseri/md2mld/releases/download/0.3.0/md2mld-0.3.0.tbz#md5:3b3833921d67f0fe66da6a03e422abf1"
-        ],
-        "opam": {
-          "name": "md2mld",
-          "version": "0.3.0",
-          "path": "esy.lock/opam/md2mld.0.3.0"
-        }
-      },
-      "overrides": [],
-      "dependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/omd@opam:1.3.1@a0702cc6",
-        "@opam/dune@opam:1.11.3@9894df55",
-        "@opam/base-bytes@opam:base@19d0c2ff",
-        "@esy-ocaml/substs@0.0.1@d41d8cd9"
-      ],
-      "devDependencies": [
-        "ocaml@4.7.1004@d41d8cd9", "@opam/omd@opam:1.3.1@a0702cc6",
-        "@opam/dune@opam:1.11.3@9894df55",
-        "@opam/base-bytes@opam:base@19d0c2ff"
-      ]
     },
     "@opam/lwt_ssl@opam:1.1.3@9d044ebe": {
       "id": "@opam/lwt_ssl@opam:1.1.3@9d044ebe",
