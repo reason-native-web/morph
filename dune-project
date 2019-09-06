@@ -37,3 +37,20 @@
   hmap
   morph_core
   ))
+
+(package
+ (name morph_client)
+ (synopsis "Abstraction on Httpaf to make http requests")
+ (depends
+  (ocaml
+   (>= 4.04.2))
+  (dune
+   (>= 1.11))
+  lwt
+  logs
+  httpaf
+  httpaf-lwt-unix
+  opium_core
+  morph_core
+  hmap
+  ))
