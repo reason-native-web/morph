@@ -49,13 +49,44 @@ let route_handler:
       |> Lwt.map((response: Response.t) => {
            let headers = H2.Headers.of_list(response.headers);
 
-           let () =
-             H2.Reqd.respond_with_string(
-               request_descriptor,
-               create_response(~headers, response.status),
-               response.body,
-             );
-           ();
+           switch (response.body) {
+           | String(body) =>
+             let () =
+               H2.Reqd.respond_with_string(
+                 request_descriptor,
+                 create_response(~headers, response.status),
+                 body,
+               );
+             ();
+           | Stream(stream) =>
+             let response =
+               create_response(
+                 ~headers,
+                 `Code(Status.to_code(response.status)),
+               );
+             let response_body =
+               H2.Reqd.respond_with_streaming(request_descriptor, response);
+             let rec read_stream = () => {
+               Lwt.bind(Lwt_stream.get(stream), maybe_body =>
+                 switch (maybe_body) {
+                 | Some(body) =>
+                   H2.Body.write_string(response_body, body);
+                   read_stream();
+                 | None => Lwt.return_unit
+                 }
+               );
+             };
+             let _ =
+               Lwt.bind(
+                 Lwt_stream.closed(stream),
+                 _ => {
+                   H2.Body.close_writer(response_body);
+                   Lwt.return_unit;
+                 },
+               );
+             let _ = read_stream();
+             ();
+           };
          });
     });
   };

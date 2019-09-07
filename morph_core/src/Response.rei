@@ -4,18 +4,25 @@
 type headers = list((string, string));
 
 /**
+ [Response.body] variant type structure.  Either a flat [string], or a [Buffer.t].
+ */
+type body =
+  | String(string)
+  | Stream(Lwt_stream.t(string));
+
+/**
 The core [Response.t] type
 */
 type t = {
   status: Status.t,
   headers,
-  body: string,
+  body,
 };
 
 /**
 [make status headers body] creates a response.
 */
-let make: (~status: Status.t=?, ~headers: headers=?, string) => t;
+let make: (~status: Status.t=?, ~headers: headers=?, body) => t;
 
 /**
 [ok extra_headers unit] is a conventience function to return a 200 OK response.
@@ -52,3 +59,8 @@ let unauthorized: (~extra_headers: headers=?, string) => Lwt.t(t);
 */
 let not_found:
   (~extra_headers: headers=?, ~message: string=?, unit) => Lwt.t(t);
+
+/**
+ [static extra_headers file_path] is a convenience function to return a 200 response with the contents of a static file.  If the file does not exist a 404 Not found response is sent instead.
+ */
+let static: (~extra_headers: headers=?, string) => Lwt.t(t);
