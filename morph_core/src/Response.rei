@@ -1,5 +1,11 @@
+/**
+[headers] is represented as a list of (string, string) tuples.
+  */
 type headers = list((string, string));
 
+/**
+The core [Response.t] type
+*/
 type t = {
   status: Status.t,
   headers,
