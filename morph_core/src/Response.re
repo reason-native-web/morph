@@ -94,6 +94,7 @@ let static = (~extra_headers=[], file_path) => {
     ? {
       let headers = [
         ("content-type", MimeTypes.getMimeType(file_path)),
+        ("connection", "close"),
         ...extra_headers,
       ];
       let stream = get_file_stream(file_path);
