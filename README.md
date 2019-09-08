@@ -1,5 +1,7 @@
 # morph
 
+[![Build Status](https://dev.azure.com/reason-native-web/morph/_apis/build/status/reason-native-web.morph?branchName=master)](https://dev.azure.com/reason-native-web/morph/_build/latest?definitionId=1&branchName=master)
+
 A tiny framework for developing HTTP stuff in reason native using Httpaf and H2.
 
 ## Documentation
