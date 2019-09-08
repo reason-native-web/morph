@@ -70,6 +70,6 @@ stages:
                 git config user.name "Strid Bot"
                 git add --all
                 git commit --message "$(Build.SourceVersionMessage)"
-                git push gh-pages
+                git push origin gh-pages
               workingDirectory: $(Build.StagingDirectory)
               displayName: "Push docs to Github pages"
