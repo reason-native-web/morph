@@ -1,9 +1,13 @@
 type headers = list((string, string));
 
+type body =
+  | String(string)
+  | Stream(Lwt_stream.t(string));
+
 type t = {
   status: Status.t,
   headers,
-  body: string,
+  body,
 };
 
 let make = (~status=`OK, ~headers=[], body) => {status, headers, body};
@@ -11,14 +15,14 @@ let make = (~status=`OK, ~headers=[], body) => {status, headers, body};
 let ok = (~extra_headers=[], ()) => {
   let headers = [("content-length", "2"), ...extra_headers];
 
-  make(~status=`OK, ~headers, "ok") |> Lwt.return;
+  make(~status=`OK, ~headers, String("ok")) |> Lwt.return;
 };
 
 let text = (~extra_headers=[], text) => {
   let content_length = text |> String.length |> string_of_int;
   let headers = [("content-length", content_length), ...extra_headers];
 
-  make(~status=`OK, ~headers, text) |> Lwt.return;
+  make(~status=`OK, ~headers, String(text)) |> Lwt.return;
 };
 
 let json = (~extra_headers=[], json) => {
@@ -29,7 +33,7 @@ let json = (~extra_headers=[], json) => {
     ...extra_headers,
   ];
 
-  make(~status=`OK, ~headers, json) |> Lwt.return;
+  make(~status=`OK, ~headers, String(json)) |> Lwt.return;
 };
 
 let html = (~extra_headers=[], markup) => {
@@ -40,7 +44,7 @@ let html = (~extra_headers=[], markup) => {
     ...extra_headers,
   ];
 
-  make(~status=`OK, ~headers, markup) |> Lwt.return;
+  make(~status=`OK, ~headers, String(markup)) |> Lwt.return;
 };
 
 let redirect = (~extra_headers=?, ~code=303, targetPath) => {
@@ -57,7 +61,7 @@ let redirect = (~extra_headers=?, ~code=303, targetPath) => {
     | None => constantHeaders
     };
 
-  make(~status=`Code(code), ~headers, targetPath) |> Lwt.return;
+  make(~status=`Code(code), ~headers, String(targetPath)) |> Lwt.return;
 };
 
 let unauthorized = (~extra_headers=[], message) => {
@@ -66,7 +70,7 @@ let unauthorized = (~extra_headers=[], message) => {
     ...extra_headers,
   ];
 
-  make(~status=`Unauthorized, ~headers, message) |> Lwt.return;
+  make(~status=`Unauthorized, ~headers, String(message)) |> Lwt.return;
 };
 
 let not_found = (~extra_headers=[], ~message="Not found", ()) => {
@@ -75,5 +79,29 @@ let not_found = (~extra_headers=[], ~message="Not found", ()) => {
     ...extra_headers,
   ];
 
-  make(~status=`Not_found, ~headers, message) |> Lwt.return;
+  make(~status=`Not_found, ~headers, String(message)) |> Lwt.return;
+};
+
+let get_file_stream = file_name => {
+  let read_only_flags = [Unix.O_RDONLY];
+  let read_only_perm = 444;
+  let fd = Unix.openfile(file_name, read_only_flags, read_only_perm);
+  Lwt_io.of_unix_fd(fd, ~mode=Lwt_io.Input)
+  |> Lwt_io.read_chars
+  |> Lwt_stream.map(c => String.make(1, c));
+};
+
+let static = (~extra_headers=[], file_path) => {
+  Sys.file_exists(file_path)
+    ? {
+      let size = Unix.stat(file_path).st_size;
+      let headers = [
+        ("Content-type", Magic_mime.lookup(file_path)),
+        ("Content-length", string_of_int(size)),
+        ...extra_headers,
+      ];
+      let stream = get_file_stream(file_path);
+      make(~status=`OK, ~headers, Stream(stream)) |> Lwt.return;
+    }
+    : not_found(~extra_headers, ~message="File does not exist", ());
 };

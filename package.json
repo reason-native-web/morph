@@ -33,7 +33,8 @@
     "@opam/opium_core": "rgrinberg/opium:opium_core.opam",
     "@opam/hmap": "*",
     "ocaml": "<4.8.0",
-    "@esy-ocaml/reason": "*"
+    "@esy-ocaml/reason": "*",
+    "@opam/magic-mime": "*"
   },
   "resolutions": {
     "@opam/httpaf-lwt-unix": "anmonteiro/httpaf:httpaf-lwt-unix.opam#5dff1b4",

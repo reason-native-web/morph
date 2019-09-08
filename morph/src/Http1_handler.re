@@ -52,17 +52,50 @@ let route_handler:
       handler(request)
       |> Lwt.map((response: Response.t) => {
            let headers = Httpaf.Headers.of_list(response.headers);
-
-           let () =
-             Httpaf.Reqd.respond_with_string(
-               request_descriptor,
+           switch ((response.body: Response.body)) {
+           | String(body) =>
+             let () =
+               Httpaf.Reqd.respond_with_string(
+                 request_descriptor,
+                 create_response(
+                   ~headers,
+                   `Code(Status.to_code(response.status)),
+                 ),
+                 body,
+               );
+             ();
+           | Stream(stream) =>
+             let response =
                create_response(
                  ~headers,
                  `Code(Status.to_code(response.status)),
-               ),
-               response.body,
-             );
-           ();
+               );
+             let response_body =
+               Httpaf.Reqd.respond_with_streaming(
+                 request_descriptor,
+                 response,
+               );
+             let rec read_stream = () => {
+               Lwt.bind(Lwt_stream.get(stream), maybe_body =>
+                 switch (maybe_body) {
+                 | Some(body) =>
+                   Httpaf.Body.write_string(response_body, body);
+                   read_stream();
+                 | None => Lwt.return_unit
+                 }
+               );
+             };
+             let _ =
+               Lwt.bind(
+                 Lwt_stream.closed(stream),
+                 _ => {
+                   Httpaf.Body.close_writer(response_body);
+                   Lwt.return_unit;
+                 },
+               );
+             let _ = read_stream();
+             ();
+           };
          });
     });
   };
