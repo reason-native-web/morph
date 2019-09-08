@@ -70,7 +70,7 @@ let route_handler:
                Lwt.bind(Lwt_stream.get(stream), maybe_body =>
                  switch (maybe_body) {
                  | Some(body) =>
-                   H2.Body.write_string(response_body, body);
+                   H2.Body.write_char(response_body, body);
                    read_stream();
                  | None => Lwt.return_unit
                  }

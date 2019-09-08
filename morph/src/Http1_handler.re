@@ -79,7 +79,7 @@ let route_handler:
                Lwt.bind(Lwt_stream.get(stream), maybe_body =>
                  switch (maybe_body) {
                  | Some(body) =>
-                   Httpaf.Body.write_string(response_body, body);
+                   Httpaf.Body.write_char(response_body, body);
                    read_stream();
                  | None => Lwt.return_unit
                  }
