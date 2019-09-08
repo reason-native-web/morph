@@ -51,14 +51,14 @@ stages:
               workingDirectory: $(Build.StagingDirectory)
               displayName: "Clone GitHub pages repo"
 
-            - script: rm -rf $(Build.StagingDirectory)/next
+            - script: rm -rf $(Build.StagingDirectory)
               displayName: Remove last version of the docs
 
             - task: DownloadPipelineArtifact@2
               displayName: Download docs
               inputs:
                 artifactName: Docs
-                targetPath: $(Build.StagingDirectory)/next
+                targetPath: $(Build.StagingDirectory)
               
             - script: |
                 git config user.name "Strid Bot"
