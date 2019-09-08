@@ -37,7 +37,7 @@ stages:
   - deployment: Publish_docs
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     displayName: Publish docs to Github
-    environment: prod
+    environment: gh-pages
     pool:
       vmImage: ubuntu-16.04
     strategy:
@@ -52,12 +52,12 @@ stages:
               displayName: "Clone GitHub pages repo"
 
             - script: |
-                rm -rf $(Build.StagingDirectory)/morph
-                rm -rf $(Build.StagingDirectory)/morph_client
-                rm -rf $(Build.StagingDirectory)/morph_core
-                rm $(Build.StagingDirectory)/index.html
-                rm $(Build.StagingDirectory)/odoc.css
-                rm $(Build.StagingDirectory)/highlight.pack.js
+                rm -rf $(Build.StagingDirectory)/morph || true
+                rm -rf $(Build.StagingDirectory)/morph_client || true
+                rm -rf $(Build.StagingDirectory)/morph_core || true
+                rm $(Build.StagingDirectory)/index.html || true
+                rm $(Build.StagingDirectory)/odoc.css || true
+                rm $(Build.StagingDirectory)/highlight.pack.js || true
               displayName: Remove last version of the docs
 
             - task: DownloadPipelineArtifact@2
