@@ -8,6 +8,8 @@ steps:
     displayName: "Save docsPath in variable"
     condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'))
 
+  - script: cp docs/index.html $(docsPath)/index.html
+
   - publish: $(docsPath)
     displayName: "Publish Artifact: Docs"
     artifact: Docs

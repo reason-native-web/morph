@@ -35,6 +35,7 @@ stages:
   dependsOn: [Build]
   jobs:
   - deployment: Publish_docs
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     displayName: Publish docs to Github
     environment: prod
     pool:
@@ -63,6 +64,6 @@ stages:
                 git config user.name "Strid Bot"
                 git add --all
                 git commit --message "$(Build.SourceVersionMessage)"
-                git push
+                git push gh-pages
               workingDirectory: $(Build.StagingDirectory)
               displayName: "Push docs to Github pages"
