@@ -96,7 +96,7 @@ let static = (~extra_headers=[], file_path) => {
     ? {
       let size = Unix.stat(file_path).st_size;
       let headers = [
-        ("Content-type", MimeTypes.getMimeType(file_path)),
+        ("Content-type", Magic_mime.lookup(file_path)),
         ("Content-length", string_of_int(size)),
         ...extra_headers,
       ];
