@@ -2,7 +2,7 @@ type headers = list((string, string));
 
 type body =
   | String(string)
-  | Stream(Lwt_stream.t(string));
+  | Stream(Lwt_stream.t(char));
 
 type t = {
   status: Status.t,
@@ -86,9 +86,7 @@ let get_file_stream = file_name => {
   let read_only_flags = [Unix.O_RDONLY];
   let read_only_perm = 444;
   let fd = Unix.openfile(file_name, read_only_flags, read_only_perm);
-  Lwt_io.of_unix_fd(fd, ~mode=Lwt_io.Input)
-  |> Lwt_io.read_chars
-  |> Lwt_stream.map(c => String.make(1, c));
+  Lwt_io.of_unix_fd(fd, ~mode=Lwt_io.Input) |> Lwt_io.read_chars;
 };
 
 let static = (~extra_headers=[], file_path) => {
