@@ -1,16 +1,18 @@
 # These steps are only run on Linux
 steps:
   - script: "esy docs"
-    displayName: "Build docs"
+    displayName: "[docs] Build"
     condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'))
 
   - script: echo '##vso[task.setvariable variable=docsPath]'$(esy echo '#{self.target_dir}/default/_doc/_html')
-    displayName: "Save docsPath in variable"
+    displayName: "[docs] Save docsPath in variable"
     condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'))
 
   - script: cp docs/index.html $(docsPath)/index.html
+    displayName: "[docs] Copy the custom index.html file"
+    condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'))
 
   - publish: $(docsPath)
-    displayName: "Publish Artifact: Docs"
+    displayName: "[docs] Publish Artifact: Docs"
     artifact: Docs
     condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'))
