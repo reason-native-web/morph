@@ -51,7 +51,13 @@ stages:
               workingDirectory: $(Build.StagingDirectory)
               displayName: "Clone GitHub pages repo"
 
-            - script: rm -rf $(Build.StagingDirectory)
+            - script: |
+                rm -rf $(Build.StagingDirectory)/morph
+                rm -rf $(Build.StagingDirectory)/morph_client
+                rm -rf $(Build.StagingDirectory)/morph_core
+                rm $(Build.StagingDirectory)/index.html
+                rm $(Build.StagingDirectory)/odoc.css
+                rm $(Build.StagingDirectory)/highlight.pack.js
               displayName: Remove last version of the docs
 
             - task: DownloadPipelineArtifact@2
