@@ -4,7 +4,7 @@
 type headers = list((string, string));
 
 /**
- [Response.body] variant type structure.  Either a flat [string], or a [Buffer.t].
+ [Response.body] variant type structure.  Either a flat [string], or an [Lwt_stream.t(string)].
  */
 type body =
   | String(string)
