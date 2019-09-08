@@ -8,12 +8,18 @@ let greet_handler = (greeting, _request) => {
   Morph_core.Response.text("Hello " ++ greeting);
 };
 
+let static_handler = _request => {
+  let path_to_static_file = Sys.getcwd() ++ "/README.md";
+  Morph_core.Response.static(path_to_static_file);
+};
+
 let routes =
   Routes.(
     Routes.Infix.(
       with_method([
         (`GET, root_handler <$ s("")),
         (`GET, greet_handler <$> s("greet") *> str),
+        (`GET, static_handler <$ s("static")),
       ])
     )
   );
