@@ -20,9 +20,9 @@
     "@opam/h2-lwt-unix": "*",
     "@opam/h2-lwt": "*",
     "@opam/h2": "*",
-    "@opam/httpaf-lwt-unix": "anmonteiro/httpaf:httpaf-lwt-unix.opam#5dff1b4",
-    "@opam/httpaf-lwt": "anmonteiro/httpaf:httpaf-lwt.opam#5dff1b4",
-    "@opam/httpaf": "anmonteiro/httpaf:httpaf.opam#5dff1b4",
+    "@opam/httpaf-lwt-unix": "anmonteiro/httpaf:httpaf-lwt-unix.opam#76b461bed081c64908fb1fdfa076ab2c936ca622",
+    "@opam/httpaf-lwt": "anmonteiro/httpaf:httpaf-lwt.opam#76b461bed081c64908fb1fdfa076ab2c936ca622",
+    "@opam/httpaf": "anmonteiro/httpaf:httpaf.opam#76b461bed081c64908fb1fdfa076ab2c936ca622",
     "@opam/containers": "*",
     "@opam/uri": "*",
     "@opam/lwt_ssl": "*",
@@ -37,9 +37,12 @@
     "@opam/magic-mime": "*"
   },
   "resolutions": {
-    "@opam/httpaf-lwt-unix": "anmonteiro/httpaf:httpaf-lwt-unix.opam#5dff1b4",
-    "@opam/httpaf-lwt": "anmonteiro/httpaf:httpaf-lwt.opam#5dff1b4",
-    "@opam/httpaf": "anmonteiro/httpaf:httpaf.opam#5dff1b4"
+    "@opam/h2-lwt-unix": "anmonteiro/ocaml-h2:h2-lwt-unix.opam#737bce6ec7e4d7f4ad0b314165496431b7eb30a9",
+    "@opam/h2-lwt": "anmonteiro/ocaml-h2:h2-lwt.opam#737bce6ec7e4d7f4ad0b314165496431b7eb30a9",
+    "@opam/h2": "anmonteiro/ocaml-h2:h2.opam#737bce6ec7e4d7f4ad0b314165496431b7eb30a9",
+    "@opam/httpaf-lwt-unix": "anmonteiro/httpaf:httpaf-lwt-unix.opam#76b461bed081c64908fb1fdfa076ab2c936ca622",
+    "@opam/httpaf-lwt": "anmonteiro/httpaf:httpaf-lwt.opam#76b461bed081c64908fb1fdfa076ab2c936ca622",
+    "@opam/httpaf": "anmonteiro/httpaf:httpaf.opam#76b461bed081c64908fb1fdfa076ab2c936ca622"
   },
   "devDependencies": {
     "@opam/mtime": "*",
