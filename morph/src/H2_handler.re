@@ -48,45 +48,18 @@ let route_handler:
       handler(request)
       |> Lwt.map((response: Response.t) => {
            let headers = H2.Headers.of_list(response.headers);
-
-           switch (response.body) {
-           | String(body) =>
-             let () =
-               H2.Reqd.respond_with_string(
-                 request_descriptor,
-                 create_response(~headers, response.status),
-                 body,
-               );
-             ();
-           | Stream(stream) =>
-             let response =
-               create_response(
-                 ~headers,
-                 `Code(Status.to_code(response.status)),
-               );
-             let response_body =
-               H2.Reqd.respond_with_streaming(request_descriptor, response);
-             let rec read_stream = () => {
-               Lwt.bind(Lwt_stream.get(stream), maybe_body =>
-                 switch (maybe_body) {
-                 | Some(body) =>
-                   H2.Body.write_char(response_body, body);
-                   read_stream();
-                 | None => Lwt.return_unit
-                 }
-               );
-             };
-             let _ =
-               Lwt.bind(
-                 Lwt_stream.closed(stream),
-                 _ => {
-                   H2.Body.close_writer(response_body);
-                   Lwt.return_unit;
-                 },
-               );
-             let _ = read_stream();
-             ();
-           };
+           Respond.respond(
+             ~http_response=create_response(~headers, response.status),
+             ~respond_with_string=H2.Reqd.respond_with_string,
+             ~respond_with_streaming=
+               H2.Reqd.respond_with_streaming(
+                 ~flush_headers_immediately=true,
+               ),
+             ~write_char=H2.Body.write_char,
+             ~close_writer=H2.Body.close_writer,
+             request_descriptor,
+             response,
+           );
          });
     });
   };
