@@ -10,6 +10,7 @@ depends: [
   "lwt"
   "opium_core"
   "hmap"
+  "magic-mime"
 ]
 build: [
   ["dune" "subst"] {pinned}

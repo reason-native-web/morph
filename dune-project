@@ -19,6 +19,7 @@
   lwt
   opium_core
   hmap
+  magic-mime
   ))
 
 
