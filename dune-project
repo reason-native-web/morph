@@ -16,6 +16,7 @@
    (>= 4.04.2))
   (dune
    (>= 1.11))
+  reason
   lwt
   opium_core
   hmap
@@ -31,6 +32,7 @@
    (>= 4.04.2))
   (dune
    (>= 1.11))
+  reason
   lwt
   logs
   httpaf
@@ -50,6 +52,7 @@
    (>= 4.04.2))
   (dune
    (>= 1.11))
+  reason
   lwt
   logs
   httpaf
