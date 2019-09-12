@@ -25,14 +25,19 @@ type t = {
 let make: (~status: Status.t=?, ~headers: headers=?, body) => t;
 
 /**
-[empty unit] creates an empty response.
+[empty t] an empty response, a starting place to compose an http response.
 */
-let empty: unit => t;
+let empty: t;
 
 /**
 [add_header header response] returns a copy of t of response with the header tuple added.
 */
 let add_header: ((string, string), t) => t;
+
+/**
+[add_header headers response] returns a copy of t of response with the headers added.
+*/
+let add_headers: (headers, t) => t;
 
 /**
 [set_status status response] returns a copy of t with the given status.

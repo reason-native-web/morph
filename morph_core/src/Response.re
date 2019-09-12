@@ -10,12 +10,16 @@ type t = {
   body,
 };
 
-let empty = () => {status: `OK, headers: [], body: String("")};
+let empty = {status: `OK, headers: [], body: String("")};
 
 let make = (~status=`OK, ~headers=[], body) => {status, headers, body};
 
 let add_header = (new_header: (string, string), res: t) => {
   {...res, headers: res.headers @ [new_header]};
+};
+
+let add_headers = (new_headers: headers, res: t) => {
+  {...res, headers: res.headers @ new_headers};
 };
 
 let set_status = (status: Status.t, res: t) => {
