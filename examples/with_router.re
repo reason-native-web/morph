@@ -2,15 +2,17 @@ Fmt_tty.setup_std_outputs();
 Logs.set_level(Some(Logs.Info));
 Logs.set_reporter(Logs_fmt.reporter());
 
-let root_handler = _request => Morph_core.Response.text("Hello world!");
+let root_handler = _request =>
+  Morph_core.Response.text("Hello world!", Morph_core.Response.empty());
 
 let greet_handler = (greeting, _request) => {
-  Morph_core.Response.text("Hello " ++ greeting);
+  Morph_core.Response.text("Hello " ++ greeting, Morph_core.Response.empty());
 };
 
 let static_handler = _request => {
   let path_to_static_file = Sys.getcwd() ++ "/README.md";
-  Morph_core.Response.static(path_to_static_file);
+  Morph_core.Response.empty()
+  |> Morph_core.Response.static(path_to_static_file);
 };
 
 let routes =
@@ -53,7 +55,7 @@ let handler = (request: Morph_core.Request.t) => {
   |> (
     fun
     | Some(res) => res(request)
-    | None => Morph_core.Response.not_found()
+    | None => Morph_core.Response.not_found(Morph_core.Response.empty())
   );
 };
 
