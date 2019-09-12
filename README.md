@@ -10,6 +10,17 @@ https://reason-native-web.github.io/
 
 _The documentation is not as fleshed out as it should be, the repos is under heavy development._
 
+## Build and run examples
+
+```
+esy install
+esy build
+esy examples
+$(esy examples-path)/hello_world.exe
+$(esy examples-path)/with_router.exe
+$(esy examples-path)/simple_proxy.exe
+```
+
 ## Example
 
 **Server:**
