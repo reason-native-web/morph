@@ -27,6 +27,8 @@ jobs:
         displayName: "esy install"
       - script: "esy build"
         displayName: "esy build"
+      - script: "esy dune build @fmt"
+        displayName: "Check code formatting"
       - script: "esy examples"
         displayName: "Build examples"
       - template: utils/create-docs.yml
