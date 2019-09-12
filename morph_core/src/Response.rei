@@ -1,6 +1,6 @@
 /**
 [headers] is represented as a list of (string, string) tuples.
-  */
+*/
 type headers = list((string, string));
 
 /**
@@ -25,42 +25,66 @@ type t = {
 let make: (~status: Status.t=?, ~headers: headers=?, body) => t;
 
 /**
-[ok extra_headers unit] is a conventience function to return a 200 OK response.
+[empty t] an empty response, a starting place to compose an http response.
 */
-let ok: (~extra_headers: headers=?, unit) => Lwt.t(t);
+let empty: t;
 
 /**
-[text extra_headers text] is a conventience function to return a text response.
+[add_header header response] returns a copy of t of response with the header tuple added.
 */
-let text: (~extra_headers: headers=?, string) => Lwt.t(t);
+let add_header: ((string, string), t) => t;
 
 /**
-[json extra_headers json] is a conventience function to return a JSON response.
+[add_header headers response] returns a copy of t of response with the headers added.
 */
-let json: (~extra_headers: headers=?, string) => Lwt.t(t);
+let add_headers: (headers, t) => t;
 
 /**
-[html extra_headers markup] is a conventience function to return a HTML response.
+[set_status status response] returns a copy of t with the given status.
 */
-let html: (~extra_headers: headers=?, string) => Lwt.t(t);
+let set_status: (Status.t, t) => t;
 
 /**
-[redirect extra_headers code target] is a conventience function to create a redirect response.
+[set_body body response] returns a copy of t with the given body.
 */
-let redirect: (~extra_headers: headers=?, ~code: int=?, string) => Lwt.t(t);
+let set_body: (body, t) => t;
 
 /**
-[unauthorized extra_headers message] is a conventience function to return a unauthorized response.
+[ok response] is a conventience function to return a 200 OK response.
 */
-let unauthorized: (~extra_headers: headers=?, string) => Lwt.t(t);
+let ok: t => Lwt.t(t);
 
 /**
-[not_found extra_headers message unit] is a conventience function to return a 404 Not found response.
+[text text response] is a conventience function to return a text response.
 */
-let not_found:
-  (~extra_headers: headers=?, ~message: string=?, unit) => Lwt.t(t);
+let text: (string, t) => Lwt.t(t);
 
 /**
- [static extra_headers file_path] is a convenience function to return a 200 response with the contents of a static file.  If the file does not exist a 404 Not found response is sent instead.
+[json json response] is a conventience function to return a JSON response.
+*/
+let json: (string, t) => Lwt.t(t);
+
+/**
+[html markup response] is a conventience function to return a HTML response.
+*/
+let html: (string, t) => Lwt.t(t);
+
+/**
+[redirect code target response] is a conventience function to create a redirect response.
+*/
+let redirect: (~code: int=?, string, t) => Lwt.t(t);
+
+/**
+[unauthorized message response] is a conventience function to return a unauthorized response.
+*/
+let unauthorized: (string, t) => Lwt.t(t);
+
+/**
+[not_found message response] is a conventience function to return a 404 Not found response.
+*/
+let not_found: (~message: string=?, t) => Lwt.t(t);
+
+/**
+ [static file_path response] is a convenience function to return a 200 response with the contents of a static file.  If the file does not exist a 404 Not found response is sent instead.
  */
-let static: (~extra_headers: headers=?, string) => Lwt.t(t);
+let static: (string, t) => Lwt.t(t);

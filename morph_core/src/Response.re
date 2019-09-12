@@ -10,76 +10,84 @@ type t = {
   body,
 };
 
+let empty = {status: `OK, headers: [], body: String("")};
+
 let make = (~status=`OK, ~headers=[], body) => {status, headers, body};
 
-let ok = (~extra_headers=[], ()) => {
-  let headers = [("content-length", "2"), ...extra_headers];
-
-  make(~status=`OK, ~headers, String("ok")) |> Lwt.return;
+let add_header = (new_header: (string, string), res: t) => {
+  {...res, headers: res.headers @ [new_header]};
 };
 
-let text = (~extra_headers=[], text) => {
+let add_headers = (new_headers: headers, res: t) => {
+  {...res, headers: res.headers @ new_headers};
+};
+
+let set_status = (status: Status.t, res: t) => {
+  {...res, status};
+};
+
+let set_body = (body: body, res: t) => {
+  {...res, body};
+};
+
+let ok = (res: t) => {
+  add_header(("Content-length", "2"), res)
+  |> set_status(`OK)
+  |> set_body(String("ok"))
+  |> Lwt.return;
+};
+
+let text = (text, res: t) => {
   let content_length = text |> String.length |> string_of_int;
-  let headers = [("content-length", content_length), ...extra_headers];
-
-  make(~status=`OK, ~headers, String(text)) |> Lwt.return;
+  add_header(("Content-length", content_length), res)
+  |> set_body(String(text))
+  |> Lwt.return;
 };
 
-let json = (~extra_headers=[], json) => {
+let json = (json, res: t) => {
   let content_length = json |> String.length |> string_of_int;
-  let headers = [
-    ("content-type", "application/json"),
-    ("content-length", content_length),
-    ...extra_headers,
-  ];
-
-  make(~status=`OK, ~headers, String(json)) |> Lwt.return;
+  add_header(("Content-type", "application/json"), res)
+  |> add_header(("Content-length", content_length))
+  |> set_body(String(json))
+  |> Lwt.return;
 };
 
-let html = (~extra_headers=[], markup) => {
+let html = (markup, res: t) => {
   let content_length = markup |> String.length |> string_of_int;
-  let headers = [
-    ("content-type", "text/html"),
-    ("content-length", content_length),
-    ...extra_headers,
-  ];
-
-  make(~status=`OK, ~headers, String(markup)) |> Lwt.return;
+  add_header(("Content-type", "text/html"), res)
+  |> add_header(("Content-length", content_length))
+  |> set_body(String(markup))
+  |> Lwt.return;
 };
 
-let redirect = (~extra_headers=?, ~code=303, targetPath) => {
+let redirect = (~code=303, targetPath, res: t) => {
   let content_length = targetPath |> String.length |> string_of_int;
 
-  let constantHeaders = [
-    ("content-length", content_length),
-    ("location", targetPath),
-  ];
-
-  let headers =
-    switch (extra_headers) {
-    | Some(h) => List.concat([constantHeaders, h])
-    | None => constantHeaders
-    };
-
-  make(~status=`Code(code), ~headers, String(targetPath)) |> Lwt.return;
+  add_header(("Content-length", content_length), res)
+  |> add_header(("Location", targetPath))
+  |> set_status(`Code(code))
+  |> set_body(String(targetPath))
+  |> Lwt.return;
 };
 
-let unauthorized = (~extra_headers=[], message) => {
-  let headers = [
-    ("content-length", String.length(message) |> string_of_int),
-    ...extra_headers,
-  ];
-
-  make(~status=`Unauthorized, ~headers, String(message)) |> Lwt.return;
+let unauthorized = (message, res: t) => {
+  add_header(
+    ("Content-length", String.length(message) |> string_of_int),
+    res,
+  )
+  |> set_status(`Unauthorized)
+  |> set_body(String(message))
+  |> Lwt.return;
 };
 
-let not_found = (~extra_headers=[], ~message="Not found", ()) => {
-  let headers = [
+let not_found = (~message="Not found", res: t) => {
+  add_header(
     ("content-length", String.length(message) |> string_of_int),
-    ...extra_headers,
-  ];
-
-  make(~status=`Not_found, ~headers, String(message)) |> Lwt.return;
+    res,
+  )
+  |> set_status(`Not_found)
+  |> set_body(String(message))
+  |> Lwt.return;
 };
 
 let get_file_stream = file_name => {
@@ -89,17 +97,15 @@ let get_file_stream = file_name => {
   Lwt_io.of_unix_fd(fd, ~mode=Lwt_io.Input) |> Lwt_io.read_chars;
 };
 
-let static = (~extra_headers=[], file_path) => {
+let static = (file_path, res: t) => {
   Sys.file_exists(file_path)
     ? {
       let size = Unix.stat(file_path).st_size;
-      let headers = [
-        ("Content-type", Magic_mime.lookup(file_path)),
-        ("Content-length", string_of_int(size)),
-        ...extra_headers,
-      ];
       let stream = get_file_stream(file_path);
-      make(~status=`OK, ~headers, Stream(stream)) |> Lwt.return;
+      add_header(("Content-type", Magic_mime.lookup(file_path)), res)
+      |> add_header(("Content-length", string_of_int(size)))
+      |> set_body(Stream(stream))
+      |> Lwt.return;
     }
-    : not_found(~extra_headers, ~message="File does not exist", ());
+    : not_found(~message="File does not exist", res);
 };
