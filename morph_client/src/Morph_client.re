@@ -1,6 +1,7 @@
 open Lwt.Infix;
 
-exception Failed_request(string);
+external from_httpaf_status: Httpaf.Status.t => Morph_core.Status.t =
+  "%identity";
 
 let error_handler = _ => assert(false);
 
@@ -39,12 +40,7 @@ let read_response = (~notify_finished, response, response_body) => {
 
     Httpaf.Body.schedule_read(response_body, ~on_read, ~on_eof);
   | {headers, status, _} =>
-    Format.fprintf(
-      Format.err_formatter,
-      "%a\n%!",
-      Httpaf.Response.pp_hum,
-      response,
-    );
+    Logs.err(m => m("%a\n%!", Httpaf.Response.pp_hum, response));
     let content_length =
       Httpaf.Headers.get(headers, "content-length")
       |> CCOpt.flat_map(CCInt.of_string)
@@ -65,9 +61,13 @@ let read_response = (~notify_finished, response, response_body) => {
       Httpaf.Body.schedule_read(response_body, ~on_read, ~on_eof);
     }
     and on_eof = () => {
-      Lwt.wakeup_later_exn(
+      Lwt.wakeup_later(
         notify_finished,
-        Failed_request(Httpaf.Status.to_string(status)),
+        Morph_core.Response.{
+          status: from_httpaf_status(status),
+          body: String(Buffer.contents(body_buffer)),
+          headers: Httpaf.Headers.to_list(headers),
+        },
       );
     };
 

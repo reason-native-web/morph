@@ -1,23 +1,21 @@
-let h2_handler =
-    (~error_handler=H2_handler.error_handler, ~request_handler, ssl_server) =>
+let h2_handler = (~request_handler, ssl_server) =>
   H2_lwt_unix.Server.SSL.create_connection_handler(
     ~certfile=?None,
     ~keyfile=?None,
     ~config=?None,
     ~server=ssl_server,
     ~request_handler,
-    ~error_handler,
+    ~error_handler=H2_handler.error_handler,
   );
 
-let http1_handler =
-    (~error_handler=Http1_handler.error_handler, ~request_handler, ssl_server) =>
+let http1_handler = (~request_handler, ssl_server) =>
   Httpaf_lwt_unix.Server.SSL.create_connection_handler(
     ~certfile=?None,
     ~keyfile=?None,
     ~config=?None,
     ~server=ssl_server,
     ~request_handler,
-    ~error_handler,
+    ~error_handler=Http1_handler.error_handler,
   );
 
 let startHttpServer = (~port=8080, ~middlewares, handler) => {
