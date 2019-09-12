@@ -16,9 +16,11 @@
    (>= 4.04.2))
   (dune
    (>= 1.11))
+  reason
   lwt
   opium_core
   hmap
+  magic-mime
   ))
 
 
@@ -30,12 +32,17 @@
    (>= 4.04.2))
   (dune
    (>= 1.11))
+  reason
   lwt
   logs
   httpaf
+  httpaf-lwt
   httpaf-lwt-unix
   h2
+  h2-lwt
   h2-lwt-unix
+  ssl
+  lwt_ssl
   opium_core
   hmap
   morph_core
@@ -49,10 +56,14 @@
    (>= 4.04.2))
   (dune
    (>= 1.11))
+  reason
   lwt
   logs
   httpaf
+  httpaf-lwt
   httpaf-lwt-unix
+  ssl
+  lwt_ssl
   opium_core
   morph_core
   hmap

@@ -7,9 +7,11 @@ bug-reports: "https://github.com/reason-native-web/morph/issues"
 depends: [
   "ocaml" {>= "4.04.2"}
   "dune" {>= "1.11"}
+  "reason"
   "lwt"
   "opium_core"
   "hmap"
+  "magic-mime"
 ]
 build: [
   ["dune" "subst"] {pinned}
