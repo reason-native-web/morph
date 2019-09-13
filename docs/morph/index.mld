@@ -29,4 +29,4 @@ A simple "Hello world!" can be built as follows:
     |> Lwt_main.run;
 ]}
 
-For more examples go to the {{: https://reason-native-web.github.io/docs/http/with-routes-package} reason-native-web homepage} or look in the {{: https://github.com/reason-native-web/morph/tree/master/examples} examples folder} of this project.
+For more examples go to the {{: https://reason-native-web.github.io} reason-native-web homepage} or look in the {{: https://github.com/reason-native-web/morph/tree/master/examples} examples folder} of this project.
