@@ -3,6 +3,12 @@ parameters:
   module_path: ./morph
 
 steps:
+  # This is mostyl a check that the package.json is valid
+  - script: "esy"
+    displayName: Try building package - ${{ parameters.package_name}}
+    workingDirectory: ${{ parameters.module_path }}
+    condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'))
+
   - script: "npm pack ."
     displayName: package ${{ parameters.package_name}} for npm
     workingDirectory: ${{ parameters.module_path }}
