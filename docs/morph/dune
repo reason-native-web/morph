@@ -1,3 +1,41 @@
+(executables
+  (libraries morph morph_client morph_core mtime mtime.clock.os
+  routes logs logs.fmt fmt.tty lwt)
+  (names
+    with_router
+    simple_proxy
+    hello_world
+    getting_started
+    simple_switch_based_router
+    with_routes_package)
+) 
+
+(alias
+  (name docs-examples)
+  (deps
+    with_router.exe
+    simple_proxy.exe
+    hello_world.exe
+    getting_started.exe
+    simple_switch_based_router.exe
+    with_routes_package.exe)
+)
+
+(rule
+  (targets getting_started.ml)
+  (deps    getting_started.md)
+  (action  (with-stdout-to %{targets} (run ocaml-mdx pp %{deps}))))
+  
+(rule
+  (targets simple_switch_based_router.ml)
+  (deps    simple-switch-based-router.md)
+  (action  (with-stdout-to %{targets} (run ocaml-mdx pp %{deps}))))
+  
+(rule
+  (targets with_routes_package.ml)
+  (deps    with-routes-package.md)
+  (action  (with-stdout-to %{targets} (run ocaml-mdx pp %{deps}))))
+
 (documentation
-    (package morph)
-    (mld_files (:standard)))
+  (package morph)
+  (mld_files (:standard)))

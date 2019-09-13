@@ -48,6 +48,7 @@
     "@opam/mtime": "*",
     "@opam/routes": "*",
     "@opam/odoc": "*",
-    "@reason-native-web/oopen": "*"
+    "@reason-native-web/oopen": "*",
+    "@opam/mdx": "*"
   }
 }
