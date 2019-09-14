@@ -5,7 +5,7 @@
 (documentation https://reason-native-web.github.io/morph)
 (generate_opam_files true)
 
-(using fmt 1.2 (enabled_for reason))
+(using fmt 1.2)
 
 
 (package

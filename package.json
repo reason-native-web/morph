@@ -49,6 +49,7 @@
     "@opam/routes": "*",
     "@opam/odoc": "*",
     "@reason-native-web/oopen": "*",
-    "@opam/mdx": "*"
+    "@opam/mdx": "*",
+    "@opam/ocamlformat": "*"
   }
 }
