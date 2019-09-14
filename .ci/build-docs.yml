@@ -1,0 +1,14 @@
+# These steps are only run on Linux
+steps:
+  - script: "esy docs"
+    displayName: "[docs] Build"
+
+  - script: echo '##vso[task.setvariable variable=docsPath]'$(esy docs-path)
+    displayName: "[docs] Save docsPath in variable"
+
+  - script: cp docs/index.html $(docsPath)/index.html
+    displayName: "[docs] Copy the custom index.html file"
+
+  - publish: $(docsPath)
+    displayName: "[docs] Publish Artifact: Docs"
+    artifact: Docs

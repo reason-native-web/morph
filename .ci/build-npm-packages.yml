@@ -1,0 +1,13 @@
+steps:
+  - template: utils/create-npm-package.yml
+    parameters:
+      package_name: morph_core
+      module_path: ./morph_core
+  - template: utils/create-npm-package.yml
+    parameters:
+      package_name: morph
+      module_path: ./morph
+  - template: utils/create-npm-package.yml
+    parameters:
+      package_name: morph_client
+      module_path: ./morph_client
