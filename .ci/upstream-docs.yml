@@ -1,0 +1,41 @@
+steps:
+  - script: mkdir -p $(Pipeline.Workspace)/webpage
+
+  - script: |
+      git clone https://$(github_pat)@github.com/reason-native-web/reason-native-web.github.io .
+      git pull
+    workingDirectory: $(Pipeline.Workspace)/webpage
+    displayName: "Clone GitHub pages repo"
+
+  - script: |
+      rm -rf $(Pipeline.Workspace)/webpage/docs/morph || true
+      rm -rf $(Pipeline.Workspace)/webpage/website/pages/API/morph || true
+      rm -rf $(Pipeline.Workspace)/webpage/website/pages/API/morph_client || true
+      rm -rf $(Pipeline.Workspace)/webpage/website/pages/API/morph_core || true
+    displayName: Remove last version of the docs
+
+  - task: DownloadPipelineArtifact@2
+    displayName: Download docs
+    inputs:
+      artifactName: Docs
+      targetPath: $(Build.StagingDirectory)
+
+  - task: DownloadPipelineArtifact@2
+    displayName: Download guides
+    inputs:
+      artifactName: Guides
+      targetPath: $(Pipeline.Workspace)/webpage/docs/morph
+
+  - script: |
+      mv $(Build.StagingDirectory)/morph $(Pipeline.Workspace)/webpage/website/pages/API/morph
+      mv $(Build.StagingDirectory)/morph_client $(Pipeline.Workspace)/webpage/website/pages/API/morph_client
+      mv $(Build.StagingDirectory)/morph_core $(Pipeline.Workspace)/webpage/website/pages/API/morph_core
+    displayName: Move API docs in place
+    
+  - script: |
+      git config user.name "Strid Bot"
+      git add --all
+      git commit --message "$(Build.SourceVersionMessage)"
+      git push origin master
+    workingDirectory: $(Pipeline.Workspace)/webpage
+    displayName: "Push docs to Github pages"
