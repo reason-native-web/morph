@@ -5,7 +5,7 @@ steps:
     displayName: "esy install"
   - script: "esy build"
     displayName: "esy build"
-  - script: "esy dune build @fmt"
+  - script: "esy dune build @fmt --root ."
     displayName: "Check code formatting"
   - script: "esy examples"
     displayName: "Build examples"
