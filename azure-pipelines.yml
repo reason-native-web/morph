@@ -6,29 +6,37 @@ trigger:
 stages:
 - stage: Build
   jobs:
+  - job: Linux
+    pool:
+      vmImage: ubuntu-latest
+    variables:
+      ESY__PREFIX: $(Pipeline.Workspace)/.esy
+    steps:
     - template: .ci/build-platform.yml
-      parameters:
-        platform: Linux
-        vmImage: ubuntu-16.04
-        esyLockPath: $(Build.SourcesDirectory)/esy.lock/index.json
-        installFolderPath: /3______________________________________________________________
-        ESY__PREFIX: $(Pipeline.Workspace)/.esy
+    - template: .ci/build-npm-packages.yml
+    - template: .ci/build-docs.yml
 
+  - job: macOS
+    pool:
+      vmImage: macOS-latest
+    variables:
+      ESY__PREFIX: $(Pipeline.Workspace)/.esy
+    steps:
     - template: .ci/build-platform.yml
       parameters:
-        platform: macOS
-        vmImage: macOS-10.13
         esyLockPath: $(Build.SourcesDirectory)/esy.lock/index.json
         installFolderPath: /3_______________________________________________
-        ESY__PREFIX: $(Pipeline.Workspace)/.esy
 
-    # - template: .ci/build-platform.yml
-    #   parameters:
-    #     platform: Windows
-    #     vmImage: vs2017-win2016
-    #     esyLockPath: $(Build.SourcesDirectory)\esy.lock\index.json
-    #     installFolderPath: \3_
-    #     ESY__PREFIX: $(Pipeline.Workspace)\.esy
+  # - job: Windows
+  #   pool:
+  #     vmImage: windows-latest
+  #   variables:
+  #     ESY__PREFIX: $(Pipeline.Workspace)\.esy
+  #   steps:
+  #   - template: .ci/build-platform.yml
+  #     parameters:
+  #       esyLockPath: $(Build.SourcesDirectory)\esy.lock\index.json
+  #       installFolderPath: \3_
 
 - stage: Publish_docs
   displayName: Publish documentation

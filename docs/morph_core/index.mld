@@ -1,9 +1,9 @@
-{0 Morph client}
+{0 Morph_core}
 
-A HTTP client built ontop of Httpaf that leverages {{: https://rgrinberg.github.io/opium/opium_core/index.html} Opium_core} to build reusable middlewares.
+The core types for Morph
 
 The entry point of this library is the module:
-{!module-Morph_client}.
+{!module-Morph_core}.
 
 {1 Core concepts}
 

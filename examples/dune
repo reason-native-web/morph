@@ -1,9 +1,0 @@
-(executables
-    (libraries morph morph_client morph_core mtime mtime.clock.os
-    routes logs logs.fmt fmt.tty lwt)
-    (names with_router simple_proxy hello_world)) 
-
-(alias
- (name examples)
- (deps with_router.exe simple_proxy.exe hello_world.exe)
-)

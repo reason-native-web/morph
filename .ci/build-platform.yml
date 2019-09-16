@@ -1,46 +1,11 @@
-parameters:
-  platform: "macOS"
-  vmImage: "macOS-10.13"
-  package: "morph"
-  esyLockPath: $(Build.SourcesDirectory)/esy.lock
-  installFolderPath: /3_______________________________________________
-  ESY__PREFIX: $(Pipeline.Workspace)/.esy
-
-jobs:
-  - job: ${{ parameters.platform }}
-    pool:
-      vmImage: ${{ parameters.vmImage }}
-      demands: node.js
-    timeoutInMinutes: 120 # This is mostly for Windows
-    variables:
-      ESY__PREFIX: ${{ parameters.ESY__PREFIX }}
-
-    steps:
-      - template: utils/use-node.yml
-      - template: utils/use-esy.yml
-#      - task: CacheBeta@0
-#        displayName: Cache esy
-#        inputs:
-#          key: $(Agent.OS) | esy | ${{ parameters.esyLockPath }}
-#          path: ${{ parameters.ESY__PREFIX }}${{ parameters.installFolderPath }}
-      - script: "esy install"
-        displayName: "esy install"
-      - script: "esy build"
-        displayName: "esy build"
-      - script: "esy dune build @fmt"
-        displayName: "Check code formatting"
-      - script: "esy examples"
-        displayName: "Build examples"
-      - template: utils/create-docs.yml
-      - template: utils/create-npm-package.yml
-        parameters:
-          package_name: morph_core
-          module_path: ./morph_core
-      - template: utils/create-npm-package.yml
-        parameters:
-          package_name: morph
-          module_path: ./morph
-      - template: utils/create-npm-package.yml
-        parameters:
-          package_name: morph_client
-          module_path: ./morph_client
+steps:
+  - template: utils/use-node.yml
+  - template: utils/use-esy.yml
+  - script: "esy install"
+    displayName: "esy install"
+  - script: "esy build"
+    displayName: "esy build"
+  - script: "esy dune build @fmt"
+    displayName: "Check code formatting"
+  - script: "esy examples"
+    displayName: "Build examples"
