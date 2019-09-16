@@ -1,7 +1,9 @@
 name: Build master - $(Build.BuildId)
 
 trigger:
-  - master
+  branches:
+    include:
+    - master
 
 stages:
 - stage: Build
