@@ -1,0 +1,28 @@
+name: Check PR
+
+on:
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest]
+    steps:
+    - uses: actions/setup-node@v1
+      with:
+        version: 10
+    - uses: actions/checkout@v1
+    - name: Install esy
+      run: npm install -g esy@0.5.8
+    - name: Install dependencies
+      run: esy install
+    - name: Build
+      run: esy build
+    - name: Check code formatting
+      run: esy dune build @fmt --root .
+    - name: Build examples
+      run: esy examples
