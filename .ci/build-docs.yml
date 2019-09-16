@@ -12,3 +12,7 @@ steps:
   - publish: $(docsPath)
     displayName: "[docs] Publish Artifact: Docs"
     artifact: Docs
+
+  - publish: docs/markdown/*.md
+    displayName: "[docs] Publish Artifact: Guides"
+    artifact: Guides
