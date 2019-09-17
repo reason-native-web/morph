@@ -12,7 +12,14 @@ steps:
   - publish: $(docsPath)
     displayName: "[docs] Publish Artifact: Docs"
     artifact: Docs
+  
+  - script: |
+      ls $(Build.SourcesDirectory)
+      ls $(Build.SourcesDirectory)/docs
+      ls $(Build.SourcesDirectory)/docs/markdown
 
-  - publish: docs/markdown/*.md
+  - task: PublishPipelineArtifact@1
     displayName: "[docs] Publish Artifact: Guides"
-    artifact: Guides
+    inputs:
+      path: $(Build.SourcesDirectory)/docs/markdown
+      artifact: Guides
