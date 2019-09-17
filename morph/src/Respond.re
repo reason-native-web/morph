@@ -9,10 +9,10 @@ let respond =
       response: Morph_core.Response.t,
     ) => {
   switch (response.body) {
-  | String(body) =>
+  | `String(body) =>
     let () = respond_with_string(request_descriptor, http_response, body);
     ();
-  | Stream(stream) =>
+  | `Stream(stream) =>
     let response_body =
       respond_with_streaming(request_descriptor, http_response);
     let rec read_stream = () => {

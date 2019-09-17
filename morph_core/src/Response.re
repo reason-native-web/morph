@@ -1,8 +1,9 @@
 type headers = list((string, string));
 
-type body =
-  | String(string)
-  | Stream(Lwt_stream.t(char));
+type body = [
+  | `String(string)
+  | `Stream(Lwt_stream.t(char))
+];
 
 type t = {
   status: Status.t,
@@ -10,7 +11,7 @@ type t = {
   body,
 };
 
-let empty = {status: `OK, headers: [], body: String("")};
+let empty = {status: `OK, headers: [], body: `String("")};
 
 let make = (~status=`OK, ~headers=[], body) => {status, headers, body};
 
@@ -33,14 +34,14 @@ let set_body = (body: body, res: t) => {
 let ok = (res: t) => {
   add_header(("Content-length", "2"), res)
   |> set_status(`OK)
-  |> set_body(String("ok"))
+  |> set_body(`String("ok"))
   |> Lwt.return;
 };
 
 let text = (text, res: t) => {
   let content_length = text |> String.length |> string_of_int;
   add_header(("Content-length", content_length), res)
-  |> set_body(String(text))
+  |> set_body(`String(text))
   |> Lwt.return;
 };
 
@@ -48,7 +49,7 @@ let json = (json, res: t) => {
   let content_length = json |> String.length |> string_of_int;
   add_header(("Content-type", "application/json"), res)
   |> add_header(("Content-length", content_length))
-  |> set_body(String(json))
+  |> set_body(`String(json))
   |> Lwt.return;
 };
 
@@ -56,7 +57,7 @@ let html = (markup, res: t) => {
   let content_length = markup |> String.length |> string_of_int;
   add_header(("Content-type", "text/html"), res)
   |> add_header(("Content-length", content_length))
-  |> set_body(String(markup))
+  |> set_body(`String(markup))
   |> Lwt.return;
 };
 
@@ -66,7 +67,7 @@ let redirect = (~code=303, targetPath, res: t) => {
   add_header(("Content-length", content_length), res)
   |> add_header(("Location", targetPath))
   |> set_status(`Code(code))
-  |> set_body(String(targetPath))
+  |> set_body(`String(targetPath))
   |> Lwt.return;
 };
 
@@ -76,7 +77,7 @@ let unauthorized = (message, res: t) => {
     res,
   )
   |> set_status(`Unauthorized)
-  |> set_body(String(message))
+  |> set_body(`String(message))
   |> Lwt.return;
 };
 
@@ -86,7 +87,7 @@ let not_found = (~message="Not found", res: t) => {
     res,
   )
   |> set_status(`Not_found)
-  |> set_body(String(message))
+  |> set_body(`String(message))
   |> Lwt.return;
 };
 
@@ -104,7 +105,7 @@ let static = (file_path, res: t) => {
       let stream = get_file_stream(file_path);
       add_header(("Content-type", Magic_mime.lookup(file_path)), res)
       |> add_header(("Content-length", string_of_int(size)))
-      |> set_body(Stream(stream))
+      |> set_body(`Stream(stream))
       |> Lwt.return;
     }
     : not_found(~message="File does not exist", res);
