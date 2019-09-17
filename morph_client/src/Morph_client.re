@@ -32,7 +32,7 @@ let read_response = (~notify_finished, response, response_body) => {
         notify_finished,
         Morph_core.Response.{
           status: `OK,
-          body: String(Buffer.contents(body_buffer)),
+          body: `String(Buffer.contents(body_buffer)),
           headers: Httpaf.Headers.to_list(headers),
         },
       );
@@ -65,7 +65,7 @@ let read_response = (~notify_finished, response, response_body) => {
         notify_finished,
         Morph_core.Response.{
           status: from_httpaf_status(status),
-          body: String(Buffer.contents(body_buffer)),
+          body: `String(Buffer.contents(body_buffer)),
           headers: Httpaf.Headers.to_list(headers),
         },
       );
