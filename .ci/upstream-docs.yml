@@ -34,8 +34,9 @@ steps:
     
   - script: |
       git config user.name "Strid Bot"
+      git config user.email "ulrikaugustsson@gmail.com"
       git add --all
       git commit --message "$(Build.SourceVersionMessage)"
-      git push origin master
+      git push origin
     workingDirectory: $(Pipeline.Workspace)/webpage
     displayName: "Push docs to Github pages"
