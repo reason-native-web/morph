@@ -7,5 +7,6 @@ steps:
     displayName: "esy build"
   - script: "esy dune build @fmt --root ."
     displayName: "Check code formatting"
+  - template: run-tests.yml
   - script: "esy examples"
     displayName: "Build examples"
