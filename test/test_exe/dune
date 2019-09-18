@@ -2,4 +2,4 @@
  (name RunTests)
  (package morph)
  (public_name RunTests.exe)
- (libraries morph.test_framework morph_core.test))
+ (libraries morph.test_framework morph.test morph_core.test))
