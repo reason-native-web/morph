@@ -35,7 +35,9 @@ let startHttpServer = (~port=8080, ~middlewares, handler) => {
       listen_address,
       connection_handler,
     )
-    >|= (_server => Logs.info(m => m("HTTP server started on port: %d", port)));
+    >|= (
+      _server => Logs.info(m => m("HTTP server started on port: %d", port))
+    );
   });
 
   let (forever, _) = Lwt.wait();
@@ -108,7 +110,9 @@ let startHttpsServer = (~port=9443, ~cert, ~priv_key, ~middlewares, handler) => 
       listen_address,
       connection_handler,
     )
-    >|= (_server => Logs.info(m => m("HTTPS server started on port: %d", port)));
+    >|= (
+      _server => Logs.info(m => m("HTTPS server started on port: %d", port))
+    );
   });
 
   let (forever, _) = Lwt.wait();
