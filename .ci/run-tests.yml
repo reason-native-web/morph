@@ -1,0 +1,12 @@
+steps:
+  - script: "esy test"
+    displayName: "esy test"
+
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: './junit.xml' 
+      mergeTestResults: true
+      failTaskOnFailedTests: true
+      testRunTitle: Unit tests - $(Agent.OS)
+      buildPlatform: $(Agent.OS)

@@ -15,6 +15,7 @@
     }
   },
   "scripts": {
+    "test": "esy x RunTests.exe",
     "format": "dune build @fmt --auto-promote",
     "examples": "esy b dune build @docs-examples",
     "examples-path": "esy echo #{self.target_dir}/default/docs",
@@ -51,11 +52,13 @@
     "@opam/httpaf": "anmonteiro/httpaf:httpaf.opam#76b461bed081c64908fb1fdfa076ab2c936ca622"
   },
   "devDependencies": {
+    "@reason-native/rely": "*",
     "@opam/mtime": "*",
     "@opam/routes": "*",
     "@opam/odoc": "*",
     "refmterr": "*",
     "@opam/mdx": "*",
-    "@opam/ocamlformat": "*"
+    "@opam/ocamlformat": "*",
+    "@opam/utop": "*"
   }
 }

@@ -1,0 +1,5 @@
+(library
+ (name TestFramework)
+ (public_name morph.test_framework)
+ (libraries rely.lib)
+ (flags -linkall -g -w -9))

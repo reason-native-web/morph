@@ -2,5 +2,6 @@
 *.merlin
 _esy
 node_modules
+junit.xml
 
 */esy.lock
