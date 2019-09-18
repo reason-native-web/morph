@@ -21,7 +21,7 @@ let http1_handler = (~request_handler, ssl_server) =>
 let startHttpServer = (~port=8080, ~middlewares, handler) => {
   open Lwt.Infix;
 
-  let listen_address = Unix.(ADDR_INET(inet_addr_any, port));
+  let listen_address = Unix.(ADDR_INET(inet_addr_loopback, port));
 
   Lwt.async(() => {
     let connection_handler =
@@ -35,7 +35,7 @@ let startHttpServer = (~port=8080, ~middlewares, handler) => {
       listen_address,
       connection_handler,
     )
-    >>= (_server => Lwt_io.printlf("HTTP server started on port: %d", port));
+    >|= (_server => Logs.info(m => m("HTTP server started on port: %d", port)));
   });
 
   let (forever, _) = Lwt.wait();
@@ -108,7 +108,7 @@ let startHttpsServer = (~port=9443, ~cert, ~priv_key, ~middlewares, handler) => 
       listen_address,
       connection_handler,
     )
-    >>= (_server => Lwt_io.printlf("HTTPS server started on port: %d", port));
+    >|= (_server => Logs.info(m => m("HTTPS server started on port: %d", port)));
   });
 
   let (forever, _) = Lwt.wait();
