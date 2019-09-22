@@ -19,7 +19,7 @@
     "@opam/httpaf-lwt": "anmonteiro/httpaf:httpaf-lwt.opam#5dff1b4",
     "@opam/httpaf": "anmonteiro/httpaf:httpaf.opam#5dff1b4",
     "@reason-native-web/morph": "*",
-    "ocaml": "*",
+    "ocaml": "< 4.09.0",
     "@esy-ocaml/reason": "*"
   },
   "resolutions": {

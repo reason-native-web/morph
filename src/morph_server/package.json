@@ -16,7 +16,7 @@
     "@opam/logs": "*",
     "@opam/fmt": "*",
     "@reason-native-web/morph": "*",
-    "ocaml": "*",
+    "ocaml": "< 4.09.0",
     "@esy-ocaml/reason": "*"
   },
   "resolutions": {

@@ -25,7 +25,7 @@
     "@opam/uri": "*",
     "@opam/containers": "*",
     "@reason-native-web/morph": "*",
-    "ocaml": "*",
+    "ocaml": "< 4.09.0",
     "@esy-ocaml/reason": "*"
   },
   "resolutions": {

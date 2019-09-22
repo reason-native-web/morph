@@ -39,7 +39,7 @@
     "@opam/fmt": "*",
     "@opam/opium_core": "rgrinberg/opium:opium_core.opam",
     "@opam/hmap": "*",
-    "ocaml": "*",
+    "ocaml": "< 4.09.0",
     "@esy-ocaml/reason": "*",
     "@opam/magic-mime": "*"
   },

@@ -22,7 +22,7 @@
     "@opam/h2-lwt": "*",
     "@opam/h2": "*",
     "@reason-native-web/morph": "*",
-    "ocaml": "*",
+    "ocaml": "< 4.09.0",
     "@esy-ocaml/reason": "*"
   },
   "resolutions": {
