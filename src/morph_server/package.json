@@ -1,5 +1,5 @@
 {
-  "name": "@reason-native-web/morph",
+  "name": "@reason-native-web/morph_server",
   "version": "0.1.0",
   "esy": {
     "build": "dune build --profile=release .",
@@ -12,17 +12,15 @@
   },
   "dependencies": {
     "@opam/dune": "*",
-    "@opam/h2": "*",
     "@opam/lwt": "*",
     "@opam/logs": "*",
     "@opam/fmt": "*",
-    "@opam/opium_core": "rgrinberg/opium:opium_core.opam",
-    "@opam/hmap": "*",
-    "@opam/magic-mime": "*",
+    "@reason-native-web/morph": "*",
     "ocaml": "*",
     "@esy-ocaml/reason": "*"
   },
   "resolutions": {
+    "@reason-native-web/morph": "link:../morph",
     "@opam/opium_core": "rgrinberg/opium:opium_core.opam#1767ce612bc69a2ecd569404cb37f4a2c0e93e05"
   },
   "devDependencies": {}
