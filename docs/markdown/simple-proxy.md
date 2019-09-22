@@ -10,10 +10,10 @@ To create a proxy in Morph we can use the fact that `Morph_client` is just a han
 
 ```reason
 let proxy:
-  Opium_core.Filter.simple(Morph_core.Request.t, Morph_core.Response.t) =
+  Opium_core.Filter.simple(Morph.Request.t, Morph.Response.t) =
   (
     service,
-    {target, meth, headers, read_body, context}: Morph_core.Request.t,
+    {target, meth, headers, read_body, context}: Morph.Request.t,
   ) => {
     let host = "www.bing.com";
     let target = "https://" ++ host ++ target;
@@ -40,7 +40,7 @@ let proxy:
 <!--OCaml-->
 
 ```ocaml
-let proxy service ({target; meth; headers; read_body; context} : Morph_core.Request.t) =
+let proxy service ({target; meth; headers; read_body; context} : Morph.Request.t) =
   let host = "www.bing.com" in
   let target = "https://" ^ host ^ target in
   let () = Logs.info (fun m -> m "Proxying request to: %s" target) in
@@ -54,7 +54,7 @@ let proxy service ({target; meth; headers; read_body; context} : Morph_core.Requ
     |> List.append
          [("Via", "HTTP/1.1 localhost:8080"); ("X-Forwarded-For", "_secret")]
   in
-  service Morph_core.Request.{target; meth; headers; read_body; context};
+  service Morph.Request.{target; meth; headers; read_body; context};
 ```
 
 <!--END_DOCUSAURUS_CODE_TABS-->
@@ -65,14 +65,16 @@ Now that we hace our middleware we can pass that in the middlewares list and sin
 <!--Reason-->
 
 ```reason
-Morph.start_server(~middlewares=[proxy], Morph_client.handle) |> Lwt_main.run;
+let server = Morph_server_http.make();
+Morph.start(~servers=[server], ~middlewares=[proxy], Morph_client.handle) |> Lwt_main.run;
 ```
 
 <!--OCaml-->
 
 ```ocaml
 let () =
-    Morph.start_server ~middlewares:[proxy] Morph_client.handle |> Lwt_main.run
+    let server = Morph_server_http.make () in
+    Morph.start ~servers:[server] ~middlewares:[proxy] Morph_client.handle |> Lwt_main.run
 ```
 
 <!--END_DOCUSAURUS_CODE_TABS-->

@@ -14,11 +14,11 @@ First step is to create handlers. A handler is just a function that returns a `R
 
 ```reason
 /* Just respond with "ok" on every request */
-let root_handler = (_request) => Morph_core.Response.ok(Morph_core.Response.empty);
+let root_handler = (_request) => Morph.Response.ok(Morph.Response.empty);
 
 /* Return a greeting with the name */
 let greet_handler = (greeting, _request) => {
-  Morph_core.Response.text(greeting, Morph_core.Response.empty);
+  Morph.Response.text(greeting, Morph.Response.empty);
 };
 ```
 
@@ -26,10 +26,10 @@ let greet_handler = (greeting, _request) => {
 
 ```ocaml
 (* Just respond with "ok" on every request *)
-let root_handler _request = Morph_core.Response.ok Morph_core.Response.empty
+let root_handler _request = Morph.Response.ok Morph.Response.empty
 
 (* Return a greeting with the name *)
-let greet_handler greeting _request = Morph_core.Response.text greeting Morph_core.Response.empty
+let greet_handler greeting _request = Morph.Response.text greeting Morph.Response.empty
 ```
 
 <!--END_DOCUSAURUS_CODE_TABS-->
@@ -71,27 +71,29 @@ Lastly you create a routes callback and start the server. In this case we pass i
 <!--Reason-->
 
 ```reason
-let handler = (request: Morph_core.Request.t) =>
+let handler = (request: Morph.Request.t) =>
   Routes.match_with_method(~target=request.target, ~meth=request.meth, routes)
   |> (
     fun
     | Some(res) => res(request)
-    | None => Morph_core.Response.not_found(Morph_core.Response.empty)
+    | None => Morph.Response.not_found(Morph.Response.empty)
   );
 
-Morph.start_server(handler) |> Lwt_main.run;
+let server = Morph_server_http.make();
+Morph.start(~servers=[server], handler) |> Lwt_main.run;
 ```
 
 <!--OCaml-->
 
 ```ocaml
 let () =
-  let handler (request: Morph_core.Request.t) =
+  let handler (request: Morph.Request.t) =
     (Routes.match_with_method ~target:request.target ~meth:request.meth routes)
     |> (function
       | Some res -> res request
-      | None  -> Morph_core.Response.not_found Morph_core.Response.empty) in
-  Morph.start_server handler
+      | None  -> Morph.Response.not_found Morph.Response.empty) in
+  let server = Morph_server_http.make () in
+  Morph.start ~servers:[server] handler
   |> Lwt_main.run
 ```
 

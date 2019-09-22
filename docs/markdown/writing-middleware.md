@@ -10,19 +10,19 @@ The base building block of `Morph` is `Middlewares` and `Handlers`.
 A handler takes a request and returns a response and a middleware transforms (or should I say... Morphs) a handler. We're going to write a logger that write the time it takes for a request in this example. The signature of a middleware is:
 
 ```reason
-Opium_core.Filter.simple(Morph_core.Request.t, Morph_core.Response.t)
+Opium_core.Filter.simple(Morph.Request.t, Morph.Response.t)
 ```
 
 which can be exapnded to:
 
 ```reason
-Opium_core.Handler.t(Morph_core.Request.t, Morph_core.Response.t) => Opium_core.Handler.t(Morph_core.Request.t, Morph_core.Response.t)
+Opium_core.Handler.t(Morph.Request.t, Morph.Response.t) => Opium_core.Handler.t(Morph.Request.t, Morph.Response.t)
 ```
 
 or further:
 
 ```reason
-(Morph_core.Request.t => Lwt.t(Morph_core.Response.t)) => (Morph_core.Request.t => Lwt.t(Morph_core.Response.t))
+(Morph.Request.t => Lwt.t(Morph.Response.t)) => (Morph.Request.t => Lwt.t(Morph.Response.t))
 ```
 
 That means that a middleware that does nothing will look like this:
@@ -43,7 +43,7 @@ The following code takes a service and returns a new service. The returned servi
 <!--Reason-->
 
 ```reason
-let logger = (service) => (request: Morph_core.Request.t) => {
+let logger = (service) => (request: Morph.Request.t) => {
     open Lwt.Infix;
     let start_request = Mtime_clock.elapsed();
     service(request)
@@ -53,7 +53,7 @@ let logger = (service) => (request: Morph_core.Request.t) => {
         Logs.info(m =>
           m(
             "http: %s request to %s finished in %fms",
-            Morph_core.Method.to_string(request.meth),
+            Morph.Method.to_string(request.meth),
             request.target,
             Mtime.Span.abs_diff(start_request, end_request)
             |> Mtime.Span.to_ms,
@@ -69,7 +69,7 @@ let logger = (service) => (request: Morph_core.Request.t) => {
 <!--OCaml-->
 
 ```ocaml
-let logger service (request: Morph_core.Request.t) =
+let logger service (request: Morph.Request.t) =
   let open Lwt.Infix in
   let start_request = Mtime_clock.elapsed () in
   service request
@@ -78,7 +78,7 @@ let logger service (request: Morph_core.Request.t) =
   Logs.info (fun m ->
       m
         ("http: %s request to %s finished in %fms")
-        (Morph_core.Method.to_string request.meth)
+        (Morph.Method.to_string request.meth)
         request.target
         (Mtime.Span.abs_diff start_request end_request |> Mtime.Span.to_ms)) ;
   response;
@@ -96,9 +96,10 @@ Fmt_tty.setup_std_outputs();
 Logs.set_level(Some(Logs.Info));
 Logs.set_reporter(Logs_fmt.reporter());
 
-let handler = _request => Morph_core.Response.text("Hello World!");
+let handler = _request => Morph.Response.text("Hello World!");
+let server = Morph_server_http.make();
 
-Morph.start_server(~middlewares=[logger], handler) |> Lwt_main.run;
+Morph.start(~servers=[server], ~middlewares=[logger], handler) |> Lwt_main.run;
 ```
 
 <!--OCaml-->
@@ -108,8 +109,9 @@ Fmt_tty.setup_std_outputs ();
 Logs.set_level (Some Logs.Info);
 Logs.set_reporter (Logs_fmt.reporter ());
 
-let handler _request = Morph_core.Response.text "Hello World!" Morph_core.Response.empty in
-Morph.start_server ~middlewares:[logger] handler |> Lwt_main.run
+let handler _request = Morph.Response.text "Hello World!" Morph.Response.empty in
+let server = Morph_server_http.make () in
+Morph.start ~servers:[server] ~middlewares:[logger] handler |> Lwt_main.run
 ```
 
 <!--END_DOCUSAURUS_CODE_TABS-->

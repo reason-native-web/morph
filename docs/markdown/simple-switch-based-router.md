@@ -13,7 +13,7 @@ The example code bellow shows some common usecases
 <!--Reason-->
 
 ```reason
-let handler = (request: Morph_core.Request.t) => {
+let handler = (request: Morph.Request.t) => {
   let path_parts =
     request.target
     |> Uri.of_string
@@ -22,12 +22,12 @@ let handler = (request: Morph_core.Request.t) => {
     |> List.filter(s => s != "");
 
   switch (request.meth, path_parts) {
-  | (_, []) => Morph_core.Response.text("Hello world!", Morph_core.Response.empty)
+  | (_, []) => Morph.Response.text("Hello world!", Morph.Response.empty)
   | (_, ["greet", name]) =>
-    Morph_core.Response.text("Hello " ++ name ++ "!", Morph_core.Response.empty)
+    Morph.Response.text("Hello " ++ name ++ "!", Morph.Response.empty)
   | (`GET, ["static", ...file_path]) =>
-    Morph_core.Response.static(file_path |> String.concat("/"), Morph_core.Response.empty)
-  | (_, _) => Morph_core.Response.not_found, Morph_core.Response.empty)
+    Morph.Response.static(file_path |> String.concat("/"), Morph.Response.empty)
+  | (_, _) => Morph.Response.not_found, Morph.Response.empty)
   };
 };
 ```
@@ -35,7 +35,7 @@ let handler = (request: Morph_core.Request.t) => {
 <!--OCaml-->
 
 ```ocaml
-let handler (request : Morph_core.Request.t) =
+let handler (request : Morph.Request.t) =
   let path_parts =
       request.target
       |> Uri.of_string
@@ -44,30 +44,32 @@ let handler (request : Morph_core.Request.t) =
       |> List.filter (fun s  -> s <> "") in
   match ((request.meth), path_parts) with
   | (_,[]) ->
-      Morph_core.Response.text "Hello world!" Morph_core.Response.empty
+      Morph.Response.text "Hello world!" Morph.Response.empty
   | (_,"greet"::name::[]) ->
-      Morph_core.Response.text ("Hello " ^ name ^ "!") Morph_core.Response.empty
+      Morph.Response.text ("Hello " ^ name ^ "!") Morph.Response.empty
   | (`GET, "static"::file_path) ->
-      Morph_core.Response.static (file_path |> String.concat "/") Morph_core.Response.empty
-  | (_,_) -> Morph_core.Response.not_found Morph_core.Response.empty
+      Morph.Response.static (file_path |> String.concat "/") Morph.Response.empty
+  | (_,_) -> Morph.Response.not_found Morph.Response.empty
 ```
 
 <!--END_DOCUSAURUS_CODE_TABS-->
 
-When you have built out the routes you want inside of the handler you simply pass it as the last argument to `Morph.start_server` to start the server.
+When you have built out the routes you want inside of the handler you simply pass it as the last argument to `Morph.start` to start the server.
 
 <!--DOCUSAURUS_CODE_TABS-->
 <!--Reason-->
 
 ```reason
-Morph.start_server(handler)
+let server = Morph_server_http.make();
+Morph.start(~servers=[server], handler)
 |> Lwt_main.run;
 ```
 
 <!--OCaml-->
 
 ```ocaml
-Morph.start_server handler
+let server = Morph_server_http.make () in
+Morph.start ~servers:[server] handler
 |> Lwt_main.run
 ```
 

@@ -1,6 +1,6 @@
 (executables
- (libraries morph morph_client morph_core mtime mtime.clock.os routes logs
-   logs.fmt fmt.tty lwt)
+ (libraries morph morph_client morph_server_http mtime mtime.clock.os routes
+   logs logs.fmt fmt.tty lwt)
  (names getting_started simple_proxy simple_switch_based_router
    with_routes_package writing_middleware))
 

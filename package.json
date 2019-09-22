@@ -3,12 +3,12 @@
   "version": "0.0.2",
   "esy": {
     "build": [
-      "dune build -p morph_core",
       "dune build -p morph",
-      "dune build -p morph_client"
+      "dune build -p morph_client",
+      "dune build -p morph_server"
     ],
     "buildDev": [
-      "refmterr dune build --root . --only-packages=morph,morph_client,morph_core"
+      "refmterr dune build --root . --only-packages=morph,morph_server,morph_client"
     ],
     "buildEnv": {
       "ODOC_SYNTAX": "re"
@@ -16,10 +16,10 @@
   },
   "scripts": {
     "test": "esy x RunTests.exe",
-    "format": "dune build @fmt --auto-promote",
+    "format": "dune build @fmt --auto-promote --root .",
     "examples": "esy b dune build @docs-examples",
     "examples-path": "esy echo #{self.target_dir}/default/docs",
-    "docs": "dune build @doc --only-packages=morph,morph_client,morph_core",
+    "docs": "dune build @doc --only-packages=morph,morph_server,morph_client",
     "docs-path": "esy echo #{self.target_dir}/default/_doc/_html"
   },
   "dependencies": {
@@ -39,7 +39,7 @@
     "@opam/fmt": "*",
     "@opam/opium_core": "rgrinberg/opium:opium_core.opam",
     "@opam/hmap": "*",
-    "ocaml": "*",
+    "ocaml": "< 4.09.0",
     "@esy-ocaml/reason": "*",
     "@opam/magic-mime": "*"
   },

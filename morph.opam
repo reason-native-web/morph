@@ -20,7 +20,6 @@ depends: [
   "lwt_ssl"
   "opium_core"
   "hmap"
-  "morph_core"
 ]
 build: [
   ["dune" "subst"] {pinned}

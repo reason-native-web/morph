@@ -1,0 +1,39 @@
+{
+  "name": "@reason-native-web/morph_server_https",
+  "version": "0.1.0",
+  "esy": {
+    "build": "dune build --profile=release .",
+    "buildEnv": {
+      "ODOC_SYNTAX": "re"
+    }
+  },
+  "scripts": {
+    "format": "dune build @fmt --auto-promote"
+  },
+  "dependencies": {
+    "@opam/dune": "*",
+    "@opam/lwt": "*",
+    "@opam/logs": "*",
+    "@opam/fmt": "*",
+    "@opam/httpaf-lwt-unix": "anmonteiro/httpaf:httpaf-lwt-unix.opam#5dff1b4",
+    "@opam/httpaf-lwt": "anmonteiro/httpaf:httpaf-lwt.opam#5dff1b4",
+    "@opam/httpaf": "anmonteiro/httpaf:httpaf.opam#5dff1b4",
+    "@opam/h2-lwt-unix": "*",
+    "@opam/h2-lwt": "*",
+    "@opam/h2": "*",
+    "@reason-native-web/morph": "*",
+    "ocaml": "< 4.09.0",
+    "@esy-ocaml/reason": "*"
+  },
+  "resolutions": {
+    "@opam/h2-lwt-unix": "anmonteiro/ocaml-h2:h2-lwt-unix.opam#737bce6ec7e4d7f4ad0b314165496431b7eb30a9",
+    "@opam/h2-lwt": "anmonteiro/ocaml-h2:h2-lwt.opam#737bce6ec7e4d7f4ad0b314165496431b7eb30a9",
+    "@opam/h2": "anmonteiro/ocaml-h2:h2.opam#737bce6ec7e4d7f4ad0b314165496431b7eb30a9",
+    "@opam/httpaf-lwt-unix": "anmonteiro/httpaf:httpaf-lwt-unix.opam#76b461bed081c64908fb1fdfa076ab2c936ca622",
+    "@opam/httpaf-lwt": "anmonteiro/httpaf:httpaf-lwt.opam#76b461bed081c64908fb1fdfa076ab2c936ca622",
+    "@opam/httpaf": "anmonteiro/httpaf:httpaf.opam#76b461bed081c64908fb1fdfa076ab2c936ca622",
+    "@reason-native-web/morph": "link:../morph",
+    "@opam/opium_core": "rgrinberg/opium:opium_core.opam#1767ce612bc69a2ecd569404cb37f4a2c0e93e05"
+  },
+  "devDependencies": {}
+}
