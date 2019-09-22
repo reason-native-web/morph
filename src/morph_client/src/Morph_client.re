@@ -1,7 +1,6 @@
 open Lwt.Infix;
 
-external from_httpaf_status: Httpaf.Status.t => Morph.Status.t =
-  "%identity";
+external from_httpaf_status: Httpaf.Status.t => Morph.Status.t = "%identity";
 
 let error_handler = _ => assert(false);
 

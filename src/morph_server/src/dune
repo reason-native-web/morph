@@ -1,4 +1,4 @@
 (library
  (name morph_server)
  (public_name morph_server)
- (libraries lwt logs morph))
+ (libraries lwt logs morph httpaf httpaf-lwt httpaf-lwt-unix))
