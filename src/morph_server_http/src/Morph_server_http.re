@@ -1,5 +1,5 @@
 let make = (~port=8080, ()) => {
-  let listen_address = Unix.(ADDR_INET(inet_addr_loopback, port));
+  let listen_address = Unix.(ADDR_INET(inet_addr_any, port));
   let start = handler => {
     Lwt.async(() => {
       open Lwt.Infix;
