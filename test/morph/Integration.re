@@ -4,23 +4,24 @@ let {describe} =
   describeConfig
   |> withLifecycle(testLifecycle =>
        testLifecycle
-       |> beforeAll(() =>
-            Morph.start_server(~http_port=20000, _ =>
+       |> beforeAll(() => {
+            let http_server = Morph_server_http.make(~port=20000, ());
+            Morph.start(~servers=[http_server], _ =>
               Lwt.return(
-                Morph_core.Response.empty
-                |> Morph_core.Response.set_body(`String("test")),
+                Morph.Response.empty
+                |> Morph.Response.set_body(`String("test")),
               )
-            )
-          )
+            );
+          })
        |> afterAll(Lwt.cancel)
      )
   |> build;
 
 describe("test lifecycle order example", ({test, describe}) => {
   test("some test", ({expect}) => {
-    Morph_client.handle(Morph_core.Request.make("http://localhost:20000"))
+    Morph_client.handle(Morph.Request.make("http://localhost:20000"))
     |> Lwt.map(response => {
-         Morph_core.Response.(
+         Morph.Response.(
            switch (response.body) {
            | `String(body) => expect.string(body).toEqual("test")
            | _ => expect.string("fail").toEqual("me")

@@ -1,0 +1,4 @@
+(library
+ (name morph_server_http)
+ (public_name morph_server.http)
+ (libraries lwt logs httpaf httpaf-lwt-unix opium_core hmap morph morph_server))

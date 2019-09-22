@@ -1,0 +1,4 @@
+(library
+ (name morph)
+ (public_name morph)
+ (libraries lwt  lwt.unix logs opium_core hmap magic-mime))

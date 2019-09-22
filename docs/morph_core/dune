@@ -1,3 +1,0 @@
-(documentation
- (package morph_core)
- (mld_files (:standard)))

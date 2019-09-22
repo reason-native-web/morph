@@ -16,7 +16,6 @@ depends: [
   "ssl"
   "lwt_ssl"
   "opium_core"
-  "morph_core"
   "hmap"
 ]
 build: [

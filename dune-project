@@ -7,23 +7,6 @@
 
 (using fmt 1.2)
 
-
-(package
- (name morph_core)
- (synopsis "Base types defining request and response for a morph app")
- (depends
-  (ocaml
-   (>= 4.04.2))
-  (dune
-   (>= 1.11))
-  reason
-  lwt
-  opium_core
-  hmap
-  magic-mime
-  ))
-
-
 (package
  (name morph)
  (synopsis "Abstraction on Httpaf and H2 to run opium_core services")
@@ -45,7 +28,28 @@
   lwt_ssl
   opium_core
   hmap
-  morph_core
+  ))
+
+(package
+ (name morph_server)
+ (synopsis "Abstraction on Httpaf and H2 to run opium_core services")
+ (depends
+  (ocaml
+   (>= 4.04.2))
+  (dune
+   (>= 1.11))
+  morph
+  reason
+  lwt
+  logs
+  httpaf
+  httpaf-lwt
+  httpaf-lwt-unix
+  h2
+  h2-lwt
+  h2-lwt-unix
+  opium_core
+  hmap
   ))
 
 (package
@@ -65,6 +69,5 @@
   ssl
   lwt_ssl
   opium_core
-  morph_core
   hmap
   ))

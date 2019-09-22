@@ -11,6 +11,7 @@ steps:
       rm -rf $(Pipeline.Workspace)/webpage/docs/morph || true
       rm -rf $(Pipeline.Workspace)/webpage/website/pages/API/morph || true
       rm -rf $(Pipeline.Workspace)/webpage/website/pages/API/morph_client || true
+      rm -rf $(Pipeline.Workspace)/webpage/website/pages/API/morph_server || true
       rm -rf $(Pipeline.Workspace)/webpage/website/pages/API/morph_core || true
     displayName: Remove last version of the docs
 
@@ -29,7 +30,7 @@ steps:
   - script: |
       mv $(Build.StagingDirectory)/morph $(Pipeline.Workspace)/webpage/website/pages/API/morph
       mv $(Build.StagingDirectory)/morph_client $(Pipeline.Workspace)/webpage/website/pages/API/morph_client
-      mv $(Build.StagingDirectory)/morph_core $(Pipeline.Workspace)/webpage/website/pages/API/morph_core
+      mv $(Build.StagingDirectory)/morph_server $(Pipeline.Workspace)/webpage/website/pages/API/morph_server
     displayName: Move API docs in place
     
   - script: |

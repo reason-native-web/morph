@@ -8,7 +8,7 @@ The entry point of this library is the module:
 {1 Core concepts}
 
 Morph_client is built on top of Opium_core that provides us with Filters and Services.
-The Morph_client is just a [Opium_core.Serivce.t] so it takes a {!module-Morph_core.Request.t} and returns a {!module-Morph_core.Response.t} wrapped in a [Lwt.t].
+The Morph_client is just a [Opium_core.Serivce.t] so it takes a {!module-Morph.Request.t} and returns a {!module-Morph.Response.t} wrapped in a [Lwt.t].
 
 To read more about Filters and Services I recommend going to the {{: https://rgrinberg.github.io/opium/opium_core/index.html} Opium_core} documentation.
 
