@@ -1,12 +1,18 @@
 parameters:
   package_name: morph
-  module_path: ./morph
+  module_path: ./src/morph
 
 steps:
   # This is mostyl a check that the package.json is valid
   - script: "esy"
     displayName: Try building package - ${{ parameters.package_name}}
     workingDirectory: ${{ parameters.module_path }}
+
+  - script: |
+      cp ${{ parameters.package_name }}.opam ${{ parameters.module_path }}
+      cp README.md ${{ parameters.module_path }}
+      cp LICENSE ${{ parameters.module_path }}
+    displayName: Copy needed files
 
   - script: "npm pack ."
     displayName: package ${{ parameters.package_name}} for npm

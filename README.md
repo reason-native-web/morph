@@ -26,7 +26,8 @@ $(esy examples-path)/simple_proxy.exe
 **Server:**
 
 ```ocaml
-Morph.start_server(_request => Http.Response.Ok.make)
+let http_server = Morph_server_http.make();
+Morph.start(~servers=[http_server], _request => Http.Response.Ok.make)
 |> Lwt_main.run;
 ```
 
