@@ -42,6 +42,39 @@
   reason
   lwt
   logs
+  ))
+
+(package
+ (name morph_server_http)
+ (synopsis "Abstraction on Httpaf and H2 to run opium_core services")
+ (depends
+  (ocaml
+   (>= 4.04.2))
+  (dune
+   (>= 1.11))
+  morph
+  reason
+  lwt
+  logs
+  httpaf
+  httpaf-lwt
+  httpaf-lwt-unix
+  opium_core
+  hmap
+  ))
+
+(package
+ (name morph_server_https)
+ (synopsis "Abstraction on Httpaf and H2 to run opium_core services")
+ (depends
+  (ocaml
+   (>= 4.04.2))
+  (dune
+   (>= 1.11))
+  morph
+  reason
+  lwt
+  logs
   httpaf
   httpaf-lwt
   httpaf-lwt-unix
@@ -49,6 +82,8 @@
   h2-lwt
   h2-lwt-unix
   opium_core
+  ssl
+  lwt_ssl
   hmap
   ))
 
