@@ -5,26 +5,27 @@ parameters:
 steps:
   # This is mostyl a check that the package.json is valid
   - script: "esy"
-    displayName: Try building package - ${{ parameters.package_name}}
+    displayName: "[NPM ${{ parameters.package_name}}] Try building package"
     workingDirectory: ${{ parameters.module_path }}
 
   - script: |
       cp ${{ parameters.package_name }}.opam ${{ parameters.module_path }}
       cp README.md ${{ parameters.module_path }}
       cp LICENSE ${{ parameters.module_path }}
-    displayName: Copy needed files
+    displayName: "[NPM ${{ parameters.package_name}}] Copy extra files"
 
   - script: "npm pack ."
-    displayName: package ${{ parameters.package_name}} for npm
+    displayName: "[NPM ${{ parameters.package_name}}] Create package"
     workingDirectory: ${{ parameters.module_path }}
 
   - script: mv reason-native-web-${{ parameters.package_name}}-* ${{ parameters.package_name}}-package.tgz
-    displayName: rename release package
+    displayName: "[NPM ${{ parameters.package_name}}] Rename release package"
     workingDirectory: ${{ parameters.module_path }}
 
   - script: |
       rm ${{ parameters.module_path }}/${{ parameters.package_name }}.opam
-    displayName: Remove copied opam file
+    displayName: "[NPM ${{ parameters.package_name}}] Remove copied opam file"
 
   - publish: ${{ parameters.module_path }}/${{ parameters.package_name}}-package.tgz
     artifact: ${{ parameters.package_name}}_package
+    displayName: "[NPM ${{ parameters.package_name}}] Publish artifact"
