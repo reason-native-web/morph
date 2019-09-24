@@ -22,5 +22,9 @@ steps:
     displayName: rename release package
     workingDirectory: ${{ parameters.module_path }}
 
+  - script: |
+      rm ${{ parameters.module_path }}/${{ parameters.package_name }}.opam
+    displayName: Remove copied opam file
+
   - publish: ${{ parameters.module_path }}/${{ parameters.package_name}}-package.tgz
     artifact: ${{ parameters.package_name}}_package
