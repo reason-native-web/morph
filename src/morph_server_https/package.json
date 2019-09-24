@@ -1,6 +1,6 @@
 {
   "name": "@reason-native-web/morph_server_https",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "esy": {
     "build": "dune build --profile=release .",
     "buildEnv": {
@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "@opam/dune": "*",
+    "@opam/lwt_ssl": "*",
     "@opam/lwt": "*",
+    "@opam/ssl": "*",
     "@opam/logs": "*",
     "@opam/fmt": "*",
     "@opam/httpaf-lwt-unix": "anmonteiro/httpaf:httpaf-lwt-unix.opam#5dff1b4",
@@ -22,6 +24,7 @@
     "@opam/h2-lwt": "*",
     "@opam/h2": "*",
     "@reason-native-web/morph": "*",
+    "@reason-native-web/morph_server": "*",
     "ocaml": "< 4.09.0",
     "@esy-ocaml/reason": "*"
   },
