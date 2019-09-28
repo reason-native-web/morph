@@ -20,7 +20,7 @@
     "@esy-ocaml/reason": "*"
   },
   "resolutions": {
-    "@reason-native-web/morph": "link:../morph",
+    "@reason-native-web/morph": "link:./morph.json",
     "@opam/opium_core": "rgrinberg/opium:opium_core.opam#1767ce612bc69a2ecd569404cb37f4a2c0e93e05"
   },
   "devDependencies": {}

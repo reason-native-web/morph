@@ -4,11 +4,11 @@ parameters:
 
 steps:
   # This is mostyl a check that the package.json is valid
-  - script: "esy"
+  - script: "esy @${{ parameters.package_name }}"
     displayName: "[NPM ${{ parameters.package_name}}] Try building package"
-    workingDirectory: ${{ parameters.module_path }}
 
   - script: |
+      cp ${{ parameters.package_name }}.json ${{ parameters.module_path }}/package.json
       cp ${{ parameters.package_name }}.opam ${{ parameters.module_path }}
       cp README.md ${{ parameters.module_path }}
       cp LICENSE ${{ parameters.module_path }}
