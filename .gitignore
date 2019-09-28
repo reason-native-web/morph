@@ -5,3 +5,4 @@ node_modules
 junit.xml
 
 */esy.lock
+*.esy.lock

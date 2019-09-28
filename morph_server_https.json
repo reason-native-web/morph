@@ -2,7 +2,7 @@
   "name": "@reason-native-web/morph_server_https",
   "version": "0.1.2",
   "esy": {
-    "build": "dune build --profile=release .",
+    "build": "dune build --profile=release  ./src/morph_server_https",
     "buildEnv": {
       "ODOC_SYNTAX": "re"
     }
@@ -36,7 +36,7 @@
     "@opam/httpaf-lwt": "anmonteiro/httpaf:httpaf-lwt.opam#76b461bed081c64908fb1fdfa076ab2c936ca622",
     "@opam/httpaf": "anmonteiro/httpaf:httpaf.opam#76b461bed081c64908fb1fdfa076ab2c936ca622",
     "@reason-native-web/morph": "link:./morph.json",
-    "@reason-native-web/morph_server": "link:../morph_server",
+    "@reason-native-web/morph_server": "link:./morph_server.json",
     "@opam/opium_core": "rgrinberg/opium:opium_core.opam#1767ce612bc69a2ecd569404cb37f4a2c0e93e05"
   },
   "devDependencies": {}
