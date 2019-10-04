@@ -15,15 +15,10 @@ let respond =
   | `Stream(stream) =>
     let response_body =
       respond_with_streaming(request_descriptor, http_response);
-    let rec read_stream = () => {
-      Lwt.bind(Lwt_stream.get(stream), maybe_body =>
-        switch (maybe_body) {
-        | Some(body) =>
-          write_char(response_body, body);
-          read_stream();
-        | None => Lwt.return_unit
-        }
-      );
+    let read_stream = () => {
+      Lwt_stream.iter(body => {
+        write_char(response_body, body);
+      }, stream);
     };
     let _ =
       Lwt.bind(
