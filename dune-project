@@ -18,12 +18,6 @@
   reason
   lwt
   logs
-  httpaf
-  httpaf-lwt
-  httpaf-lwt-unix
-  h2
-  h2-lwt
-  h2-lwt-unix
   ssl
   lwt_ssl
   opium_core
@@ -104,5 +98,4 @@
   ssl
   lwt_ssl
   opium_core
-  hmap
   ))

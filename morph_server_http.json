@@ -2,7 +2,7 @@
   "name": "@reason-native-web/morph_server_http",
   "version": "0.1.2",
   "esy": {
-    "build": "dune build --profile=release  ./src/morph_server_http",
+    "build": "dune build -p morph_server_http",
     "buildEnv": {
       "ODOC_SYNTAX": "re"
     }
