@@ -50,8 +50,10 @@ let make = (handler, _client_address, request_descriptor) => {
              Httpaf.Reqd.respond_with_streaming(
                ~flush_headers_immediately=true,
              ),
+           ~write_string=Httpaf.Body.write_string(~off=?None, ~len=?None),
            ~write_char=Httpaf.Body.write_char,
            ~close_writer=Httpaf.Body.close_writer,
+           ~flush_body=Httpaf.Body.flush,
            request_descriptor,
            response,
          );

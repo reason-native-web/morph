@@ -54,8 +54,10 @@ let make:
                H2.Reqd.respond_with_streaming(
                  ~flush_headers_immediately=true,
                ),
+             ~write_string=H2.Body.write_string(~off=?None, ~len=?None),
              ~write_char=H2.Body.write_char,
              ~close_writer=H2.Body.close_writer,
+             ~flush_body=H2.Body.flush,
              request_descriptor,
              response,
            );

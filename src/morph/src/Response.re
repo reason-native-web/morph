@@ -1,6 +1,10 @@
 type headers = list((string, string));
 
-type body = [ | `String(string) | `Stream(Lwt_stream.t(char))];
+type body = [
+  | `String(string)
+  | `Stream(Lwt_stream.t(char))
+  | `StringStream(Lwt_stream.t(string))
+];
 
 type t = {
   status: Status.t,

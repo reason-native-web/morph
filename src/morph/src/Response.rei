@@ -6,7 +6,11 @@ type headers = list((string, string));
 /**
  [Response.body] variant type structure.  Either a flat [string], or an [Lwt_stream.t(char)].
  */
-type body = [ | `String(string) | `Stream(Lwt_stream.t(char))];
+type body = [
+  | `String(string)
+  | `Stream(Lwt_stream.t(char))
+  | `StringStream(Lwt_stream.t(string))
+];
 
 /**
 The core [Response.t] type
