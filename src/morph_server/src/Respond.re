@@ -16,9 +16,7 @@ let respond =
     let response_body =
       respond_with_streaming(request_descriptor, http_response);
     let read_stream = () => {
-      Lwt_stream.iter(body => {
-        write_char(response_body, body);
-      }, stream);
+      Lwt_stream.iter(body => {write_char(response_body, body)}, stream);
     };
     let _ =
       Lwt.bind(
