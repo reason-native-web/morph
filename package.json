@@ -3,11 +3,6 @@
   "version": "0.0.2",
   "esy": {
     "build": [
-      "dune build -p morph",
-      "dune build -p morph_client",
-      "dune build -p morph_server"
-    ],
-    "buildDev": [
       "refmterr dune build --root ."
     ],
     "buildEnv": {
