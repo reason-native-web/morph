@@ -4,12 +4,21 @@
 type headers = list((string, string));
 
 /**
- [Response.body] variant type structure.  Either a flat [string], or an [Lwt_stream.t(char)].
+ [Response.body] variant type structure. There are currently 3 types of bodies.
+
+ [`String] Use a simple string as body
+
+ [`Stream] Use a stream of chars as body, the stream will be written fully before flushing
+
+ [`StringStream] Use a stream of strings as body, it will be flushed on every new string
  */
 type body = [
-  | `String(string)
-  | `Stream(Lwt_stream.t(char))
-  | `StringStream(Lwt_stream.t(string))
+  | /** Use a simple string as body  */
+    `String(string)
+  | /** Use a stream of chars as body */
+    `Stream(Lwt_stream.t(char))
+  | /** Use a stream of strings as body */
+    `StringStream(Lwt_stream.t(string))
 ];
 
 /**
