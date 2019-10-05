@@ -35,7 +35,6 @@
   morph
   reason
   lwt
-  logs
   ))
 
 (package

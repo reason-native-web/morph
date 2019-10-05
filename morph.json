@@ -2,7 +2,7 @@
   "name": "@reason-native-web/morph",
   "version": "0.1.1",
   "esy": {
-    "build": "dune build --profile=release ./src/morph",
+    "build": "dune build -p morph",
     "buildEnv": {
       "ODOC_SYNTAX": "re"
     }

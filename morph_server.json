@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "esy": {
     "build": "dune build -p morph_server",
+    "buildDev": "dune build --only-packages=morph_server --root=.",
     "buildEnv": {
       "ODOC_SYNTAX": "re"
     }
@@ -13,15 +14,12 @@
   "dependencies": {
     "@opam/dune": "*",
     "@opam/lwt": "*",
-    "@opam/logs": "*",
-    "@opam/fmt": "*",
     "@reason-native-web/morph": "*",
     "ocaml": "< 4.09.0",
     "@esy-ocaml/reason": "*"
   },
   "resolutions": {
-    "@reason-native-web/morph": "link:./morph.json",
-    "@opam/opium_core": "rgrinberg/opium:opium_core.opam#1767ce612bc69a2ecd569404cb37f4a2c0e93e05"
+    "@reason-native-web/morph": "link:./morph.json"
   },
   "devDependencies": {}
 }

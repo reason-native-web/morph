@@ -10,7 +10,6 @@ depends: [
   "morph"
   "reason"
   "lwt"
-  "logs"
 ]
 build: [
   ["dune" "subst"] {pinned}

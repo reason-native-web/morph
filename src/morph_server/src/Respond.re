@@ -22,13 +22,10 @@ let respond =
       ();
     };
     let _ =
-      Lwt.bind(
-        Lwt_stream.closed(stream),
-        _ => {
-          close_writer(response_body);
-          Lwt.return_unit;
-        },
-      );
+      Lwt.bind(Lwt_stream.closed(stream), _ => {
+        flush_body(response_body, () => close_writer(response_body))
+        |> Lwt.return
+      });
     read_stream();
   | `StringStream(stream) =>
     let response_body =
@@ -45,13 +42,10 @@ let respond =
       ();
     };
     let _ =
-      Lwt.bind(
-        Lwt_stream.closed(stream),
-        _ => {
-          flush_body(response_body, () => close_writer(response_body));
-          Lwt.return_unit;
-        },
-      );
+      Lwt.bind(Lwt_stream.closed(stream), _ => {
+        flush_body(response_body, () => close_writer(response_body))
+        |> Lwt.return
+      });
     read_stream();
   };
 };
