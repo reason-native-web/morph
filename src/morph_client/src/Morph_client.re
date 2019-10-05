@@ -4,13 +4,27 @@ external from_httpaf_status: Httpaf.Status.t => Morph.Status.t = "%identity";
 
 let error_handler = _ => assert(false);
 
+let flat_map_opt = (fn, opt) => {
+  switch (opt) {
+  | Some(x) => Some(fn(x))
+  | None => None
+  };
+};
+
+let get_or_opt = (~default, opt) => {
+  switch (opt) {
+  | Some(x) => x
+  | None => default
+  };
+};
+
 let read_response = (~notify_finished, response, response_body) => {
   switch (response) {
   | {Httpaf.Response.status: `OK, headers, _} =>
     let content_length =
       Httpaf.Headers.get(headers, "content-length")
-      |> CCOpt.flat_map(CCInt.of_string)
-      |> CCOpt.get_or(~default=2048);
+      |> flat_map_opt(int_of_string)
+      |> get_or_opt(~default=2048);
 
     let body_buffer = Buffer.create(content_length);
 
@@ -42,8 +56,8 @@ let read_response = (~notify_finished, response, response_body) => {
     Logs.err(m => m("%a\n%!", Httpaf.Response.pp_hum, response));
     let content_length =
       Httpaf.Headers.get(headers, "content-length")
-      |> CCOpt.flat_map(CCInt.of_string)
-      |> CCOpt.get_or(~default=2048);
+      |> flat_map_opt(int_of_string)
+      |> get_or_opt(~default=2048);
 
     let body_buffer = Buffer.create(content_length);
 
