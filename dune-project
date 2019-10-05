@@ -92,6 +92,7 @@
   reason
   lwt
   logs
+  fmt
   httpaf
   httpaf-lwt
   httpaf-lwt-unix
@@ -99,3 +100,12 @@
   lwt_ssl
   opium_core
   ))
+
+(package
+  (name morph_test)
+  (depends
+    (ocaml (>= 4.04.2))
+    (dune (>= 1.11))
+    reason
+    rely
+    morph))
