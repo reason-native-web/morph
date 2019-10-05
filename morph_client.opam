@@ -10,13 +10,13 @@ depends: [
   "reason"
   "lwt"
   "logs"
+  "fmt"
   "httpaf"
   "httpaf-lwt"
   "httpaf-lwt-unix"
   "ssl"
   "lwt_ssl"
   "opium_core"
-  "hmap"
 ]
 build: [
   ["dune" "subst"] {pinned}

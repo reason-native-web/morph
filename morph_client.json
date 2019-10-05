@@ -2,7 +2,7 @@
   "name": "@reason-native-web/morph_client",
   "version": "0.1.1",
   "esy": {
-    "build": "dune build --profile=release  ./src/morph_client",
+    "build": "dune build --profile=release ./src/morph_client",
     "buildEnv": {
       "ODOC_SYNTAX": "re"
     }
@@ -21,9 +21,7 @@
     "@opam/logs": "*",
     "@opam/fmt": "*",
     "@opam/opium_core": "rgrinberg/opium:opium_core.opam",
-    "@opam/hmap": "*",
     "@opam/uri": "*",
-    "@opam/containers": "*",
     "@reason-native-web/morph": "*",
     "ocaml": "< 4.09.0",
     "@esy-ocaml/reason": "*"
