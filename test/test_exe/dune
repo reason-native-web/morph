@@ -1,5 +1,5 @@
 (executable
  (name RunTests)
- (package morph)
+ (package morph_test)
  (public_name RunTests.exe)
- (libraries morph.test_framework morph.test))
+ (libraries morph_test.framework morph_test.morph))

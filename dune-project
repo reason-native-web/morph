@@ -18,12 +18,6 @@
   reason
   lwt
   logs
-  httpaf
-  httpaf-lwt
-  httpaf-lwt-unix
-  h2
-  h2-lwt
-  h2-lwt-unix
   ssl
   lwt_ssl
   opium_core
@@ -41,7 +35,6 @@
   morph
   reason
   lwt
-  logs
   ))
 
 (package
@@ -98,11 +91,20 @@
   reason
   lwt
   logs
+  fmt
   httpaf
   httpaf-lwt
   httpaf-lwt-unix
   ssl
   lwt_ssl
   opium_core
-  hmap
   ))
+
+(package
+  (name morph_test)
+  (depends
+    (ocaml (>= 4.04.2))
+    (dune (>= 1.11))
+    reason
+    rely
+    morph))
