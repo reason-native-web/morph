@@ -1,4 +1,12 @@
+parameters:
+  installFolderPath: "/3______________________________________________________________/i"
+
 steps:
+  - task: CacheBeta@0
+    inputs:
+      key: test_ESY__PREFIX_tar_i_path_cache | esy | $(Agent.OS) | esy.lock/index.json
+      path: $(ESY__PREFIX)${{ parameters.installFolderPath }}
+    displayName: Cache esy packages
   - template: utils/use-node.yml
   - template: utils/use-esy.yml
   - script: "esy install"
@@ -10,3 +18,4 @@ steps:
   - template: run-tests.yml
   - script: "esy examples"
     displayName: "Build examples"
+  - script: ls $(ESY__PREFIX)${{ parameters.installFolderPath }}

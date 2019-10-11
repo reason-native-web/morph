@@ -13,8 +13,11 @@ stages:
       vmImage: ubuntu-latest
     variables:
       ESY__PREFIX: $(Pipeline.Workspace)/.esy
+      AZP_CACHING_TAR: true
     steps:
     - template: .ci/build-platform.yml
+      parameters:
+        installFolderPath: "/3______________________________________________________________/i"
     - template: .ci/build-npm-packages.yml
     - template: .ci/build-docs.yml
 
@@ -23,11 +26,11 @@ stages:
       vmImage: macOS-latest
     variables:
       ESY__PREFIX: $(Pipeline.Workspace)/.esy
+      AZP_CACHING_TAR: true
     steps:
     - template: .ci/build-platform.yml
       parameters:
-        esyLockPath: $(Build.SourcesDirectory)/esy.lock/index.json
-        installFolderPath: /3_______________________________________________
+        installFolderPath: "/3_______________________________________________"
 
   # - job: Windows
   #   pool:

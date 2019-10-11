@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/setup-node@v1
       with:
-        version: 10
+        node-version: 10
     - uses: actions/checkout@v1
     - name: Install esy
       run: npm install -g esy@0.5.8
