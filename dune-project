@@ -101,6 +101,22 @@
   ))
 
 (package
+ (name morph_graphql_server)
+ (synopsis "Helpers for working with graphql and morph")
+ (depends
+  (ocaml
+   (>= 4.04.2))
+  (dune
+   (>= 1.11))
+  reason
+  lwt
+  logs
+  morph
+  graphql
+  graphql-lwt
+  ))
+
+(package
   (name morph_test)
   (depends
     (ocaml (>= 4.04.2))

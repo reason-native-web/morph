@@ -1,0 +1,20 @@
+{
+  "name": "@reason-native-web/morph_graphql_server",
+  "version": "0.1.1",
+  "esy": {
+    "build": "dune build -p morph_graphql_server"
+  },
+  "dependencies": {
+    "@esy-ocaml/reason": "*",
+    "@opam/dune": "*",
+    "@opam/fmt": "*",
+    "@opam/graphql-lwt": "0.13.0",
+    "@opam/graphql": "0.13.0",
+    "@opam/hmap": "*",
+    "@opam/logs": "*",
+    "@opam/lwt": "*",
+    "@opam/yojson": "*",
+    "@reason-native-web/morph": "*",
+    "ocaml": "< 4.09.0"
+  }
+}

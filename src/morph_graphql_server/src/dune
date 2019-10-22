@@ -1,0 +1,4 @@
+(library
+ (name morph_graphql_server)
+ (public_name morph_graphql_server)
+ (libraries graphql graphql-lwt lwt morph yojson))

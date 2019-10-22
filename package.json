@@ -42,7 +42,9 @@
     "@opam/hmap": "*",
     "ocaml": "< 4.09.0",
     "@esy-ocaml/reason": "*",
-    "@opam/magic-mime": "*"
+    "@opam/magic-mime": "*",
+    "@opam/graphql-lwt": "0.13.0",
+    "@opam/graphql": "0.13.0"
   },
   "resolutions": {
     "@opam/h2-lwt-unix": "anmonteiro/ocaml-h2:h2-lwt-unix.opam#737bce6ec7e4d7f4ad0b314165496431b7eb30a9",
@@ -60,6 +62,7 @@
     "refmterr": "*",
     "@opam/mdx": "*",
     "@opam/ocamlformat": "*",
-    "@opam/utop": "*"
+    "@opam/utop": "*",
+    "@opam/merlin": "*"
   }
 }

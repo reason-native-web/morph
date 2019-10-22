@@ -19,3 +19,7 @@ steps:
     parameters:
       package_name: morph_client
       module_path: ./src/morph_client
+  - template: utils/create-npm-package.yml
+    parameters:
+      package_name: morph_graphql_server
+      module_path: ./src/morph_graphql_server
