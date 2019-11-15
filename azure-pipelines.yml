@@ -12,7 +12,6 @@ stages:
     pool:
       vmImage: ubuntu-latest
     variables:
-      AZP_CACHING_TAR: false
       CACHE_FOLDER: $(Pipeline.Workspace)/cache
       ESY__CACHE_INSTALL_PATH: /home/vsts/.esy/3_____________________________________________________________________/i
     steps:
@@ -29,7 +28,6 @@ stages:
     variables:
       CACHE_FOLDER: $(Pipeline.Workspace)/cache
       ESY__CACHE_INSTALL_PATH: /Users/vsts/.esy/3____________________________________________________________________/i
-      AZP_CACHING_TAR: true
     steps:
     - template: .ci/build-platform.yml
     - template: .ci/utils/prepare-cache.yml
