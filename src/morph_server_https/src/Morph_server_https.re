@@ -8,12 +8,9 @@ let h2_handler = (~request_handler, ssl_server) =>
     ~error_handler=H2_handler.error_handler,
   );
 
-let http1_handler = (~request_handler, ssl_server) =>
+let http1_handler = (~request_handler) =>
   Httpaf_lwt_unix.Server.SSL.create_connection_handler(
-    ~certfile=?None,
-    ~keyfile=?None,
     ~config=?None,
-    ~server=ssl_server,
     ~request_handler,
     ~error_handler=Http1_handler.error_handler,
   );
@@ -56,9 +53,8 @@ let make = (~port=9443, ~cert, ~priv_key, ()) => {
                   | Some("http/1.1") =>
                     http1_handler(
                       ~request_handler=Http1_handler.make(handler),
-                      ssl_server,
                       client_addr,
-                      fd,
+                      ssl_server,
                     )
                   | Some("h2") =>
                     h2_handler(

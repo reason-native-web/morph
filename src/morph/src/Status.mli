@@ -31,7 +31,7 @@
     POSSIBILITY OF SUCH DAMAGE.
   ----------------------------------------------------------------------------*)
 
-type informational = [`Continue]
+type informational = [ `Continue ]
 (** The 1xx (Informational) class of status code indicates an interim
       response for communicating connection status or request progress
       prior to completing the requested action and sending a final
@@ -108,10 +108,10 @@ type server_error =
       more details. *)
 
 type standard =
-  [informational | successful | redirection | client_error | server_error]
+  [ informational | successful | redirection | client_error | server_error ]
 (** The status codes defined in the HTTP 1.1 RFCs *)
 
-type t = [standard | `Code of int]
+type t = [ standard | `Code of int ]
 (** The standard codes along with support for custom codes. *)
 
 val default_reason_phrase : standard -> string

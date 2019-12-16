@@ -32,9 +32,9 @@
   ----------------------------------------------------------------------------*)
 
 type standard =
-  [`GET | `HEAD | `POST | `PUT | `DELETE | `CONNECT | `OPTIONS | `TRACE]
+  [ `GET | `HEAD | `POST | `PUT | `DELETE | `CONNECT | `OPTIONS | `TRACE ]
 
-type t = [standard | `Other of string]
+type t = [ standard | `Other of string ]
 
 let is_safe = function `GET | `HEAD | `OPTIONS | `TRACE -> true | _ -> false
 
@@ -43,43 +43,25 @@ let is_cacheable = function `GET | `HEAD | `POST -> true | _ -> false
 let is_idempotent = function `PUT | `DELETE -> true | t -> is_safe t
 
 let to_string = function
-  | `GET ->
-      "GET"
-  | `HEAD ->
-      "HEAD"
-  | `POST ->
-      "POST"
-  | `PUT ->
-      "PUT"
-  | `DELETE ->
-      "DELETE"
-  | `CONNECT ->
-      "CONNECT"
-  | `OPTIONS ->
-      "OPTIONS"
-  | `TRACE ->
-      "TRACE"
-  | `Other s ->
-      s
+  | `GET -> "GET"
+  | `HEAD -> "HEAD"
+  | `POST -> "POST"
+  | `PUT -> "PUT"
+  | `DELETE -> "DELETE"
+  | `CONNECT -> "CONNECT"
+  | `OPTIONS -> "OPTIONS"
+  | `TRACE -> "TRACE"
+  | `Other s -> s
 
 let of_string = function
-  | "GET" ->
-      `GET
-  | "HEAD" ->
-      `HEAD
-  | "POST" ->
-      `POST
-  | "PUT" ->
-      `PUT
-  | "DELETE" ->
-      `DELETE
-  | "CONNECT" ->
-      `CONNECT
-  | "OPTIONS" ->
-      `OPTIONS
-  | "TRACE" ->
-      `TRACE
-  | s ->
-      `Other s
+  | "GET" -> `GET
+  | "HEAD" -> `HEAD
+  | "POST" -> `POST
+  | "PUT" -> `PUT
+  | "DELETE" -> `DELETE
+  | "CONNECT" -> `CONNECT
+  | "OPTIONS" -> `OPTIONS
+  | "TRACE" -> `TRACE
+  | s -> `Other s
 
 let pp_hum fmt t = Format.fprintf fmt "%s" (to_string t)

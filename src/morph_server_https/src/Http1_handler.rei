@@ -11,6 +11,6 @@ let make:
   (
     Opium_core.Service.t(Morph.Request.t, Morph.Response.t),
     Unix.sockaddr,
-    Httpaf.Reqd.t('reqd)
+    Httpaf.Reqd.t('handle, 'io)
   ) =>
   unit;

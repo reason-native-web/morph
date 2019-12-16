@@ -11,11 +11,7 @@ let make =
     ) => {
   open Lwt.Infix;
 
-  let client =
-    Lwt_ssl.embed_uninitialized_socket(
-      socket,
-      Ssl.create_context(Ssl.TLSv1_2, Ssl.Client_context),
-    );
+  let client = Lwt_ssl.embed_uninitialized_socket(socket, Ssl.create_context(Ssl.TLSv1_2, Ssl.Client_context));
 
   let () =
     Ssl.set_client_SNI_hostname(
@@ -24,13 +20,7 @@ let make =
     );
 
   Lwt_ssl.ssl_perform_handshake(client)
-  >>= (
-    client =>
-      Httpaf_lwt_unix.Client.SSL.create_connection(
-        ~client,
-        Lwt_ssl.get_fd(client),
-      )
-  )
+  >>= Httpaf_lwt_unix.Client.SSL.create_connection
   >|= (
     connection => {
       let request_body =

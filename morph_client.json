@@ -20,7 +20,7 @@
     "@opam/ssl": "*",
     "@opam/logs": "*",
     "@opam/fmt": "*",
-    "@opam/opium_core": "rgrinberg/opium:opium_core.opam",
+    "@opam/opium_core": "rgrinberg/opium:opium_core.opam#08365268a838b90acfd2acba4bd2a294121b0803",
     "@opam/uri": "*",
     "@reason-native-web/morph": "*",
     "ocaml": "< 4.09.0",
@@ -30,8 +30,7 @@
     "@opam/httpaf-lwt-unix": "anmonteiro/httpaf:httpaf-lwt-unix.opam#76b461bed081c64908fb1fdfa076ab2c936ca622",
     "@opam/httpaf-lwt": "anmonteiro/httpaf:httpaf-lwt.opam#76b461bed081c64908fb1fdfa076ab2c936ca622",
     "@opam/httpaf": "anmonteiro/httpaf:httpaf.opam#76b461bed081c64908fb1fdfa076ab2c936ca622",
-    "@reason-native-web/morph": "link:./morph.json",
-    "@opam/opium_core": "rgrinberg/opium:opium_core.opam#1767ce612bc69a2ecd569404cb37f4a2c0e93e05"
+    "@reason-native-web/morph": "link:./morph.json"
   },
   "devDependencies": {}
 }
