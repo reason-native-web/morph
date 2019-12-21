@@ -65,6 +65,8 @@ stages:
       }
     steps:
     - template: .ci/create-npm-package.yml
+      parameters:
+        package_name: $( package_name )
 
 - stage: Publish_docs
   displayName: Publish documentation
