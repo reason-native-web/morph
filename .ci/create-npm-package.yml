@@ -6,6 +6,9 @@ steps:
     parameters:
       cache_key: ${{ parameters.package_name}} | esy.lock/index.json 
 
+  - template: ./utils/use-node.yml
+  - template: ./utils/use-esy.yml
+
   # This is mostyl a check that the package.json is valid
   - script: "esy @${{ parameters.package_name }}"
     displayName: "[NPM ${{ parameters.package_name}}] Try building package"
