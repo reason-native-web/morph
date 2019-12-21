@@ -1,6 +1,6 @@
 {
   "name": "@reason-native-web/morph",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "esy": {
     "build": "dune build -p morph",
     "buildEnv": {
@@ -12,13 +12,13 @@
   },
   "dependencies": {
     "@opam/dune": "*",
-    "@opam/lwt": "*",
+    "@opam/lwt": "^4.0.0",
     "@opam/logs": "*",
     "@opam/fmt": "*",
     "@opam/opium_core": "rgrinberg/opium:opium_core.opam#08365268a838b90acfd2acba4bd2a294121b0803",
     "@opam/hmap": "*",
     "@opam/magic-mime": "*",
-    "ocaml": "< 4.09.0",
+    "ocaml": "*",
     "@esy-ocaml/reason": "*"
   },
   "resolutions": {
