@@ -49,6 +49,11 @@ stages:
   dependsOn: []
   jobs:
   - job:
+    pool:
+      vmImage: ubuntu-latest
+    variables:
+      CACHE_FOLDER: $(Pipeline.Workspace)/cache
+      ESY__CACHE_INSTALL_PATH: /home/vsts/.esy/3_____________________________________________________________________/i
     strategy:
       matrix: {
         "client": {package_name: "morph_client"},
