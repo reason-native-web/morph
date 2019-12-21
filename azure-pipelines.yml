@@ -18,7 +18,6 @@ stages:
     - template: .ci/build-platform.yml
       parameters:
         installFolderPath: "/3______________________________________________________________/i"
-    - template: .ci/build-npm-packages.yml
     - template: .ci/build-docs.yml
     - template: .ci/utils/prepare-cache.yml
 
@@ -44,6 +43,22 @@ stages:
   #     parameters:
   #       esyLockPath: $(Build.SourcesDirectory)\esy.lock\index.json
   #       installFolderPath: \3_
+
+- stage: Build_NPM
+  displayName: Build NPM packages
+  jobs:
+  - job:
+    strategy:
+      matrix: {
+        "client": {package_name: "morph_client"},
+        "graphql_server": {package_name: "morph_graphql_server"},
+        "server": {package_name: "morph_server"},
+        "server_http": {package_name: "morph_server_http"},
+        "server_https": {package_name: "morph_server_https"},
+        "morph": {package_name: "morph"}
+      }
+    steps:
+    - template: .ci/create-npm-package.yml
 
 - stage: Publish_docs
   displayName: Publish documentation

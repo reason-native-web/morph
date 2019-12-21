@@ -1,31 +1,36 @@
 parameters:
   package_name: morph
-  module_path: ./src/morph
 
 steps:
+  - template: ./utils/cache.yml
+    parameters:
+      cache_key: ${{ parameters.package_name}} | esy.lock/index.json 
+
   # This is mostyl a check that the package.json is valid
   - script: "esy @${{ parameters.package_name }}"
     displayName: "[NPM ${{ parameters.package_name}}] Try building package"
 
   - script: |
-      cp ${{ parameters.package_name }}.json ${{ parameters.module_path }}/package.json
-      cp ${{ parameters.package_name }}.opam ${{ parameters.module_path }}
-      cp README.md ${{ parameters.module_path }}
-      cp LICENSE ${{ parameters.module_path }}
+      cp ${{ parameters.package_name }}.json ./src/${{ parameters.package_name }}/package.json
+      cp ${{ parameters.package_name }}.opam ./src/${{ parameters.package_name }}
+      cp README.md ./src/${{ parameters.package_name }}
+      cp LICENSE ./src/${{ parameters.package_name }}
     displayName: "[NPM ${{ parameters.package_name}}] Copy extra files"
 
   - script: "npm pack ."
     displayName: "[NPM ${{ parameters.package_name}}] Create package"
-    workingDirectory: ${{ parameters.module_path }}
+    workingDirectory: ./src/${{ parameters.package_name }}
 
   - script: mv reason-native-web-${{ parameters.package_name}}-* ${{ parameters.package_name}}-package.tgz
     displayName: "[NPM ${{ parameters.package_name}}] Rename release package"
-    workingDirectory: ${{ parameters.module_path }}
+    workingDirectory: ./src/${{ parameters.package_name }}
 
   - script: |
-      rm ${{ parameters.module_path }}/${{ parameters.package_name }}.opam
+      rm ./src/${{ parameters.package_name }}/${{ parameters.package_name }}.opam
     displayName: "[NPM ${{ parameters.package_name}}] Remove copied opam file"
 
-  - publish: ${{ parameters.module_path }}/${{ parameters.package_name}}-package.tgz
+  - publish: ./src/${{ parameters.package_name }}/${{ parameters.package_name}}-package.tgz
     artifact: ${{ parameters.package_name}}_package
     displayName: "[NPM ${{ parameters.package_name}}] Publish artifact"
+
+  - template: ./utils/prepare-cache.yml
