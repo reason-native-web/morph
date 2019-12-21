@@ -46,6 +46,7 @@ stages:
 
 - stage: Build_NPM
   displayName: Build NPM packages
+  dependsOn: []
   jobs:
   - job:
     strategy:
