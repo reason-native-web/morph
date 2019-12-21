@@ -1,6 +1,6 @@
 {
   "name": "@reason-native-web/morph_client",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "esy": {
     "build": "dune build -p morph_client",
     "buildEnv": {
@@ -16,14 +16,14 @@
     "@opam/httpaf-lwt": "anmonteiro/httpaf:httpaf-lwt.opam#5dff1b4",
     "@opam/httpaf": "anmonteiro/httpaf:httpaf.opam#5dff1b4",
     "@opam/lwt_ssl": "*",
-    "@opam/lwt": "*",
+    "@opam/lwt": "^4.0.0",
     "@opam/ssl": "*",
     "@opam/logs": "*",
     "@opam/fmt": "*",
     "@opam/opium_core": "rgrinberg/opium:opium_core.opam#08365268a838b90acfd2acba4bd2a294121b0803",
     "@opam/uri": "*",
     "@reason-native-web/morph": "*",
-    "ocaml": "< 4.09.0",
+    "ocaml": "*",
     "@esy-ocaml/reason": "*"
   },
   "resolutions": {
