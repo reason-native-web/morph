@@ -36,8 +36,7 @@
     "@opam/httpaf-lwt": "anmonteiro/httpaf:httpaf-lwt.opam#90e7c8783a99bdb9f098b017a2ca34516de0abad",
     "@opam/httpaf": "anmonteiro/httpaf:httpaf.opam#90e7c8783a99bdb9f098b017a2ca34516de0abad",
     "@reason-native-web/morph": "link:./morph.json",
-    "@reason-native-web/morph_server": "link:./morph_server.json",
-    "@opam/opium_core": "rgrinberg/opium:opium_core.opam#1767ce612bc69a2ecd569404cb37f4a2c0e93e05"
+    "@reason-native-web/morph_server": "link:./morph_server.json"
   },
   "devDependencies": {}
 }
