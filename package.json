@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "esy": {
     "build": [
-      "refmterr dune build --root=."
+      "dune build --root=."
     ],
     "install": [
       [
@@ -57,7 +57,6 @@
     "@opam/mtime": "*",
     "@opam/routes": "*",
     "@opam/odoc": "*",
-    "refmterr": "*",
     "@opam/mdx": "*",
     "@opam/ocamlformat": "*",
     "@opam/utop": "*",
