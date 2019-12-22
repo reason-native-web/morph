@@ -16,5 +16,8 @@
     "@opam/yojson": "*",
     "@reason-native-web/morph": "*",
     "ocaml": "*"
+  },
+  "resolutions": {
+    "@reason-native-web/morph": "link:./morph.json"
   }
 }
