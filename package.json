@@ -47,7 +47,6 @@
     "@opam/graphql": "0.13.0"
   },
   "resolutions": {
-    "refmterr": "ulrikstrid/reason-native:refmterr.json#bc09656",
     "@opam/conf-libssl": "esy-packages/esy-openssl#860ad7f",
     "@opam/httpaf-lwt-unix": "anmonteiro/httpaf:httpaf-lwt-unix.opam#90e7c8783a99bdb9f098b017a2ca34516de0abad",
     "@opam/httpaf-lwt": "anmonteiro/httpaf:httpaf-lwt.opam#90e7c8783a99bdb9f098b017a2ca34516de0abad",
