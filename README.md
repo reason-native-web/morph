@@ -32,3 +32,7 @@ Morph.start(~servers=[http_server], _request => Http.Response.Ok.make)
 ```
 
 Slightly larger example using ocaml-routes: https://github.com/reason-native-web/morph/blob/master/examples/with_router.re
+
+## Sponsors
+
+Thank you to [@imbsky](https://github.com/imbsky) for sponsoring my work on Morph
