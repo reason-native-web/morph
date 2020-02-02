@@ -21,14 +21,20 @@ type body = [
     `StringStream(Lwt_stream.t(string))
 ];
 
-/**
-The core [Response.t] type
-*/
-type t = {
+type success = {
   status: Status.t,
   headers,
   body,
 };
+
+type failure = [ | `User(string) | `Server(string) | `Auth(string)];
+
+/**
+The core [Response.t] type
+*/
+type t = result(success, failure);
+
+let success_of_failure: failure => success;
 
 /**
 [make status headers body] creates a response.
@@ -96,6 +102,7 @@ let unauthorized: (string, t) => Lwt.t(t);
 let not_found: (~message: string=?, t) => Lwt.t(t);
 
 /**
- [static file_path response] is a convenience function to return a 200 response with the contents of a static file.  If the file does not exist a 404 Not found response is sent instead.
+ [static file_path response] is a co
+nvenience function to return a 200 response with the contents of a static file.  If the file does not exist a 404 Not found response is sent instead.
  */
 let static: (string, t) => Lwt.t(t);

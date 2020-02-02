@@ -6,30 +6,62 @@ type body = [
   | `StringStream(Lwt_stream.t(string))
 ];
 
-type t = {
+type success = {
   status: Status.t,
   headers,
   body,
 };
 
-let empty = {status: `OK, headers: [], body: `String("")};
+type failure = [ | `User(string) | `Server(string) | `Auth(string)];
 
-let make = (~status=`OK, ~headers=[], body) => {status, headers, body};
+/**
+The core [Response.t] type
+*/
+type t = result(success, failure);
 
-let add_header = (new_header: (string, string), res: t) => {
-  {...res, headers: res.headers @ [new_header]};
+let success_of_failure =
+  fun
+  | `User(message) => {
+      status: `Bad_request,
+      headers: [],
+      body: `String(message),
+    }
+  | `Server(message) => {
+      status: `Internal_server_error,
+      headers: [],
+      body: `String(message),
+    }
+  | `Auth(message) => {
+      status: `Unauthorized,
+      headers: [],
+      body: `String(message),
+    };
+
+let result_map = (fn, res) => {
+  switch (res) {
+  | Ok(data) => Ok(fn(data))
+  | e => e
+  };
 };
 
-let add_headers = (new_headers: headers, res: t) => {
-  {...res, headers: res.headers @ new_headers};
+let empty = Ok({status: `OK, headers: [], body: `String("")});
+
+let make = (~status=`OK, ~headers=[], body) => Ok({status, headers, body});
+
+let add_header = (new_header: (string, string)) => {
+  result_map(res => {...res, headers: res.headers @ [new_header]});
 };
 
-let set_status = (status: Status.t, res: t) => {
-  {...res, status};
+let add_headers = (new_headers: headers) => {
+  result_map(res => {...res, headers: res.headers @ new_headers});
 };
 
-let set_body = (body: body, res: t) => {
-  {...res, body};
+let set_status = (status: Status.t) => {
+  result_map(res => {...res, status});
+};
+
+let set_body = (body: body) => {
+  result_map(res => {...res, body});
 };
 
 let ok = (res: t) => {
