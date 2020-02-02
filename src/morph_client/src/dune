@@ -1,4 +1,0 @@
-(library
- (name morph_client)
- (public_name morph_client)
- (libraries lwt logs uri ssl lwt_ssl httpaf httpaf-lwt-unix opium_core morph))

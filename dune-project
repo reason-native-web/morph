@@ -81,26 +81,6 @@
   ))
 
 (package
- (name morph_client)
- (synopsis "Abstraction on Httpaf to make http requests")
- (depends
-  (ocaml
-   (>= 4.04.2))
-  (dune
-   (>= 1.11))
-  reason
-  lwt
-  logs
-  fmt
-  httpaf
-  httpaf-lwt
-  httpaf-lwt-unix
-  ssl
-  lwt_ssl
-  opium_core
-  ))
-
-(package
  (name morph_graphql_server)
  (synopsis "Helpers for working with graphql and morph")
  (depends
