@@ -1,1 +1,1 @@
-let make: (~port: int=?, unit) => Morph.Server.t;
+let make: (~port: int=?, ~address: Unix.inet_addr=?, unit) => Morph.Server.t;

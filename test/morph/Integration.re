@@ -1,15 +1,22 @@
 open TestFramework;
 let test_string = "test";
+let test_port = 20000;
 
 let {describe} =
   describeConfig
   |> withLifecycle(testLifecycle =>
        testLifecycle
        |> beforeAll(() => {
-            let http_server = Morph_server_http.make(~port=20000, ());
+            let http_server =
+              Morph_server_http.make(
+                ~port=test_port,
+                ~address=Unix.inet_addr_loopback,
+                (),
+              );
             Morph.start(~servers=[http_server], _ =>
               Lwt.return(
                 Morph.Response.empty
+                |> Morph.Response.add_header(("connection", "close"))
                 |> Morph.Response.set_body(`String(test_string)),
               )
             );
@@ -24,7 +31,7 @@ describe("Integration", ({test, describe}) => {
 
     Piaf.Client.Oneshot.request(
       ~meth=`GET,
-      Uri.of_string("http://localhost:20000"),
+      Uri.of_string("http://localhost:" ++ string_of_int(test_port)),
     )
     >>= (
       res =>
