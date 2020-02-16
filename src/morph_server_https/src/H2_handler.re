@@ -10,8 +10,7 @@ let map_or = (~default: 'b, fn: 'a => 'b, opt: option('a)) =>
   | None => default
   };
 
-let make =
-    (handler: Morph.Server.handler, _client_address, request_descriptor) => {
+let make = (handler, _client_address, request_descriptor) => {
   Lwt.async(() => {
     let H2.Request.{target, meth, headers, scheme: _} =
       H2.Reqd.request(request_descriptor);
@@ -31,17 +30,18 @@ let make =
     let create_response = (~headers, status) =>
       H2.Response.create(~headers, status);
 
-    let request =
-      Morph.Request.{
-        target,
-        meth,
-        headers: H2.Headers.to_list(headers),
-        read_body,
-        context: Hmap.empty,
-      };
-
-    handler(request)
-    |> Lwt.map((response: Morph.Response.t) => {
+    Lwt.bind(read_body(), body =>
+      handler(
+        Morph.Request.{
+          target,
+          meth,
+          headers: H2.Headers.to_list(headers),
+          body: `String(body),
+          context: Hmap.empty,
+        },
+      )
+    )
+    |> Lwt.map((response: Morph.Response.t('body)) => {
          let response =
            switch (response) {
            | Error(failure) => Morph.Response.success_of_failure(failure)

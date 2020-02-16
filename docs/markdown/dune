@@ -1,12 +1,12 @@
 (executables
- (libraries morph morph_client morph_server_http morph_graphql_server mtime
-   mtime.clock.os routes logs logs.fmt fmt.tty lwt graphql graphql-lwt)
- (names getting_started simple_proxy simple_switch_based_router
-   with_routes_package writing_middleware graphql_server))
+ (libraries morph morph_server_http morph_graphql_server mtime mtime.clock.os
+   routes logs logs.fmt fmt.tty lwt graphql graphql-lwt uri)
+ (names getting_started simple_switch_based_router with_routes_package
+   writing_middleware graphql_server))
 
 (alias
  (name docs-examples)
- (deps getting_started.exe simple_proxy.exe simple_switch_based_router.exe
+ (deps getting_started.exe simple_switch_based_router.exe
    with_routes_package.exe writing_middleware.exe graphql_server.exe))
 
 (rule
@@ -25,13 +25,13 @@
    %{targets}
    (run ocaml-mdx pp %{deps}))))
 
-(rule
- (targets simple_proxy.ml)
- (deps simple-proxy.md)
- (action
-  (with-stdout-to
-   %{targets}
-   (run ocaml-mdx pp %{deps}))))
+;(rule
+; (targets simple_proxy.ml)
+; (deps simple-proxy.md)
+; (action
+;  (with-stdout-to
+;   %{targets}
+;   (run ocaml-mdx pp %{deps}))))
 
 (rule
  (targets simple_switch_based_router.ml)

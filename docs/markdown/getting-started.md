@@ -14,7 +14,7 @@ There are some helpers to create some of the common responses, we will use the t
 
 ```reason
 let server = Morph_server_http.make();
-let handler = _request => Morph.Response.text("Hello World!");
+let handler = _request => Morph.Response.text("Hello World!") |> Lwt.return;
 
 Morph.start(~servers=[server], handler) |> Lwt_main.run;
 ```
@@ -25,7 +25,7 @@ Morph.start(~servers=[server], handler) |> Lwt_main.run;
 let () =
     let server = Morph_server_http.make () in
     let handler _request =
-        Morph.Response.text "Hello World!" Morph.Response.empty in
+        Morph.Response.text "Hello World!" Morph.Response.empty |> Lwt.return in
     Morph.start ~servers:[server] handler |> Lwt_main.run
 ```
 

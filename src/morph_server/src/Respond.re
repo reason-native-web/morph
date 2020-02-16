@@ -8,7 +8,7 @@ let respond =
       ~close_writer,
       ~flush_body,
       request_descriptor,
-      response: Morph.Response.success,
+      response: Morph.Response.success('body),
     ) => {
   switch (response.body) {
   | `String(body) =>

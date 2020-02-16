@@ -1,6 +1,14 @@
-let make = (schema: Graphql_lwt.Schema.schema('ctx)) => {
-  let parse = (ctx, body) => {
+let make =
+    (schema: Graphql_lwt.Schema.schema('ctx))
+    : Morph.Server.handler([> | `String(string)], 'res_body) => {
+  open Morph.Request;
+  let parse = ({context, body, _}: Morph.Request.t([> | `String(string)])) => {
     module Json = Yojson.Basic;
+    let body =
+      switch (body) {
+      | `String(str) => str
+      | _ => "{}"
+      };
     let json = Json.from_string(body);
     let query = Json.Util.member("query", json) |> Json.Util.to_string_option;
     switch (query) {
@@ -20,7 +28,7 @@ let make = (schema: Graphql_lwt.Schema.schema('ctx)) => {
           |> Json.Util.to_string_option;
         Graphql_lwt.Schema.execute(
           schema,
-          ctx,
+          context,
           ~variables?,
           ~operation_name?,
           query,
@@ -34,21 +42,23 @@ let make = (schema: Graphql_lwt.Schema.schema('ctx)) => {
     };
   };
 
-  let handler: Morph.Server.handler =
-    (request: Morph.Request.t) => {
+  let handler: Morph.Server.handler('req_body, 'res_body) =
+    request => {
       Lwt.Infix.(
-        request.read_body()
-        >>= parse(request.context)
+        parse(request)
         >>= (
           result =>
             switch (result) {
             | Ok(`Response(json)) =>
               let json_string = Yojson.Basic.to_string(json);
-              Morph.Response.empty |> Morph.Response.json(json_string);
+              Morph.Response.empty
+              |> Morph.Response.json(json_string)
+              |> Lwt.return;
             | Error(json) =>
               Morph.Response.empty
               |> Morph.Response.set_status(`Internal_server_error)
               |> Morph.Response.json(Yojson.Basic.to_string(json))
+              |> Lwt.return
             | _ =>
               Morph.Response.empty
               |> Morph.Response.set_status(`Internal_server_error)

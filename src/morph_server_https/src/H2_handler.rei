@@ -9,7 +9,14 @@ let error_handler:
 
 let make:
   (
-    Opium_core.Service.t(Morph.Request.t, Morph.Response.t),
+    Morph.Server.handler(
+      [ | `String(string)],
+      [
+        | `String(string)
+        | `Stream(Lwt_stream.t(char))
+        | `StringStream(Lwt_stream.t(string))
+      ],
+    ),
     Unix.sockaddr,
     H2.Reqd.t
   ) =>

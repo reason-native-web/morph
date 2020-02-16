@@ -1,22 +1,15 @@
-type t = {
+type t('body) = {
   target: string,
   meth: Method.t,
   headers: list((string, string)),
-  read_body: unit => Lwt.t(string),
+  body: 'body,
   context: Hmap.t,
 };
 
-let make =
-    (
-      ~meth=`GET,
-      ~headers=[],
-      ~read_body=() => Lwt.return(""),
-      ~context=Hmap.empty,
-      target,
-    ) => {
+let make = (~meth=`GET, ~headers=[], ~body, ~context=Hmap.empty, target) => {
   target,
   meth,
   headers,
-  read_body,
+  body,
   context,
 };

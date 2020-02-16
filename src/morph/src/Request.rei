@@ -1,8 +1,8 @@
-type t = {
+type t('body) = {
   target: string,
   meth: Method.t,
   headers: list((string, string)),
-  read_body: unit => Lwt.t(string),
+  body: 'body,
   context: Hmap.t,
 };
 
@@ -10,8 +10,8 @@ let make:
   (
     ~meth: Method.t=?,
     ~headers: list((string, string))=?,
-    ~read_body: unit => Lwt.t(string)=?,
+    ~body: 'body,
     ~context: Hmap.t=?,
     string
   ) =>
-  t;
+  t('body);

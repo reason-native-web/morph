@@ -43,7 +43,7 @@ The following code takes a service and returns a new service. The returned servi
 <!--Reason-->
 
 ```reason
-let logger = (service) => (request: Morph.Request.t) => {
+let logger = (service) => request => {
     open Lwt.Infix;
     let start_request = Mtime_clock.elapsed();
     service(request)
@@ -69,8 +69,9 @@ let logger = (service) => (request: Morph.Request.t) => {
 <!--OCaml-->
 
 ```ocaml
-let logger service (request: Morph.Request.t) =
+let logger service request =
   let open Lwt.Infix in
+  let open Morph.Request in
   let start_request = Mtime_clock.elapsed () in
   service request
   >|= fun response ->
@@ -96,7 +97,7 @@ Fmt_tty.setup_std_outputs();
 Logs.set_level(Some(Logs.Info));
 Logs.set_reporter(Logs_fmt.reporter());
 
-let handler = _request => Morph.Response.text("Hello World!");
+let handler = _request => Morph.Response.text("Hello World!") |> Lwt.return;
 let server = Morph_server_http.make();
 
 Morph.start(~servers=[server], ~middlewares=[logger], handler) |> Lwt_main.run;
@@ -109,7 +110,7 @@ Fmt_tty.setup_std_outputs ();
 Logs.set_level (Some Logs.Info);
 Logs.set_reporter (Logs_fmt.reporter ());
 
-let handler _request = Morph.Response.text "Hello World!" Morph.Response.empty in
+let handler _request = Morph.Response.text "Hello World!" Morph.Response.empty |> Lwt.return in
 let server = Morph_server_http.make () in
 Morph.start ~servers:[server] ~middlewares:[logger] handler |> Lwt_main.run
 ```

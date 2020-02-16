@@ -71,13 +71,14 @@ Lastly you create a routes callback and start the server. In this case we pass i
 <!--Reason-->
 
 ```reason
-let handler = (request: Morph.Request.t) =>
+let handler = request =>
   Routes.match_with_method(~target=request.target, ~meth=request.meth, routes)
   |> (
     fun
     | Some(res) => res(request)
     | None => Morph.Response.not_found(Morph.Response.empty)
-  );
+  )
+  |> Lwt.return;
 
 let server = Morph_server_http.make();
 Morph.start(~servers=[server], handler) |> Lwt_main.run;
@@ -87,13 +88,16 @@ Morph.start(~servers=[server], handler) |> Lwt_main.run;
 
 ```ocaml
 let () =
-  let handler (request: Morph.Request.t) =
+  let handler request =
+    let open Morph.Request in
     (Routes.match_with_method ~target:request.target ~meth:request.meth routes)
     |> (function
       | Some res -> res request
-      | None  -> Morph.Response.not_found Morph.Response.empty) in
+      | None  -> Morph.Response.not_found Morph.Response.empty)
+    |> Lwt.return in
   let server = Morph_server_http.make () in
   Morph.start ~servers:[server] handler
+
   |> Lwt_main.run
 ```
 

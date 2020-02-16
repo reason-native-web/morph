@@ -9,9 +9,9 @@ Morph.start(_request => Http.Response.Ok.make)
 */
 let start:
   (
-    ~servers: list(Server.t),
-    ~middlewares: list(Server.middleware)=?,
-    Server.handler
+    ~servers: list(Server.t('req_body, 'res_body)),
+    ~middlewares: list(Server.middleware('req_body, 'res_body))=?,
+    Server.handler('req_body, 'res_body)
   ) =>
   Lwt.t(unit);
 

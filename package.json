@@ -15,7 +15,7 @@
     "fmt": "dune build @fmt --auto-promote --root .",
     "examples": "esy b dune build @docs-examples",
     "examples-path": "esy echo #{self.target_dir}/default/docs",
-    "docs": "dune build @doc --only-packages=morph,morph_client,morph_server,morph_server_http,morph_server_https",
+    "docs": "dune build @doc --only-packages=morph,morph_server,morph_server_http,morph_server_https",
     "docs-path": "esy echo #{self.target_dir}/default/_doc/_html"
   },
   "dependencies": {

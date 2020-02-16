@@ -29,17 +29,18 @@ let make = (handler, _client_address, request_descriptor) => {
     let create_response = (~headers, status) =>
       Httpaf.Response.create(~headers, ~reason=?None, ~version=?None, status);
 
-    let request =
-      Morph.Request.{
-        target,
-        meth,
-        headers: Httpaf.Headers.to_list(headers),
-        read_body,
-        context: Hmap.empty,
-      };
-
-    handler(request)
-    |> Lwt.map((response: Morph.Response.t) => {
+    Lwt.bind(read_body(), body =>
+      handler(
+        Morph.Request.{
+          target,
+          meth,
+          headers: Httpaf.Headers.to_list(headers),
+          body: `String(body),
+          context: Hmap.empty,
+        },
+      )
+    )
+    |> Lwt.map((response: Morph.Response.t('body)) => {
          let response =
            switch (response) {
            | Error(failure) => Morph.Response.success_of_failure(failure)

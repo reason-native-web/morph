@@ -1,8 +1,17 @@
-type handler = Opium_core.Service.t(Request.t, Response.t);
+type handler('req_body, 'res_body) =
+  Request.t('req_body) => Lwt.t(Response.t('res_body));
 
-type middleware = Opium_core.Filter.simple(Request.t, Response.t);
+type middleware('req_body, 'res_body) =
+  (
+    Request.t('req_body) => Lwt.t(Response.t('res_body)),
+    Request.t('req_body)
+  ) =>
+  Lwt.t(Response.t('res_body));
 
-type t = {
-  start: handler => Lwt.t(unit),
+type t('req_body, 'res_body) = {
+  start: handler('req_body, 'res_body) => Lwt.t(unit),
   port: int,
 };
+
+let apply_all = (middlewares, handler) =>
+  ListLabels.fold_left(~f=(|>), ~init=handler, middlewares);

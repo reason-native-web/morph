@@ -13,7 +13,7 @@ The example code bellow shows some common usecases
 <!--Reason-->
 
 ```reason
-let handler = (request: Morph.Request.t) => {
+let handler = request => {
   let path_parts =
     request.target
     |> Uri.of_string
@@ -25,9 +25,9 @@ let handler = (request: Morph.Request.t) => {
   | (_, []) => Morph.Response.text("Hello world!", Morph.Response.empty)
   | (_, ["greet", name]) =>
     Morph.Response.text("Hello " ++ name ++ "!", Morph.Response.empty)
-  | (`GET, ["static", ...file_path]) =>
-    Morph.Response.static(file_path |> String.concat("/"), Morph.Response.empty)
-  | (_, _) => Morph.Response.not_found, Morph.Response.empty)
+  /*| (`GET, ["static", ...file_path]) =>
+    Morph.Response.static(file_path |> String.concat("/"), Morph.Response.empty)*/
+  | (_, _) => Morph.Response.not_found, Morph.Response.empty) |> Lwt.return
   };
 };
 ```
@@ -35,7 +35,8 @@ let handler = (request: Morph.Request.t) => {
 <!--OCaml-->
 
 ```ocaml
-let handler (request : Morph.Request.t) =
+let handler request =
+  let open Morph.Request in
   let path_parts =
       request.target
       |> Uri.of_string
@@ -44,12 +45,12 @@ let handler (request : Morph.Request.t) =
       |> List.filter (fun s  -> s <> "") in
   match ((request.meth), path_parts) with
   | (_,[]) ->
-      Morph.Response.text "Hello world!" Morph.Response.empty
+      Morph.Response.text "Hello world!" Morph.Response.empty |> Lwt.return
   | (_,"greet"::name::[]) ->
-      Morph.Response.text ("Hello " ^ name ^ "!") Morph.Response.empty
-  | (`GET, "static"::file_path) ->
-      Morph.Response.static (file_path |> String.concat "/") Morph.Response.empty
-  | (_,_) -> Morph.Response.not_found Morph.Response.empty
+      Morph.Response.text ("Hello " ^ name ^ "!") Morph.Response.empty |> Lwt.return
+  (*| (`GET, "static"::file_path) ->
+      Morph.Response.static (file_path |> String.concat "/") Morph.Response.empty |> Lwt.return*)
+  | (_,_) -> Morph.Response.not_found Morph.Response.empty |> Lwt.return
 ```
 
 <!--END_DOCUSAURUS_CODE_TABS-->
