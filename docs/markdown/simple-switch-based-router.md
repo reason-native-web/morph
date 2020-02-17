@@ -27,7 +27,7 @@ let handler = request => {
     Morph.Response.text("Hello " ++ name ++ "!", Morph.Response.empty)
   /*| (`GET, ["static", ...file_path]) =>
     Morph.Response.static(file_path |> String.concat("/"), Morph.Response.empty)*/
-  | (_, _) => Morph.Response.not_found, Morph.Response.empty) |> Lwt.return
+  | (_, _) => Morph.Response.not_found, Morph.Response.empty
   };
 };
 ```
@@ -45,12 +45,12 @@ let handler request =
       |> List.filter (fun s  -> s <> "") in
   match ((request.meth), path_parts) with
   | (_,[]) ->
-      Morph.Response.text "Hello world!" Morph.Response.empty |> Lwt.return
+      Morph.Response.text "Hello world!" Morph.Response.empty
   | (_,"greet"::name::[]) ->
-      Morph.Response.text ("Hello " ^ name ^ "!") Morph.Response.empty |> Lwt.return
+      Morph.Response.text ("Hello " ^ name ^ "!") Morph.Response.empty
   (*| (`GET, "static"::file_path) ->
       Morph.Response.static (file_path |> String.concat "/") Morph.Response.empty |> Lwt.return*)
-  | (_,_) -> Morph.Response.not_found Morph.Response.empty |> Lwt.return
+  | (_,_) -> Morph.Response.not_found Morph.Response.empty
 ```
 
 <!--END_DOCUSAURUS_CODE_TABS-->

@@ -68,37 +68,37 @@ let set_body: ('body, t('body)) => t('body);
 /**
 [ok response] is a conventience function to return a 200 OK response.
 */
-let ok: t('body) => t('body);
+let ok: t('body) => Lwt.t(t('body));
 
 /**
 [text text response] is a conventience function to return a text response.
 */
-let text: (string, t('body)) => t('body);
+let text: (string, t('body)) => Lwt.t(t('body));
 
 /**
 [json json response] is a conventience function to return a JSON response.
 */
-let json: (string, t('body)) => t('body);
+let json: (string, t('body)) => Lwt.t(t('body));
 
 /**
 [html markup response] is a conventience function to return a HTML response.
 */
-let html: (string, t('body)) => t('body);
+let html: (string, t('body)) => Lwt.t(t('body));
 
 /**
 [redirect code target response] is a conventience function to create a redirect response.
 */
-let redirect: (~code: int=?, string, t('body)) => t('body);
+let redirect: (~code: int=?, string, t('body)) => Lwt.t(t('body));
 
 /**
 [unauthorized message response] is a conventience function to return a unauthorized response.
 */
-let unauthorized: (string, t('body)) => t('body);
+let unauthorized: (string, t('body)) => Lwt.t(t('body));
 
 /**
 [not_found message response] is a conventience function to return a 404 Not found response.
 */
-let not_found: (~message: string=?, t('body)) => t('body);
+let not_found: (~message: string=?, t('body)) => Lwt.t(t('body));
 
 /**
  [static file_path response] is a co

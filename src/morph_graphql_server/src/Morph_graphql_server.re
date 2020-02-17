@@ -50,15 +50,12 @@ let make =
           result =>
             switch (result) {
             | Ok(`Response(json)) =>
-              let json_string = Yojson.Basic.to_string(json);
               Morph.Response.empty
-              |> Morph.Response.json(json_string)
-              |> Lwt.return;
+              |> Morph.Response.json(Yojson.Basic.to_string(json))
             | Error(json) =>
               Morph.Response.empty
               |> Morph.Response.set_status(`Internal_server_error)
               |> Morph.Response.json(Yojson.Basic.to_string(json))
-              |> Lwt.return
             | _ =>
               Morph.Response.empty
               |> Morph.Response.set_status(`Internal_server_error)

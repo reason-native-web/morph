@@ -77,8 +77,7 @@ let handler = request =>
     fun
     | Some(res) => res(request)
     | None => Morph.Response.not_found(Morph.Response.empty)
-  )
-  |> Lwt.return;
+  );
 
 let server = Morph_server_http.make();
 Morph.start(~servers=[server], handler) |> Lwt_main.run;
@@ -93,8 +92,7 @@ let () =
     (Routes.match_with_method ~target:request.target ~meth:request.meth routes)
     |> (function
       | Some res -> res request
-      | None  -> Morph.Response.not_found Morph.Response.empty)
-    |> Lwt.return in
+      | None  -> Morph.Response.not_found Morph.Response.empty) in
   let server = Morph_server_http.make () in
   Morph.start ~servers:[server] handler
 

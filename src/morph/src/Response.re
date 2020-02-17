@@ -69,27 +69,31 @@ let set_body = body => {
 let ok = res => {
   add_header(("Content-length", "2"), res)
   |> set_status(`OK)
-  |> set_body(`String("ok"));
+  |> set_body(`String("ok"))
+  |> Lwt.return;
 };
 
 let text = (text, res) => {
   let content_length = text |> String.length |> string_of_int;
   add_header(("Content-length", content_length), res)
-  |> set_body(`String(text));
+  |> set_body(`String(text))
+  |> Lwt.return;
 };
 
 let json = (json, res) => {
   let content_length = json |> String.length |> string_of_int;
   add_header(("Content-type", "application/json"), res)
   |> add_header(("Content-length", content_length))
-  |> set_body(`String(json));
+  |> set_body(`String(json))
+  |> Lwt.return;
 };
 
 let html = (markup, res) => {
   let content_length = markup |> String.length |> string_of_int;
   add_header(("Content-type", "text/html"), res)
   |> add_header(("Content-length", content_length))
-  |> set_body(`String(markup));
+  |> set_body(`String(markup))
+  |> Lwt.return;
 };
 
 let redirect = (~code=303, targetPath, res) => {
@@ -98,7 +102,8 @@ let redirect = (~code=303, targetPath, res) => {
   add_header(("Content-length", content_length), res)
   |> add_header(("Location", targetPath))
   |> set_status(`Code(code))
-  |> set_body(`String(targetPath));
+  |> set_body(`String(targetPath))
+  |> Lwt.return;
 };
 
 let unauthorized = (message, res) => {
@@ -107,7 +112,8 @@ let unauthorized = (message, res) => {
     res,
   )
   |> set_status(`Unauthorized)
-  |> set_body(`String(message));
+  |> set_body(`String(message))
+  |> Lwt.return;
 };
 
 let not_found = (~message="Not found", res) => {
@@ -116,7 +122,8 @@ let not_found = (~message="Not found", res) => {
     res,
   )
   |> set_status(`Not_found)
-  |> set_body(`String(message));
+  |> set_body(`String(message))
+  |> Lwt.return;
 };
 /*
  let get_file_stream = file_name => {

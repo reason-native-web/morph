@@ -97,7 +97,7 @@ Fmt_tty.setup_std_outputs();
 Logs.set_level(Some(Logs.Info));
 Logs.set_reporter(Logs_fmt.reporter());
 
-let handler = _request => Morph.Response.text("Hello World!") |> Lwt.return;
+let handler = _request => Morph.Response.text("Hello World!");
 let server = Morph_server_http.make();
 
 Morph.start(~servers=[server], ~middlewares=[logger], handler) |> Lwt_main.run;
@@ -110,7 +110,7 @@ Fmt_tty.setup_std_outputs ();
 Logs.set_level (Some Logs.Info);
 Logs.set_reporter (Logs_fmt.reporter ());
 
-let handler _request = Morph.Response.text "Hello World!" Morph.Response.empty |> Lwt.return in
+let handler _request = Morph.Response.text "Hello World!" Morph.Response.empty in
 let server = Morph_server_http.make () in
 Morph.start ~servers:[server] ~middlewares:[logger] handler |> Lwt_main.run
 ```
