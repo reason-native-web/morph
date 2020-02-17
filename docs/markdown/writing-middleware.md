@@ -5,21 +5,7 @@ title: Writing middlewares for Morph
 
 The base building block of `Morph` is `Middlewares` and `Handlers`.
 
-> They are called `Filters` and `Services` in the underlying library, `Opium_core`.
-
 A handler takes a request and returns a response and a middleware transforms (or should I say... Morphs) a handler. We're going to write a logger that write the time it takes for a request in this example. The signature of a middleware is:
-
-```reason
-Opium_core.Filter.simple(Morph.Request.t, Morph.Response.t)
-```
-
-which can be exapnded to:
-
-```reason
-Opium_core.Handler.t(Morph.Request.t, Morph.Response.t) => Opium_core.Handler.t(Morph.Request.t, Morph.Response.t)
-```
-
-or further:
 
 ```reason
 (Morph.Request.t => Lwt.t(Morph.Response.t)) => (Morph.Request.t => Lwt.t(Morph.Response.t))

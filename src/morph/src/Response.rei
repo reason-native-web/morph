@@ -4,20 +4,10 @@
 type headers = list((string, string));
 
 /**
- [Response.body] variant type structure. There are currently 3 types of bodies.
+ [Response.body] variant type structure. There are currently 1 core type of body and more can be added by server implementations.
 
  [`String] Use a simple string as body
-
- [`Stream] Use a stream of chars as body, the stream will be written fully before flushing
-
- [`StringStream] Use a stream of strings as body, it will be flushed on every new string
-
-type body = [>
-  | /** Use a simple string as body  */
-    `String(string)
-];
 */
-
 type body('res_body) = [> | `String(string)] as 'res_body;
 
 type success('res_body) = {

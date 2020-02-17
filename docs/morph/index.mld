@@ -1,17 +1,14 @@
 {0 Morph}
 
-A web framework built ontop of Httpaf and H2 and leverages {{: https://rgrinberg.github.io/opium/opium_core/index.html} Opium_core} to build reusable middlewares.
+A web framework built ontop of Httpaf and H2 using reusable middlewares.
 
 The entry point of this library is the module:
 {!module-Morph}.
 
 {1 Core concepts}
 
-Morph is built on top of Opium_core that provides us with Filters and Services.
 When you start a Morph server you can provide a list of middlewares to be run on every request and a handler.
 The middleware/handler chain will be provided with a {!module-Morph.Request.t} and expects it to return a {!module-Morph.Response.t} that it will use to send a response.
-
-To read more about Filters and Services I recommend going to the {{: https://rgrinberg.github.io/opium/opium_core/index.html} Opium_core} documentation.
 
 {e I will use Filter/Middleware and Service/Handler interchangeably in the documentation.}
 

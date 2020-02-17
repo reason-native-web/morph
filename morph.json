@@ -15,7 +15,6 @@
     "@opam/lwt": "^4.0.0",
     "@opam/logs": "*",
     "@opam/fmt": "*",
-    "@opam/opium_core": "rgrinberg/opium:opium_core.opam#08365268a838b90acfd2acba4bd2a294121b0803",
     "@opam/hmap": "*",
     "@opam/magic-mime": "*",
     "ocaml": "*",

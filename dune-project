@@ -9,7 +9,7 @@
 
 (package
  (name morph)
- (synopsis "Abstraction on Httpaf and H2 to run opium_core services")
+ (synopsis "Abstraction on Httpaf and H2")
  (depends
   (ocaml
    (>= 4.04.2))
@@ -19,14 +19,13 @@
   lwt
   logs
   ssl
-  lwt_ssl
-  opium_core
+  lwt_ssl  
   hmap
   ))
 
 (package
  (name morph_server)
- (synopsis "Abstraction on Httpaf and H2 to run opium_core services")
+ (synopsis "Abstraction on Httpaf and H2")
  (depends
   (ocaml
    (>= 4.04.2))
@@ -39,7 +38,7 @@
 
 (package
  (name morph_server_http)
- (synopsis "Abstraction on Httpaf and H2 to run opium_core services")
+ (synopsis "Abstraction on Httpaf and H2")
  (depends
   (ocaml
    (>= 4.04.2))
@@ -52,13 +51,12 @@
   httpaf
   httpaf-lwt
   httpaf-lwt-unix
-  opium_core
   hmap
   ))
 
 (package
  (name morph_server_https)
- (synopsis "Abstraction on Httpaf and H2 to run opium_core services")
+ (synopsis "Abstraction on Httpaf and H2")
  (depends
   (ocaml
    (>= 4.04.2))
@@ -74,7 +72,6 @@
   h2
   h2-lwt
   h2-lwt-unix
-  opium_core
   ssl
   lwt_ssl
   hmap

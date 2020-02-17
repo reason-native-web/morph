@@ -1,11 +1,5 @@
 type headers = list((string, string));
 
-/*
- type body = [>
-   | `String(string)
- ];
- */
-
 type body('res_body) = [> | `String(string)] as 'res_body;
 
 type success('res_body) = {

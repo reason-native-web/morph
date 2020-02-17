@@ -1,5 +1,5 @@
 (library
  (name morph_server_https)
  (public_name morph_server_https)
- (libraries lwt logs httpaf httpaf-lwt-unix h2 h2-lwt-unix opium_core hmap
+ (libraries lwt logs httpaf httpaf-lwt-unix h2 h2-lwt-unix hmap
    morph morph_server))

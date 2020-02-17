@@ -95,7 +95,6 @@ let () =
       | None  -> Morph.Response.not_found Morph.Response.empty) in
   let server = Morph_server_http.make () in
   Morph.start ~servers:[server] handler
-
   |> Lwt_main.run
 ```
 
