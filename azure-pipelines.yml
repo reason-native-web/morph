@@ -56,7 +56,6 @@ stages:
       ESY__CACHE_INSTALL_PATH: /home/vsts/.esy/3_____________________________________________________________________/i
     strategy:
       matrix: {
-        "client": {package_name: "morph_client"},
         "graphql_server": {package_name: "morph_graphql_server"},
         "server": {package_name: "morph_server"},
         "server_http": {package_name: "morph_server_http"},
