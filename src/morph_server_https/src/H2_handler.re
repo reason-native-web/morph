@@ -36,7 +36,7 @@ let make = (handler, _client_address, request_descriptor) => {
           target,
           meth,
           headers: H2.Headers.to_list(headers),
-          body: `String(body),
+          body,
           context: Hmap.empty,
         },
       )

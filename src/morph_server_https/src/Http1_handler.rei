@@ -9,7 +9,7 @@ let error_handler:
 
 let make:
   (
-    Morph.Server.handler([ | `String(string)]),
+    Morph.Server.handler(string),
     Unix.sockaddr,
     Httpaf.Reqd.t('handle, 'io)
   ) =>

@@ -1,1 +1,1 @@
-let make: (~port: int=?, unit) => Morph.Server.t([ | `String(string)]);
+let make: (~port: int=?, unit) => Morph.Server.t(string);

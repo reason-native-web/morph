@@ -8,5 +8,5 @@ let error_handler:
   unit;
 
 let make:
-  (Morph.Server.handler([ | `String(string)]), Unix.sockaddr, H2.Reqd.t) =>
+  (Morph.Server.handler(string), Unix.sockaddr, H2.Reqd.t) =>
   unit;

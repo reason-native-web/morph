@@ -1,14 +1,8 @@
-let make =
-    (schema: Graphql_lwt.Schema.schema('ctx))
-    : Morph.Server.handler([> | `String(string)]) => {
+let make = (schema: Graphql_lwt.Schema.schema('ctx)) => {
   open Morph.Request;
-  let parse = ({context, body, _}: Morph.Request.t([> | `String(string)])) => {
+  let parse = ({context, body, _}: Morph.Request.t(string)) => {
     module Json = Yojson.Basic;
-    let body =
-      switch (body) {
-      | `String(str) => str
-      | _ => "{}"
-      };
+
     let json = Json.from_string(body);
     let query = Json.Util.member("query", json) |> Json.Util.to_string_option;
     switch (query) {
