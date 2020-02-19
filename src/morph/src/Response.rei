@@ -6,14 +6,17 @@ type headers = list((string, string));
 /**
  [Response.body] variant type structure. There are currently 1 core type of body and more can be added by server implementations.
 
- [`String] Use a simple string as body
+ [String] Use a simple string as body
 */
-type body('res_body) = [> | `String(string)] as 'res_body;
+type body = ..;
 
-type success('res_body) = {
+type body +=
+  | String(string);
+
+type success = {
   status: Status.t,
   headers,
-  body: body('res_body),
+  body,
 };
 
 type failure = [ | `User(string) | `Server(string) | `Auth(string)];
@@ -21,74 +24,74 @@ type failure = [ | `User(string) | `Server(string) | `Auth(string)];
 /**
 The core [Response.t] type
 */
-type t('res_body) = result(success('res_body), failure);
+type t = result(success, failure);
 
-let success_of_failure: failure => success('res_body);
+let success_of_failure: failure => success;
 
 /**
 [make status headers body] creates a response.
 */
-let make: (~status: Status.t=?, ~headers: headers=?, 'body) => t('body);
+let make: (~status: Status.t=?, ~headers: headers=?, body) => t;
 
 /**
 [empty t] an empty response, a starting place to compose an http response.
 */
-let empty: t('body);
+let empty: t;
 
 /**
 [add_header header response] returns a copy of t of response with the header tuple added.
 */
-let add_header: ((string, string), t('body)) => t('body);
+let add_header: ((string, string), t) => t;
 
 /**
 [add_header headers response] returns a copy of t of response with the headers added.
 */
-let add_headers: (headers, t('body)) => t('body);
+let add_headers: (headers, t) => t;
 
 /**
 [set_status status response] returns a copy of t with the given status.
 */
-let set_status: (Status.t, t('body)) => t('body);
+let set_status: (Status.t, t) => t;
 
 /**
 [set_body body response] returns a copy of t with the given body.
 */
-let set_body: ('body, t('body)) => t('body);
+let set_body: (body, t) => t;
 
 /**
 [ok response] is a conventience function to return a 200 OK response.
 */
-let ok: t('body) => Lwt.t(t('body));
+let ok: t => Lwt.t(t);
 
 /**
 [text text response] is a conventience function to return a text response.
 */
-let text: (string, t('body)) => Lwt.t(t('body));
+let text: (string, t) => Lwt.t(t);
 
 /**
 [json json response] is a conventience function to return a JSON response.
 */
-let json: (string, t('body)) => Lwt.t(t('body));
+let json: (string, t) => Lwt.t(t);
 
 /**
 [html markup response] is a conventience function to return a HTML response.
 */
-let html: (string, t('body)) => Lwt.t(t('body));
+let html: (string, t) => Lwt.t(t);
 
 /**
 [redirect code target response] is a conventience function to create a redirect response.
 */
-let redirect: (~code: int=?, string, t('body)) => Lwt.t(t('body));
+let redirect: (~code: int=?, string, t) => Lwt.t(t);
 
 /**
 [unauthorized message response] is a conventience function to return a unauthorized response.
 */
-let unauthorized: (string, t('body)) => Lwt.t(t('body));
+let unauthorized: (string, t) => Lwt.t(t);
 
 /**
 [not_found message response] is a conventience function to return a 404 Not found response.
 */
-let not_found: (~message: string=?, t('body)) => Lwt.t(t('body));
+let not_found: (~message: string=?, t) => Lwt.t(t);
 
 /**
  [static file_path response] is a co

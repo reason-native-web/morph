@@ -1,8 +1,8 @@
 let start =
     (
-      ~servers: list(Server.t('req_body, 'res_body)),
-      ~middlewares: list(Server.middleware('req_body, 'res_body))=[],
-      handler: Server.handler('req_body, 'res_body),
+      ~servers: list(Server.t('req_body)),
+      ~middlewares: list(Server.middleware('req_body))=[],
+      handler: Server.handler('req_body),
     ) => {
   if (Sys.unix) {
     Sys.(set_signal(sigpipe, Signal_handle(_ => ())));
@@ -11,9 +11,7 @@ let start =
   let handler = Server.apply_all(middlewares, handler);
 
   servers
-  |> List.map((server: Server.t('req_body, 'res_body)) =>
-       server.start(handler)
-     )
+  |> List.map((server: Server.t('req_body)) => server.start(handler))
   |> Lwt.join;
 };
 

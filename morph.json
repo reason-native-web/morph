@@ -16,7 +16,6 @@
     "@opam/logs": "*",
     "@opam/fmt": "*",
     "@opam/hmap": "*",
-    "@opam/magic-mime": "*",
     "ocaml": "*",
     "@esy-ocaml/reason": "*"
   },

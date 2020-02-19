@@ -16,6 +16,7 @@
     "@opam/lwt": "^4.0.0",
     "@reason-native-web/morph": "*",
     "ocaml": "*",
+    "@opam/magic-mime": "*",
     "@esy-ocaml/reason": "*"
   },
   "resolutions": {

@@ -9,7 +9,12 @@ let error_handler = (_client_address, ~request as _=?, _error, start_response) =
   Httpaf.Body.close_writer(response_body);
 };
 
-let make = (handler, _client_address, request_descriptor) => {
+let make =
+    (
+      handler: Morph.Server.handler(string),
+      _client_address: Unix.sockaddr,
+      request_descriptor: Httpaf.Reqd.t('handle, 'io),
+    ) => {
   Lwt.async(() => {
     let Httpaf.{Request.target, meth, headers, version: _} =
       Httpaf.Reqd.request(request_descriptor);
@@ -29,18 +34,18 @@ let make = (handler, _client_address, request_descriptor) => {
     let create_response = (~headers, status) =>
       Httpaf.Response.create(~headers, ~reason=?None, ~version=?None, status);
 
-    Lwt.bind(read_body(), body =>
+    Lwt.bind(read_body(), (body: string) =>
       handler(
         Morph.Request.{
           target,
           meth,
           headers: Httpaf.Headers.to_list(headers),
-          body: `String(body),
+          body,
           context: Hmap.empty,
         },
       )
     )
-    |> Lwt.map((response: Morph.Response.t('body)) => {
+    |> Lwt.map((response: Morph.Response.t) => {
          let response =
            switch (response) {
            | Error(failure) => Morph.Response.success_of_failure(failure)

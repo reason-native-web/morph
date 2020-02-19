@@ -17,7 +17,9 @@ let {describe} =
               Lwt.return(
                 Morph.Response.empty
                 |> Morph.Response.add_header(("connection", "close"))
-                |> Morph.Response.set_body(`String(test_string)),
+                |> Morph.Response.set_body(
+                     Morph.Response.String(test_string),
+                   ),
               )
             );
           })

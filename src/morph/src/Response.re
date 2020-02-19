@@ -1,11 +1,14 @@
 type headers = list((string, string));
 
-type body('res_body) = [> | `String(string)] as 'res_body;
+type body = ..;
 
-type success('res_body) = {
+type body +=
+  | String(string);
+
+type success = {
   status: Status.t,
   headers,
-  body: body('res_body),
+  body,
 };
 
 type failure = [ | `User(string) | `Server(string) | `Auth(string)];
@@ -13,24 +16,24 @@ type failure = [ | `User(string) | `Server(string) | `Auth(string)];
 /**
 The core [Response.t] type
 */
-type t('res_body) = result(success('res_body), failure);
+type t = result(success, failure);
 
 let success_of_failure =
   fun
   | `User(message) => {
       status: `Bad_request,
       headers: [],
-      body: `String(message),
+      body: String(message),
     }
   | `Server(message) => {
       status: `Internal_server_error,
       headers: [],
-      body: `String(message),
+      body: String(message),
     }
   | `Auth(message) => {
       status: `Unauthorized,
       headers: [],
-      body: `String(message),
+      body: String(message),
     };
 
 let result_map = (fn, res) => {
@@ -40,7 +43,7 @@ let result_map = (fn, res) => {
   };
 };
 
-let empty = Ok({status: `OK, headers: [], body: `String("")});
+let empty = Ok({status: `OK, headers: [], body: String("")});
 
 let make = (~status=`OK, ~headers=[], body) => Ok({status, headers, body});
 
@@ -63,14 +66,14 @@ let set_body = body => {
 let ok = res => {
   add_header(("Content-length", "2"), res)
   |> set_status(`OK)
-  |> set_body(`String("ok"))
+  |> set_body(String("ok"))
   |> Lwt.return;
 };
 
 let text = (text, res) => {
   let content_length = text |> String.length |> string_of_int;
   add_header(("Content-length", content_length), res)
-  |> set_body(`String(text))
+  |> set_body(String(text))
   |> Lwt.return;
 };
 
@@ -78,7 +81,7 @@ let json = (json, res) => {
   let content_length = json |> String.length |> string_of_int;
   add_header(("Content-type", "application/json"), res)
   |> add_header(("Content-length", content_length))
-  |> set_body(`String(json))
+  |> set_body(String(json))
   |> Lwt.return;
 };
 
@@ -86,7 +89,7 @@ let html = (markup, res) => {
   let content_length = markup |> String.length |> string_of_int;
   add_header(("Content-type", "text/html"), res)
   |> add_header(("Content-length", content_length))
-  |> set_body(`String(markup))
+  |> set_body(String(markup))
   |> Lwt.return;
 };
 
@@ -96,7 +99,7 @@ let redirect = (~code=303, targetPath, res) => {
   add_header(("Content-length", content_length), res)
   |> add_header(("Location", targetPath))
   |> set_status(`Code(code))
-  |> set_body(`String(targetPath))
+  |> set_body(String(targetPath))
   |> Lwt.return;
 };
 
@@ -106,7 +109,7 @@ let unauthorized = (message, res) => {
     res,
   )
   |> set_status(`Unauthorized)
-  |> set_body(`String(message))
+  |> set_body(String(message))
   |> Lwt.return;
 };
 
@@ -116,28 +119,6 @@ let not_found = (~message="Not found", res) => {
     res,
   )
   |> set_status(`Not_found)
-  |> set_body(`String(message))
+  |> set_body(String(message))
   |> Lwt.return;
 };
-/*
- let get_file_stream = file_name => {
-   let read_only_flags = [Unix.O_RDONLY];
-   let read_only_perm = 444;
-   let fd = Unix.openfile(file_name, read_only_flags, read_only_perm);
-   Lwt_io.of_unix_fd(fd, ~mode=Lwt_io.Input) |> Lwt_io.read_chars;
- };
-
-
- let static = (file_path, res: t) => {
-   Sys.file_exists(file_path)
-     ? {
-       let size = Unix.stat(file_path).st_size;
-       let stream = get_file_stream(file_path);
-       add_header(("Content-type", Magic_mime.lookup(file_path)), res)
-       |> add_header(("Content-length", string_of_int(size)))
-       |> set_body(`Stream(stream))
-       |> Lwt.return;
-     }
-     : not_found(~message="File does not exist", res);
- };
- */

@@ -1,6 +1,6 @@
 let make =
     (schema: Graphql_lwt.Schema.schema('ctx))
-    : Morph.Server.handler([> | `String(string)], 'res_body) => {
+    : Morph.Server.handler([> | `String(string)]) => {
   open Morph.Request;
   let parse = ({context, body, _}: Morph.Request.t([> | `String(string)])) => {
     module Json = Yojson.Basic;
@@ -42,7 +42,7 @@ let make =
     };
   };
 
-  let handler: Morph.Server.handler('req_body, 'res_body) =
+  let handler: Morph.Server.handler('req_body) =
     request => {
       Lwt.Infix.(
         parse(request)

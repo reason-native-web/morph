@@ -1,4 +1,4 @@
 (library
  (name morph)
  (public_name morph)
- (libraries lwt logs hmap magic-mime))
+ (libraries lwt logs hmap))

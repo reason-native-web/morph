@@ -8,16 +8,5 @@ let error_handler:
   unit;
 
 let make:
-  (
-    Morph.Server.handler(
-      [ | `String(string)],
-      [
-        | `String(string)
-        | `Stream(Lwt_stream.t(char))
-        | `StringStream(Lwt_stream.t(string))
-      ],
-    ),
-    Unix.sockaddr,
-    H2.Reqd.t
-  ) =>
+  (Morph.Server.handler([ | `String(string)]), Unix.sockaddr, H2.Reqd.t) =>
   unit;

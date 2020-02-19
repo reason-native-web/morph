@@ -9,14 +9,7 @@ let error_handler:
 
 let make:
   (
-    Morph.Server.handler(
-      [ | `String(string)],
-      [
-        | `String(string)
-        | `Stream(Lwt_stream.t(char))
-        | `StringStream(Lwt_stream.t(string))
-      ],
-    ),
+    Morph.Server.handler([ | `String(string)]),
     Unix.sockaddr,
     Httpaf.Reqd.t('handle, 'io)
   ) =>

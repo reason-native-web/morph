@@ -41,7 +41,7 @@ let make = (handler, _client_address, request_descriptor) => {
         },
       )
     )
-    |> Lwt.map((response: Morph.Response.t('body)) => {
+    |> Lwt.map((response: Morph.Response.t) => {
          let response =
            switch (response) {
            | Error(failure) => Morph.Response.success_of_failure(failure)

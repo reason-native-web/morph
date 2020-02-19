@@ -1,3 +1,5 @@
+exception Incorrect_Body;
+
 let respond =
     (
       ~http_response,
@@ -8,12 +10,12 @@ let respond =
       ~close_writer,
       ~flush_body,
       request_descriptor,
-      response: Morph.Response.success('body),
+      response: Morph.Response.success,
     ) => {
   switch (response.body) {
-  | `String(body) =>
+  | Morph.Response.String(body) =>
     respond_with_string(request_descriptor, http_response, body)
-  | `Stream(stream) =>
+  | Response.Stream(stream) =>
     let response_body =
       respond_with_streaming(request_descriptor, http_response);
     let read_stream = () => {
@@ -27,7 +29,7 @@ let respond =
         |> Lwt.return
       });
     read_stream();
-  | `StringStream(stream) =>
+  | Response.StringStream(stream) =>
     let response_body =
       respond_with_streaming(request_descriptor, http_response);
     let read_stream = () => {
@@ -47,5 +49,6 @@ let respond =
         |> Lwt.return
       });
     read_stream();
+  | _ => raise(Incorrect_Body)
   };
 };
