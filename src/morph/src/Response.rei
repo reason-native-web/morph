@@ -92,10 +92,3 @@ let unauthorized: (string, t) => Lwt.t(t);
 [not_found message response] is a conventience function to return a 404 Not found response.
 */
 let not_found: (~message: string=?, t) => Lwt.t(t);
-
-/**
- [static file_path response] is a co
-nvenience function to return a 200 response with the contents of a static file.  If the file does not exist a 404 Not found response is sent instead.
-
-let static: (string, t) => t;
- */;

@@ -7,6 +7,4 @@ let error_handler:
   ) =>
   unit;
 
-let make:
-  (Morph.Server.handler(string), Unix.sockaddr, H2.Reqd.t) =>
-  unit;
+let make: (Morph.Server.handler(string), Unix.sockaddr, H2.Reqd.t) => unit;
