@@ -15,7 +15,7 @@ let respond =
   switch (response.body) {
   | Morph.Response.String(body) =>
     respond_with_string(request_descriptor, http_response, body)
-  | Response.Stream(stream) =>
+  | Morph_base.Response.Stream(stream) =>
     let response_body =
       respond_with_streaming(request_descriptor, http_response);
     let read_stream = () => {
@@ -29,7 +29,7 @@ let respond =
         |> Lwt.return
       });
     read_stream();
-  | Response.StringStream(stream) =>
+  | Morph_base.Response.StringStream(stream) =>
     let response_body =
       respond_with_streaming(request_descriptor, http_response);
     let read_stream = () => {

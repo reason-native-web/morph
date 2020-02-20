@@ -57,10 +57,11 @@ stages:
     strategy:
       matrix: {
         "graphql_server": {package_name: "morph_graphql_server"},
-        "server": {package_name: "morph_server"},
+        "server": {package_name: "morph_server_base"},
         "server_http": {package_name: "morph_server_http"},
         "server_https": {package_name: "morph_server_https"},
-        "morph": {package_name: "morph"}
+        "morph": {package_name: "morph"},
+        "morph_base": {package_name: "morph_base"}
       }
     steps:
     - template: .ci/create-npm-package.yml

@@ -1,4 +1,0 @@
-(library
- (name morph_server)
- (public_name morph_server)
- (libraries lwt lwt.unix morph magic-mime))

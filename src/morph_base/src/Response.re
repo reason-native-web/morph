@@ -2,8 +2,12 @@ type Morph.Response.body +=
   | Stream(Lwt_stream.t(char))
   | StringStream(Lwt_stream.t(string));
 
-let byte_stream = (stream, res) => {
+let byte_stream = (~stream, res) => {
   Morph.Response.set_body(Stream(stream), res) |> Lwt.return;
+};
+
+let string_stream = (~stream, res) => {
+  Morph.Response.set_body(StringStream(stream), res) |> Lwt.return;
 };
 
 let get_file_stream = file_name => {
@@ -13,7 +17,7 @@ let get_file_stream = file_name => {
   Lwt_io.of_unix_fd(fd, ~mode=Lwt_io.Input) |> Lwt_io.read_chars;
 };
 
-let static = (file_path, res) => {
+let static = (~file_path, res) => {
   Sys.file_exists(file_path)
     ? {
       let size = Unix.stat(file_path).st_size;
@@ -23,7 +27,7 @@ let static = (file_path, res) => {
         res,
       )
       |> Morph.Response.add_header(("Content-length", string_of_int(size)))
-      |> byte_stream(stream);
+      |> byte_stream(~stream);
     }
     : Morph.Response.not_found(~message="File does not exist", res);
 };

@@ -24,7 +24,7 @@ let make =
       |> map_or(~default=128, int_of_string);
 
     let read_body = () =>
-      Morph_server.Body.read(
+      Morph_server_base.Body.read(
         ~content_length,
         ~get_request_body=Httpaf.Reqd.request_body,
         ~schedule_read=Httpaf.Body.schedule_read,
@@ -54,7 +54,7 @@ let make =
 
          let headers = Httpaf.Headers.of_list(response.headers);
 
-         Morph_server.Respond.respond(
+         Morph_server_base.Respond.respond(
            ~http_response=
              create_response(~headers, Status.to_httpaf(response.status)),
            ~respond_with_string=Httpaf.Reqd.respond_with_string,

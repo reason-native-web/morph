@@ -1,9 +1,8 @@
 {
-  "name": "@reason-native-web/morph_server",
+  "name": "@reason-native-web/morph_base",
   "version": "0.2.0",
   "esy": {
-    "build": "dune build -p morph_server",
-    "buildDev": "dune build --only-packages=morph_server --root=.",
+    "build": "dune build -p morph_base",
     "buildEnv": {
       "ODOC_SYNTAX": "re"
     }
@@ -14,13 +13,12 @@
   "dependencies": {
     "@opam/dune": "*",
     "@opam/lwt": "^4.0.0",
-    "@reason-native-web/morph": "*",
-    "ocaml": "*",
+    "@opam/logs": "*",
+    "@opam/fmt": "*",
+    "@opam/hmap": "*",
     "@opam/magic-mime": "*",
+    "ocaml": "*",
     "@esy-ocaml/reason": "*"
-  },
-  "resolutions": {
-    "@reason-native-web/morph": "link:./morph.json"
   },
   "devDependencies": {}
 }

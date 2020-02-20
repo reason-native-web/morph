@@ -1,0 +1,4 @@
+(library
+ (name morph_base)
+ (public_name morph.base)
+ (libraries lwt lwt.unix logs morph magic-mime))

@@ -1,0 +1,4 @@
+(library
+ (name morph_server_base)
+ (public_name morph_server_base)
+ (libraries lwt lwt.unix morph morph.base))

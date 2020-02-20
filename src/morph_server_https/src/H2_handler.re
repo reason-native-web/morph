@@ -20,7 +20,7 @@ let make = (handler, _client_address, request_descriptor) => {
       |> map_or(~default=128, int_of_string);
 
     let read_body = () =>
-      Morph_server.Body.read(
+      Morph_server_base.Body.read(
         ~content_length,
         ~get_request_body=H2.Reqd.request_body,
         ~schedule_read=H2.Body.schedule_read,
@@ -49,7 +49,7 @@ let make = (handler, _client_address, request_descriptor) => {
            };
 
          let headers = H2.Headers.of_list(response.headers);
-         Morph_server.Respond.respond(
+         Morph_server_base.Respond.respond(
            ~http_response=
              create_response(~headers, Status.to_h2(response.status)),
            ~respond_with_string=H2.Reqd.respond_with_string,

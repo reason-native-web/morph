@@ -18,13 +18,27 @@
   reason
   lwt
   logs
+  hmap
+  ))
+
+  (package
+ (name morph_base)
+ (synopsis "Abstraction on Httpaf and H2")
+ (depends
+  (ocaml
+   (>= 4.04.2))
+  (dune
+   (>= 1.11))
+  reason
+  lwt
+  logs
   ssl
   lwt_ssl  
   hmap
   ))
 
 (package
- (name morph_server)
+ (name morph_server_base)
  (synopsis "Abstraction on Httpaf and H2")
  (depends
   (ocaml
@@ -34,6 +48,7 @@
   morph
   reason
   lwt
+  magic-mime
   ))
 
 (package

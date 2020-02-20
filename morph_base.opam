@@ -7,9 +7,12 @@ bug-reports: "https://github.com/reason-native-web/morph/issues"
 depends: [
   "ocaml" {>= "4.04.2"}
   "dune" {>= "1.11"}
-  "morph"
   "reason"
   "lwt"
+  "logs"
+  "ssl"
+  "lwt_ssl"
+  "hmap"
 ]
 build: [
   ["dune" "subst"] {pinned}
