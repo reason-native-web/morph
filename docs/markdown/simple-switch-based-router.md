@@ -26,7 +26,7 @@ let handler = request => {
   | (_, ["greet", name]) =>
     Morph.Response.text("Hello " ++ name ++ "!", Morph.Response.empty)
   | (`GET, ["static", ...file_path]) =>
-    Morph_server.Response.static(file_path |> String.concat("/"), Morph.Response.empty)
+    Morph_base.Response.static(~file_path=String.concat("/", file_path), Morph.Response.empty)
   | (_, _) => Morph.Response.not_found, Morph.Response.empty
   };
 };
@@ -49,7 +49,7 @@ let handler request =
   | (_,"greet"::name::[]) ->
       Morph.Response.text ("Hello " ^ name ^ "!") Morph.Response.empty
   | (`GET, "static"::file_path) ->
-      Morph_server.Response.static (file_path |> String.concat "/") Morph.Response.empty
+      Morph_base.Response.static ~file_path:(String.concat "/" file_path) Morph.Response.empty
   | (_,_) -> Morph.Response.not_found Morph.Response.empty
 ```
 
