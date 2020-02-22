@@ -6,9 +6,7 @@ type handler('req_body) = Request.t('req_body) => Lwt.t(Response.t);
 /**
 A [middleware] takes a [handler] and returns a [handler].
 */
-type middleware('req_body) =
-  (Request.t('req_body) => Lwt.t(Response.t), Request.t('req_body)) =>
-  Lwt.t(Response.t);
+type middleware('req_body) = handler('req_body) => handler('req_body);
 
 /**
 A [Server.t] is a record that describes a server.
