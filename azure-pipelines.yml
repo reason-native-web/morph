@@ -56,10 +56,10 @@ stages:
       ESY__CACHE_INSTALL_PATH: /home/vsts/.esy/3_____________________________________________________________________/i
     strategy:
       matrix: {
-        "graphql_server": {package_name: "morph_graphql_server"},
-        "server": {package_name: "morph_server_base"},
-        "server_http": {package_name: "morph_server_http"},
-        "server_https": {package_name: "morph_server_https"},
+        "morph_graphql_server": {package_name: "morph_graphql_server"},
+        "morph_server_base": {package_name: "morph_server_base"},
+        "morph_server_http": {package_name: "morph_server_http"},
+        "morph_server_https": {package_name: "morph_server_https"},
         "morph": {package_name: "morph"},
         "morph_base": {package_name: "morph_base"}
       }

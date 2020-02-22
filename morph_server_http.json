@@ -1,5 +1,5 @@
 {
-  "name": "@reason-native-web/morph_server_base_http",
+  "name": "@reason-native-web/morph_server_http",
   "version": "0.2.0",
   "esy": {
     "build": "dune build -p morph_server_http",

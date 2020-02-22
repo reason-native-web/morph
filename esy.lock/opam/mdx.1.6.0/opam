@@ -14,7 +14,7 @@ build: [
 ]
 
 depends: [
-  "ocaml" {>= "4.02.3" & < "4.10"}
+  "ocaml" {>= "4.02.3"}
   "dune" {>= "1.11"}
   "ocamlfind"
   "fmt"
@@ -27,6 +27,7 @@ depends: [
   "ocaml-migrate-parsetree" {>= "1.0.6"}
   "ocaml-version" {>= "2.3.0"}
   "lwt" {with-test}
+  "alcotest" {with-test}
 ]
 
 synopsis: "Executable code blocks inside markdown files"
@@ -47,9 +48,9 @@ the same, mdx being the deprecated name, kept for now for compatibility.
 """
 url {
   src:
-    "https://github.com/realworldocaml/mdx/releases/download/1.5.0/mdx-1.5.0.tbz"
+    "https://github.com/realworldocaml/mdx/releases/download/1.6.0/mdx-1.6.0.tbz"
   checksum: [
-    "sha256=b68fea7235aa95a407bccea76352a8a32dee0441a72f701f3aa19d4f1cbd853c"
-    "sha512=2853e68f2e91ea36f3f22459ff1cd512237e6380163434e2bd59eee1946d166119663aaafb5acd672cbf285d9f191aee2e39fa5f587cbd41020eeae8815887cf"
+    "sha256=6b4c51c91953218b5b5b14f8e5d3dd6d0c50995b46c571b97d8b37238457a4a2"
+    "sha512=f86619905828bbdaa8a93d6605308436211e26ac850cad319d92cca971e6f548e5ac07a38d01f8098f87ea7f6a40d0f4bc0c6867c3a416b2b956042423997432"
   ]
 }
