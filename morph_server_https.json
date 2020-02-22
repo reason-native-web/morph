@@ -33,6 +33,7 @@
     "@opam/httpaf-lwt": "anmonteiro/httpaf:httpaf-lwt.opam#90e7c8783a99bdb9f098b017a2ca34516de0abad",
     "@opam/httpaf": "anmonteiro/httpaf:httpaf.opam#90e7c8783a99bdb9f098b017a2ca34516de0abad",
     "@reason-native-web/morph": "link:./morph.json",
+    "@reason-native-web/morph_base": "link:./morph_base.json",
     "@reason-native-web/morph_server_base": "link:./morph_server_base.json"
   },
   "devDependencies": {}
