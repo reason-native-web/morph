@@ -42,10 +42,9 @@ let make = (handler, _client_address, request_descriptor) => {
     )
     |> Lwt.map((response: Morph.Response.t) => {
          let response =
-           switch (response) {
-           | Error(failure) => Morph.Response.success_of_failure(failure)
-           | Ok(response) => response
-           };
+           response
+           |> Morph_server_base.Util.response_to_valid
+           |> Morph.Response.to_success;
 
          let headers = Httpaf.Headers.of_list(response.headers);
 

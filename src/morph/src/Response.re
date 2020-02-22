@@ -36,6 +36,11 @@ let success_of_failure =
       body: String(message),
     };
 
+let to_success =
+  fun
+  | Ok(success) => success
+  | Error(failure) => success_of_failure(failure);
+
 let result_map = (fn, res) => {
   switch (res) {
   | Ok(data) => Ok(fn(data))

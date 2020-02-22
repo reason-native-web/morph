@@ -28,6 +28,8 @@ type t = result(success, failure);
 
 let success_of_failure: failure => success;
 
+let to_success: t => success;
+
 /**
 [make status headers body] creates a response.
 */
