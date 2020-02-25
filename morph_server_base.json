@@ -12,12 +12,12 @@
     "format": "dune build @fmt --auto-promote"
   },
   "dependencies": {
+    "@esy-ocaml/reason": "*",
     "@opam/dune": "*",
     "@opam/lwt": "^4.0.0",
-    "@reason-native-web/morph": "*",
     "@reason-native-web/morph_base": "*",
-    "ocaml": "*",
-    "@esy-ocaml/reason": "*"
+    "@reason-native-web/morph": "*",
+    "ocaml": "*"
   },
   "resolutions": {
     "@reason-native-web/morph": "link:./morph.json",
