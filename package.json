@@ -46,7 +46,7 @@
     "@opam/mdx": "*",
     "@opam/merlin": "*",
     "@opam/mtime": "*",
-    "@opam/ocamlformat": "*",
+    "@opam/ocamlformat": ">=0.13.0",
     "@opam/odoc": "*",
     "@opam/routes": "*",
     "@opam/utop": "*",
