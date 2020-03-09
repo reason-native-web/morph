@@ -25,7 +25,7 @@
     "@reason-native-web/lwt_ssl": "^1.1.3000",
     "@reason-native-web/morph_server_base": "*",
     "@reason-native-web/morph": "*",
-    "@reason-native-web/ssl": "^0.5.9000",
+    "@reason-native-web/ssl": "^0.5.9002",
     "ocaml": "*"
   },
   "devDependencies": {}
