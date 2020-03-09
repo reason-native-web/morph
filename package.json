@@ -5,7 +5,10 @@
     "build": [
       "refmterr dune build --root=."
     ],
-    "install": "esy-installer #{self.target_dir / 'default' / 'morph_test.install'}",
+    "install": [
+      "esy-installer #{self.target_dir / 'default' / 'morph_test.install'}",
+      "esy-installer #{self.target_dir / 'default' / 'morph.install'}"
+    ],
     "buildEnv": {
       "ODOC_SYNTAX": "re"
     }
