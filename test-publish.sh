@@ -31,7 +31,6 @@ then
     # esy
     npm publish --access public --dry-run
     cd ..
-    git checkout ./$name
+    git clean -f -d ./$name
 fi
-rm $name/package.json
 done

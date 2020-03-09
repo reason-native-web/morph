@@ -1,6 +1,6 @@
 {
   "name": "@reason-native-web/morph_base",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "files": ["src/morph_base", "morph_base.opam", "README.md", "LICENSE.md"],
   "esy": {
     "build": "dune build -p morph_base",

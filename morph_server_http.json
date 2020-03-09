@@ -1,6 +1,6 @@
 {
   "name": "@reason-native-web/morph_server_http",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "esy": {
     "build": "dune build -p morph_server_http",
     "buildEnv": {
