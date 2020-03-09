@@ -1,6 +1,6 @@
 {
   "name": "@reason-native-web/morph",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "esy": {
     "build": [
       "refmterr dune build --root=."
@@ -11,7 +11,7 @@
     }
   },
   "scripts": {
-    "test": "esy x RunTests.exe",
+    "test": "esy dune build @runtest",
     "fmt": "dune build @fmt --auto-promote --root .",
     "examples": "esy b dune build @docs-examples",
     "examples-path": "esy echo #{self.target_dir}/default/docs",
@@ -30,18 +30,14 @@
     "@opam/lwt": "^4.0.0",
     "@opam/magic-mime": "*",
     "@opam/uri": "*",
-    "@reason-native-web/h1-lwt-unix": "1.0.0-alpha.1",
-    "@reason-native-web/h1-lwt": "1.0.0-alpha.1",
-    "@reason-native-web/h1": "1.0.0-alpha.1",
-    "@reason-native-web/h2-lwt-unix": "0.5.0-alpha.1",
-    "@reason-native-web/h2-lwt": "0.5.0-alpha.1",
-    "@reason-native-web/h2": "0.5.0-alpha.1",
-    "@reason-native-web/lwt_ssl": "1.1.3-alpha.1",
-    "@reason-native-web/ssl": "^0.5.9-dev.1",
+    "@reason-native-web/h1-lwt-unix": "^1.0.0",
+    "@reason-native-web/h1-lwt": "^1.0.0",
+    "@reason-native-web/h1": "^1.0.0",
+    "@reason-native-web/h2-lwt-unix": "^0.5.0",
+    "@reason-native-web/h2-lwt": "^0.5.0",
+    "@reason-native-web/h2": "^0.5.0",
+    "@reason-native-web/lwt_ssl": "^1.1.3001",
     "ocaml": "*"
-  },
-  "resolutions": {
-    "@opam/conf-libssl": "esy-packages/esy-openssl#860ad7f"
   },
   "devDependencies": {
     "@opam/mdx": "*",
@@ -51,7 +47,7 @@
     "@opam/odoc": "*",
     "@opam/routes": "*",
     "@opam/utop": "*",
-    "@reason-native-web/piaf": "1.0.0-alpha.1",
+    "@reason-native-web/piaf": "^1.0.1002",
     "@reason-native/rely": "*",
     "refmterr": "*"
   }

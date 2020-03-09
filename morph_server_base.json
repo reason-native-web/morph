@@ -1,6 +1,6 @@
 {
   "name": "@reason-native-web/morph_server_base",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "esy": {
     "build": "dune build -p morph_server_base",
     "buildDev": "dune build --only-packages=morph_server_base --root=.",
@@ -18,10 +18,6 @@
     "@reason-native-web/morph_base": "*",
     "@reason-native-web/morph": "*",
     "ocaml": "*"
-  },
-  "resolutions": {
-    "@reason-native-web/morph": "link:./morph.json",
-    "@reason-native-web/morph_base": "link:./morph_base.json"
   },
   "devDependencies": {}
 }

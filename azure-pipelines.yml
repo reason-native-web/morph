@@ -44,30 +44,6 @@ stages:
   #       esyLockPath: $(Build.SourcesDirectory)\esy.lock\index.json
   #       installFolderPath: \3_
 
-- stage: Build_NPM
-  displayName: Build NPM packages
-  dependsOn: []
-  jobs:
-  - job:
-    pool:
-      vmImage: ubuntu-latest
-    variables:
-      CACHE_FOLDER: $(Pipeline.Workspace)/cache
-      ESY__CACHE_INSTALL_PATH: /home/vsts/.esy/3_____________________________________________________________________/i
-    strategy:
-      matrix: {
-        "morph_graphql_server": {package_name: "morph_graphql_server"},
-        "morph_server_base": {package_name: "morph_server_base"},
-        "morph_server_http": {package_name: "morph_server_http"},
-        "morph_server_https": {package_name: "morph_server_https"},
-        "morph": {package_name: "morph"},
-        "morph_base": {package_name: "morph_base"}
-      }
-    steps:
-    - template: .ci/create-npm-package.yml
-      parameters:
-        package_name: $(package_name)
-
 - stage: Publish_docs
   displayName: Publish documentation
   dependsOn: [Build]

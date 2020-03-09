@@ -1,0 +1,73 @@
+name: Publish packages to npm
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+          ref: ${{ github.ref }}
+          submodules: true
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+      - name: Install esy
+        run: npm install -g esy
+      - name: Print esy cache
+        id: print_esy_cache
+        run: node .github/workflows/print_esy_cache.js
+      - name: Try to restore dependencies cache
+        id: deps-cache
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.print_esy_cache.outputs.esy_cache }}
+          key: publish-${{ hashFiles('**/index.json') }}
+      - name: Publish packages
+        run: |
+          set -e
+          packages=(
+              morph
+              morph_base
+              morph_graphql_server
+              morph_server_base
+              morph_server_http
+              morph_server_https
+          )
+          extract() {
+          # Field's key/value should be on their own line
+          echo $(cat package.json \
+              | grep "$1" \
+              | head -1 \
+              | awk -F: '{ print $2 }' \
+              | sed 's/[",]//g')
+          }
+
+          for name in "${packages[@]}"
+          do
+          mkdir -p publish
+          cp $name.json publish/package.json
+          package_name=$(extract name)
+          version=$(extract version)
+          npm_version=$(npm view "$package_name" version 2> /dev/null || echo 0)
+          if [ "$npm_version" != "$version" ]
+          then
+              cp -r src/$name/ publish
+              cp -r LICENSE publish
+              cp -r README.md publish
+              cp -r $name.opam publish
+              cd publish
+              esy
+              npm publish --access public
+              cd ..
+          fi
+          rm -rf publish
+          done
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}

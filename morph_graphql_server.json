@@ -1,6 +1,6 @@
 {
   "name": "@reason-native-web/morph_graphql_server",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "esy": {
     "build": "dune build -p morph_graphql_server"
   },
@@ -16,8 +16,5 @@
     "@opam/yojson": "*",
     "@reason-native-web/morph": "*",
     "ocaml": "*"
-  },
-  "resolutions": {
-    "@reason-native-web/morph": "link:./morph.json"
   }
 }

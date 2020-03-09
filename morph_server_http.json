@@ -1,6 +1,6 @@
 {
   "name": "@reason-native-web/morph_server_http",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "esy": {
     "build": "dune build -p morph_server_http",
     "buildEnv": {
@@ -16,17 +16,12 @@
     "@opam/fmt": "*",
     "@opam/logs": "*",
     "@opam/lwt": "^4.0.0",
-    "@reason-native-web/h1-lwt-unix": "1.0.0-alpha.1",
-    "@reason-native-web/h1-lwt": "1.0.0-alpha.1",
-    "@reason-native-web/h1": "1.0.0-alpha.1",
+    "@reason-native-web/h1-lwt-unix": "^1.0.0",
+    "@reason-native-web/h1-lwt": "^1.0.0",
+    "@reason-native-web/h1": "^1.0.0",
     "@reason-native-web/morph_server_base": "*",
     "@reason-native-web/morph": "*",
     "ocaml": "*"
-  },
-  "resolutions": {
-    "@reason-native-web/morph": "link:./morph.json",
-    "@reason-native-web/morph_base": "link:./morph_base.json",
-    "@reason-native-web/morph_server_base": "link:./morph_server_base.json"
   },
   "devDependencies": {}
 }
