@@ -18,21 +18,20 @@ echo $(cat package.json \
 
 for name in "${packages[@]}"
 do
-mkdir -p publish
-cp $name.json publish/package.json
+cp $name.json $name/package.json
 package_name=$(extract name)
 version=$(extract version)
 npm_version=$(npm view "$package_name" version 2> /dev/null || echo 0)
 if [ "$npm_version" != "$version" ]
 then
-    cp -r src/$name/ publish
-    cp -r LICENSE publish
-    cp -r README.md publish
-    cp -r $name.opam publish
-    cd publish
-    esy
+    cp -r LICENSE $name/LICENSE
+    cp -r README.md $name/README.md
+    cp -r $name.opam $name/$name.opam
+    cd $name
+    # esy
     npm publish --access public --dry-run
     cd ..
+    git checkout ./$name
 fi
-rm -rf publish
+rm $name/package.json
 done
