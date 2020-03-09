@@ -20,15 +20,6 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - name: Install esy
         run: npm install -g esy
-      - name: Print esy cache
-        id: print_esy_cache
-        run: node .github/workflows/print_esy_cache.js
-      - name: Try to restore dependencies cache
-        id: deps-cache
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.print_esy_cache.outputs.esy_cache }}
-          key: publish-${{ hashFiles('**/index.json') }}
       - name: Publish packages
         run: |
           set -e
