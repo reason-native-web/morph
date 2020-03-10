@@ -111,11 +111,11 @@ packages
     return packageData;
   })
   .map(packageData => {
-    buildAndPublishPackage(a.package);
+    buildAndPublishPackage(packageData.package);
     return packageData;
   })
   .map(packageData => {
-    cleanPackage(a.package);
+    cleanPackage(packageData.package);
     return packageData;
   })
   .forEach(packageData =>
