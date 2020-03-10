@@ -1,11 +1,8 @@
 {
   "name": "@reason-native-web/morph_server_https",
-  "version": "0.3.1",
+  "version": "0.3.4",
   "esy": {
-    "build": "dune build -p morph_server_https",
-    "buildEnv": {
-      "ODOC_SYNTAX": "re"
-    }
+    "build": "dune build -p morph_server_https"
   },
   "scripts": {
     "format": "dune build @fmt --auto-promote"
@@ -23,8 +20,8 @@
     "@reason-native-web/h2-lwt": "^0.5.0",
     "@reason-native-web/h2": "^0.5.0",
     "@reason-native-web/lwt_ssl": "^1.1.3000",
-    "@reason-native-web/morph_server_base": "*",
-    "@reason-native-web/morph": "*",
+    "@reason-native-web/morph_server_base": ">=0.3.0",
+    "@reason-native-web/morph": ">=0.3.0",
     "@reason-native-web/ssl": "^0.5.9002",
     "ocaml": "*"
   },

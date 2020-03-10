@@ -14,7 +14,7 @@
     }
   },
   "scripts": {
-    "test": "esy dune build @runtest",
+    "test": "esy x RunTests.exe",
     "fmt": "dune build @fmt --auto-promote --root .",
     "examples": "esy b dune build @docs-examples",
     "examples-path": "esy echo #{self.target_dir}/default/docs",

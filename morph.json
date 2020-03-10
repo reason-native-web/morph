@@ -1,11 +1,8 @@
 {
   "name": "@reason-native-web/morph",
-  "version": "0.3.1",
+  "version": "0.3.4",
   "esy": {
-    "build": "dune build -p morph",
-    "buildEnv": {
-      "ODOC_SYNTAX": "re"
-    }
+    "build": "dune build -p morph"
   },
   "scripts": {
     "format": "dune build @fmt --auto-promote"
