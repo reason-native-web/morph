@@ -52,8 +52,8 @@ jobs:
               cp -r README.md $name/README.md
               cp -r $name.opam $name/$name.opam
               cd $name
-              # esy
-              npm publish --access public --dry-run
+              esy
+              npm publish --access public
               cd ..
               git clean -f -d ./$name
           fi
