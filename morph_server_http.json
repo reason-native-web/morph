@@ -4,9 +4,6 @@
   "esy": {
     "build": "dune build -p morph_server_http"
   },
-  "scripts": {
-    "format": "dune build @fmt --auto-promote"
-  },
   "dependencies": {
     "@esy-ocaml/reason": "*",
     "@opam/dune": "*",
