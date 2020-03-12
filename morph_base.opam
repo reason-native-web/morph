@@ -13,8 +13,6 @@ depends: [
   "ssl"
   "lwt_ssl"
   "hmap"
-  "magic-mime"
-  "morph"
 ]
 build: [
   ["dune" "subst"] {pinned}
