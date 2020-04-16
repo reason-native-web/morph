@@ -54,6 +54,7 @@ const cleanPackage = package => {
 
   fs.unlinkSync(Path.join(package, "package.json"));
   fs.unlinkSync(Path.join(package, `${package}.opam`));
+  fs.unlinkSync(Path.join(package, `${package}.install`));
   fs.unlinkSync(Path.join(package, "LICENSE"));
   fs.unlinkSync(Path.join(package, "README.md"));
   try {

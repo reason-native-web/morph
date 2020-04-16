@@ -27,7 +27,7 @@ let handler = request => {
     Morph.Response.text("Hello " ++ name ++ "!", Morph.Response.empty)
   | (`GET, ["static", ...file_path]) =>
     Morph_base.Response.static(~file_path=String.concat("/", file_path), Morph.Response.empty)
-  | (_, _) => Morph.Response.not_found, Morph.Response.empty
+  | (_, _) => Morph.Response.not_found(Morph.Response.empty)
   };
 };
 ```

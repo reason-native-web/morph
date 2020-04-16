@@ -35,6 +35,8 @@
   ssl
   lwt_ssl  
   hmap
+  magic-mime
+  morph
   ))
 
 (package
