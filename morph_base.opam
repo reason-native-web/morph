@@ -10,6 +10,7 @@ depends: [
   "reason"
   "lwt"
   "logs"
+  "morph"
   "ssl"
   "lwt_ssl"
   "hmap"
