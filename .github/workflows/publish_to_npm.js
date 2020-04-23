@@ -2,7 +2,7 @@ const cp = require("child_process");
 const fs = require("fs");
 const Path = require("path");
 
-const getNameAndVersion = package => {
+const getNameAndVersion = (package) => {
   const packageJson = fs.readFileSync(`${package}.json`, { encoding: "utf8" });
   const packageData = JSON.parse(packageJson);
   const version = fs
@@ -13,7 +13,7 @@ const getNameAndVersion = package => {
   return { package, name: packageData.name, version };
 };
 
-const preparePackage = packageData => {
+const preparePackage = (packageData) => {
   const package = packageData.package;
   console.log(`Preparing package ${package}`);
 
@@ -25,6 +25,11 @@ const preparePackage = packageData => {
     Path.join(package, "package.json"),
     JSON.stringify(updatedPackageJson, null, 2)
   );
+  fs.writeFileSync(
+    Path.join(package, "dune-project"),
+    `(lang dune 1.11)
+`
+  );
 
   fs.copyFileSync(`${package}.opam`, Path.join(package, `${package}.opam`));
   fs.copyFileSync(`LICENSE`, Path.join(package, "LICENSE"));
@@ -33,7 +38,7 @@ const preparePackage = packageData => {
   return package;
 };
 
-const deleteFolderRecursive = path => {
+const deleteFolderRecursive = (path) => {
   if (fs.existsSync(path)) {
     fs.readdirSync(path).forEach((file, index) => {
       const curPath = Path.join(path, file);
@@ -49,12 +54,16 @@ const deleteFolderRecursive = path => {
   }
 };
 
-const cleanPackage = package => {
+const cleanPackage = (package) => {
   console.log(`Cleaning package ${package}`);
 
   fs.unlinkSync(Path.join(package, "package.json"));
   fs.unlinkSync(Path.join(package, `${package}.opam`));
-  fs.unlinkSync(Path.join(package, `${package}.install`));
+  try {
+    fs.unlinkSync(Path.join(package, `${package}.install`));
+  } catch (e) {
+    console.warn(`Could not remove ${package}.install in ${package}`);
+  }
   fs.unlinkSync(Path.join(package, "LICENSE"));
   fs.unlinkSync(Path.join(package, "README.md"));
   try {
@@ -67,7 +76,7 @@ const cleanPackage = package => {
   deleteFolderRecursive(Path.join(package, "node_modules"));
 };
 
-const buildAndPublishPackage = package => {
+const buildAndPublishPackage = (package) => {
   console.log(`Building package ${package}`);
   const cwd = Path.resolve(package);
   try {
@@ -80,11 +89,11 @@ const buildAndPublishPackage = package => {
   console.log(`Publishing package ${package}`);
   cp.execSync("npm publish --access public", {
     cwd,
-    encoding: "utf8"
+    encoding: "utf8",
   });
 };
 
-const filterPackage = packageInfo => {
+const filterPackage = (packageInfo) => {
   try {
     const remoteVersion = cp
       .execSync(`npm view ${packageInfo.name} version`, { encoding: "utf8" })
@@ -101,25 +110,25 @@ const filterPackage = packageInfo => {
 
 const packages = fs
   .readdirSync(".", { encoding: "utf8" })
-  .filter(file => file.includes(".json") && file.includes("morph"))
-  .map(file => file.replace(".json", ""));
+  .filter((file) => file.includes(".json") && file.includes("morph"))
+  .map((file) => file.replace(".json", ""));
 
 packages
   .map(getNameAndVersion)
   .filter(filterPackage)
-  .map(packageData => {
+  .map((packageData) => {
     preparePackage(packageData);
     return packageData;
   })
-  .map(packageData => {
+  .map((packageData) => {
     buildAndPublishPackage(packageData.package);
     return packageData;
   })
-  .map(packageData => {
+  .map((packageData) => {
     cleanPackage(packageData.package);
     return packageData;
   })
-  .forEach(packageData =>
+  .forEach((packageData) =>
     console.log(
       `Successfully published ${packageData.name}@${packageData.version}`
     )
