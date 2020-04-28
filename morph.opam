@@ -11,6 +11,7 @@ depends: [
   "lwt"
   "logs"
   "hmap"
+  "piaf"
 ]
 build: [
   ["dune" "subst"] {pinned}

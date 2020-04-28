@@ -13,8 +13,8 @@ There are some helpers to create some of the common responses, we will use the t
 <!--Reason-->
 
 ```reason
-let server = Morph_server_http.make();
-let handler = _request => Morph.Response.text("Hello World!", Morph.Response.empty);
+let server = Morph.Server.make();
+let handler = _request => Morph.Response.text("Hello World!") |> Lwt.return;
 
 Morph.start(~servers=[server], handler) |> Lwt_main.run;
 ```
@@ -23,9 +23,9 @@ Morph.start(~servers=[server], handler) |> Lwt_main.run;
 
 ```ocaml
 let () =
-    let server = Morph_server_http.make () in
+    let server = Morph.Server.make () in
     let handler _request =
-        Morph.Response.text "Hello World!" Morph.Response.empty in
+        Morph.Response.text "Hello World!" |> Lwt.return in
     Morph.start ~servers:[server] handler |> Lwt_main.run
 ```
 

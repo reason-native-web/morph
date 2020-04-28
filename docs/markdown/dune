@@ -1,6 +1,6 @@
 (executables
- (libraries morph morph_server_http morph_graphql_server mtime mtime.clock.os
-   routes logs logs.fmt fmt.tty lwt graphql graphql-lwt uri)
+ (libraries morph morph_graphql_server mtime mtime.clock.os routes logs
+   logs.fmt fmt.tty lwt graphql graphql-lwt uri)
  (names getting_started simple_switch_based_router with_routes_package
    writing_middleware graphql_server))
 

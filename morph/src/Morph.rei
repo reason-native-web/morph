@@ -9,9 +9,9 @@ Morph.start(_request => Http.Response.Ok.make)
 */
 let start:
   (
-    ~servers: list(Server.t('req_body)),
-    ~middlewares: list(Server.middleware('req_body))=?,
-    Server.handler('req_body)
+    ~servers: list(Server.t),
+    ~middlewares: list(Server.middleware)=?,
+    Server.handler
   ) =>
   Lwt.t(unit);
 
@@ -27,6 +27,4 @@ Defines the [response] type and helper functions to easily create responses in [
 */
 module Response = Response;
 
-module Method = Method;
-module Status = Status;
 module Header = Header;

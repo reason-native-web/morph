@@ -181,7 +181,7 @@ When we have our handler we can create a server and start serving requests. This
 <!--Reason-->
 
 ```reason
-let server = Morph_server_http.make();
+let server = Morph.Server.make();
 
 Morph.start(~servers=[server], handler) |> Lwt_main.run;
 ```
@@ -190,7 +190,7 @@ Morph.start(~servers=[server], handler) |> Lwt_main.run;
 
 ```ocaml
 let () =
-  let server = Morph_server_http.make () in
+  let server = Morph.Server.make () in
   Morph.start ~servers:[server] handler |> Lwt_main.run
 ```
 

@@ -1,45 +1,28 @@
-type headers = list((string, string));
-
-type body = ..;
-
-type body +=
-  | String(string);
-
-type success = {
-  status: Status.t,
-  headers,
-  body,
-};
+type body = Piaf.Body.t;
 
 type failure = [ | `User(string) | `Server(string) | `Auth(string)];
 
 /**
 The core [Response.t] type
 */
-type t = result(success, failure);
+type t = result(Piaf.Response.t, failure);
 
-let success_of_failure =
+let response_of_failure =
   fun
-  | `User(message) => {
-      status: `Bad_request,
-      headers: [],
-      body: String(message),
-    }
-  | `Server(message) => {
-      status: `Internal_server_error,
-      headers: [],
-      body: String(message),
-    }
-  | `Auth(message) => {
-      status: `Unauthorized,
-      headers: [],
-      body: String(message),
-    };
+  | `User(message) =>
+    Piaf.Response.create(~body=Piaf.Body.of_string(message), `Bad_request)
+  | `Server(message) =>
+    Piaf.Response.create(
+      ~body=Piaf.Body.of_string(message),
+      `Internal_server_error,
+    )
+  | `Auth(message) =>
+    Piaf.Response.create(~body=Piaf.Body.of_string(message), `Unauthorized);
 
-let to_success =
+let response_of_result =
   fun
-  | Ok(success) => success
-  | Error(failure) => success_of_failure(failure);
+  | Ok(response) => response
+  | Error(failure) => response_of_failure(failure);
 
 let result_map = (fn, res) => {
   switch (res) {
@@ -48,82 +31,81 @@ let result_map = (fn, res) => {
   };
 };
 
-let empty = Ok({status: `OK, headers: [], body: String("")});
+let empty = Ok(Piaf.Response.create(`OK));
 
-let make = (~status=`OK, ~headers=[], body) => Ok({status, headers, body});
+let make = (~version=?, ~headers=?, ~body=?, status) =>
+  Piaf.Response.create(~version?, ~headers?, ~body?, status) |> Result.ok;
 
-let add_header = (new_header: (string, string)) => {
-  result_map(res => {...res, headers: res.headers @ [new_header]});
+let add_header = ((name, value): (string, string)) =>
+  result_map((res: Piaf.Response.t) => {
+    let headers = Piaf.Headers.add(res.message.headers, name, value);
+    Piaf.Response.create(~headers, ~body=res.body, res.message.status);
+  });
+
+let add_headers = (new_headers: Header.t) =>
+  result_map((res: Piaf.Response.t) => {
+    let headers = Piaf.Headers.add_list(res.message.headers, new_headers);
+    Piaf.Response.create(~headers, ~body=res.body, res.message.status);
+  });
+
+let set_status = (status: Piaf.Status.t) =>
+  result_map((res: Piaf.Response.t) =>
+    Piaf.Response.create(~headers=res.message.headers, ~body=res.body, status)
+  );
+
+let set_body = body =>
+  result_map((res: Piaf.Response.t) =>
+    Piaf.Response.create(
+      ~headers=res.message.headers,
+      ~body,
+      res.message.status,
+    )
+  );
+
+let ok = () =>
+  Ok(Piaf.Response.create(~body=Piaf.Body.of_string("ok"), `OK));
+let text = text =>
+  Ok(Piaf.Response.create(~body=Piaf.Body.of_string(text), `OK));
+
+let json = json =>
+  Ok(
+    Piaf.Response.create(
+      ~headers=Piaf.Headers.(add(empty, "Content-type", "application/json")),
+      ~body=Piaf.Body.of_string(json),
+      `OK,
+    ),
+  );
+
+let html = markup =>
+  Ok(
+    Piaf.Response.create(
+      ~headers=Piaf.Headers.(add(empty, "Content-type", "text/html")),
+      ~body=Piaf.Body.of_string(markup),
+      `OK,
+    ),
+  );
+
+let redirect = (~code=303, targetPath) =>
+  Ok(
+    Piaf.Response.create(
+      ~headers=Piaf.Headers.(add(empty, "Location", targetPath)),
+      ~body=Piaf.Body.of_string(targetPath),
+      `Code(code),
+    ),
+  );
+
+let unauthorized = message =>
+  Ok(
+    Piaf.Response.create(~body=Piaf.Body.of_string(message), `Unauthorized),
+  );
+
+let not_found = (~message="Not found", ()) =>
+  Ok(Piaf.Response.create(~body=Piaf.Body.of_string(message), `Not_found));
+
+let string_stream = (~stream) => {
+  Ok(Piaf.Response.of_string_stream(~body=stream, `OK));
 };
 
-let add_headers = (new_headers: headers) => {
-  result_map(res => {...res, headers: res.headers @ new_headers});
-};
-
-let set_status = (status: Status.t) => {
-  result_map(res => {...res, status});
-};
-
-let set_body = body => {
-  result_map(res => {...res, body});
-};
-
-let ok = res => {
-  add_header(("Content-length", "2"), res)
-  |> set_status(`OK)
-  |> set_body(String("ok"))
-  |> Lwt.return;
-};
-
-let text = (text, res) => {
-  let content_length = text |> String.length |> string_of_int;
-  add_header(("Content-length", content_length), res)
-  |> set_body(String(text))
-  |> Lwt.return;
-};
-
-let json = (json, res) => {
-  let content_length = json |> String.length |> string_of_int;
-  add_header(("Content-type", "application/json"), res)
-  |> add_header(("Content-length", content_length))
-  |> set_body(String(json))
-  |> Lwt.return;
-};
-
-let html = (markup, res) => {
-  let content_length = markup |> String.length |> string_of_int;
-  add_header(("Content-type", "text/html"), res)
-  |> add_header(("Content-length", content_length))
-  |> set_body(String(markup))
-  |> Lwt.return;
-};
-
-let redirect = (~code=303, targetPath, res) => {
-  let content_length = targetPath |> String.length |> string_of_int;
-
-  add_header(("Content-length", content_length), res)
-  |> add_header(("Location", targetPath))
-  |> set_status(`Code(code))
-  |> set_body(String(targetPath))
-  |> Lwt.return;
-};
-
-let unauthorized = (message, res) => {
-  add_header(
-    ("Content-length", String.length(message) |> string_of_int),
-    res,
-  )
-  |> set_status(`Unauthorized)
-  |> set_body(String(message))
-  |> Lwt.return;
-};
-
-let not_found = (~message="Not found", res) => {
-  add_header(
-    ("content-length", String.length(message) |> string_of_int),
-    res,
-  )
-  |> set_status(`Not_found)
-  |> set_body(String(message))
-  |> Lwt.return;
+let static = (~file_path) => {
+  Ok(Piaf.Response.of_file(file_path));
 };

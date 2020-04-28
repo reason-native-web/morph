@@ -13,44 +13,45 @@ The example code bellow shows some common usecases
 <!--Reason-->
 
 ```reason
-let handler = request => {
+let handler = ({request, _}: Morph.Request.t) => {
   let path_parts =
-    request.target
+    request.message.target
     |> Uri.of_string
     |> Uri.path
     |> String.split_on_char('/')
     |> List.filter(s => s != "");
 
-  switch (request.meth, path_parts) {
-  | (_, []) => Morph.Response.text("Hello world!", Morph.Response.empty)
+  switch (request.message.meth, path_parts) {
+  | (_, []) => Morph.Response.text("Hello world!")
   | (_, ["greet", name]) =>
-    Morph.Response.text("Hello " ++ name ++ "!", Morph.Response.empty)
+    Morph.Response.text("Hello " ++ name ++ "!")
   | (`GET, ["static", ...file_path]) =>
-    Morph_base.Response.static(~file_path=String.concat("/", file_path), Morph.Response.empty)
-  | (_, _) => Morph.Response.not_found(Morph.Response.empty)
-  };
+    Morph.Response.static(~file_path=String.concat("/", file_path))
+  | (_, _) => Morph.Response.not_found()
+  }
+  |> Lwt.return;
 };
 ```
 
 <!--OCaml-->
 
 ```ocaml
-let handler request =
-  let open Morph.Request in
+let handler ({request; _}: Morph.Request.t) =
   let path_parts =
-      request.target
+      request.message.target
       |> Uri.of_string
       |> Uri.path
       |> String.split_on_char '/'
       |> List.filter (fun s  -> s <> "") in
-  match ((request.meth), path_parts) with
+  (match (request.message.meth, path_parts) with
   | (_,[]) ->
-      Morph.Response.text "Hello world!" Morph.Response.empty
+      Morph.Response.text "Hello world!"
   | (_,"greet"::name::[]) ->
-      Morph.Response.text ("Hello " ^ name ^ "!") Morph.Response.empty
+      Morph.Response.text ("Hello " ^ name ^ "!")
   | (`GET, "static"::file_path) ->
-      Morph_base.Response.static ~file_path:(String.concat "/" file_path) Morph.Response.empty
-  | (_,_) -> Morph.Response.not_found Morph.Response.empty
+      Morph.Response.static ~file_path:(String.concat "/" file_path)
+  | (_,_) -> Morph.Response.not_found ())
+  |> Lwt.return
 ```
 
 <!--END_DOCUSAURUS_CODE_TABS-->
@@ -61,7 +62,7 @@ When you have built out the routes you want inside of the handler you simply pas
 <!--Reason-->
 
 ```reason
-let server = Morph_server_http.make();
+let server = Morph.Server.make();
 Morph.start(~servers=[server], handler)
 |> Lwt_main.run;
 ```
@@ -69,7 +70,7 @@ Morph.start(~servers=[server], handler)
 <!--OCaml-->
 
 ```ocaml
-let server = Morph_server_http.make () in
+let server = Morph.Server.make () in
 Morph.start ~servers:[server] handler
 |> Lwt_main.run
 ```

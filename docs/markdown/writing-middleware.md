@@ -55,18 +55,17 @@ let logger = (service) => request => {
 <!--OCaml-->
 
 ```ocaml
-let logger service request =
+let logger service (req: Morph.Request.t) =
   let open Lwt.Infix in
-  let open Morph.Request in
   let start_request = Mtime_clock.elapsed () in
-  service request
+  service req
   >|= fun response ->
   let end_request = Mtime_clock.elapsed () in
   Logs.info (fun m ->
       m
         ("http: %s request to %s finished in %fms")
-        (Morph.Method.to_string request.meth)
-        request.target
+        (Piaf.Method.to_string req.request.message.meth)
+        req.request.message.target
         (Mtime.Span.abs_diff start_request end_request |> Mtime.Span.to_ms)) ;
   response;
 ```
@@ -83,8 +82,8 @@ Fmt_tty.setup_std_outputs();
 Logs.set_level(Some(Logs.Info));
 Logs.set_reporter(Logs_fmt.reporter());
 
-let handler = _request => Morph.Response.text("Hello World!");
-let server = Morph_server_http.make();
+let handler = _request => Morph.Response.text("Hello World!") |> Lwt.return;
+let server = Morph.Server.make();
 
 Morph.start(~servers=[server], ~middlewares=[logger], handler) |> Lwt_main.run;
 ```
@@ -96,8 +95,8 @@ Fmt_tty.setup_std_outputs ();
 Logs.set_level (Some Logs.Info);
 Logs.set_reporter (Logs_fmt.reporter ());
 
-let handler _request = Morph.Response.text "Hello World!" Morph.Response.empty in
-let server = Morph_server_http.make () in
+let handler _request = Morph.Response.text "Hello World!" |> Lwt.return in
+let server = Morph.Server.make () in
 Morph.start ~servers:[server] ~middlewares:[logger] handler |> Lwt_main.run
 ```
 

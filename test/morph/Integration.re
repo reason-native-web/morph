@@ -8,18 +8,23 @@ let {describe} =
        testLifecycle
        |> beforeAll(() => {
             let http_server =
-              Morph_server_http.make(
+              Morph.Server.make(
                 ~port=test_port,
                 ~address=Unix.inet_addr_loopback,
                 (),
               );
             Morph.start(~servers=[http_server], _ =>
-              Lwt.return(
-                Morph.Response.empty
-                |> Morph.Response.add_header(("connection", "close"))
-                |> Morph.Response.set_body(
-                     Morph.Response.String(test_string),
-                   ),
+              Lwt_result.return(
+                Piaf.Response.create(
+                  ~body=Piaf.Body.of_string(test_string),
+                  ~headers=
+                    Piaf.Headers.add(
+                      Piaf.Headers.empty,
+                      "content-length",
+                      String.length(test_string) |> string_of_int,
+                    ),
+                  `OK,
+                ),
               )
             );
           })

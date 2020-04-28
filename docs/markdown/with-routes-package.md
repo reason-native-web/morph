@@ -14,11 +14,11 @@ First step is to create handlers. A handler is just a function that returns a `R
 
 ```reason
 /* Just respond with "ok" on every request */
-let root_handler = (_request) => Morph.Response.ok(Morph.Response.empty);
+let root_handler = (_request) => Morph.Response.ok();
 
 /* Return a greeting with the name */
 let greet_handler = (greeting, _request) => {
-  Morph.Response.text(greeting, Morph.Response.empty);
+  Morph.Response.text(greeting);
 };
 ```
 
@@ -26,10 +26,10 @@ let greet_handler = (greeting, _request) => {
 
 ```ocaml
 (* Just respond with "ok" on every request *)
-let root_handler _request = Morph.Response.ok Morph.Response.empty
+let root_handler _request = Morph.Response.ok ()
 
 (* Return a greeting with the name *)
-let greet_handler greeting _request = Morph.Response.text greeting Morph.Response.empty
+let greet_handler greeting _request = Morph.Response.text greeting
 ```
 
 <!--END_DOCUSAURUS_CODE_TABS-->
@@ -42,12 +42,10 @@ Then you create a route definition. This definition will use the `root_handler` 
 ```reason
 let routes =
   Routes.(
-    Routes.Infix.(
-      with_method([
-        (`GET, root_handler <$ s("")),
-        (`GET, greet_handler <$> s("greet") *> str),
-      ])
-    )
+    with_method([
+      root_handler / s(""),
+      greet_handler / s("greet") / str,
+    ])
   );
 ```
 
@@ -56,11 +54,10 @@ let routes =
 ```ocaml
 let routes =
   let open Routes in
-    let open Routes.Infix in
-      with_method [
-        (`GET, root_handler <$ s "");
-        (`GET, greet_handler <$> s "greet" *> str)
-      ]
+    one_of [
+      s "" /? trail @--> root_handler;
+      s "greet" / str /? trail @--> greet_handler;
+    ]
 ```
 
 <!--END_DOCUSAURUS_CODE_TABS-->
@@ -71,15 +68,15 @@ Lastly you create a routes callback and start the server. In this case we pass i
 <!--Reason-->
 
 ```reason
-let handler = request =>
-  Routes.match_with_method(~target=request.target, ~meth=request.meth, routes)
+let handler = {request, _} =>
+  Routes.match(~target=request.message.target, routes)
   |> (
     fun
     | Some(res) => res(request)
     | None => Morph.Response.not_found(Morph.Response.empty)
   );
 
-let server = Morph_server_http.make();
+let server = Morph.Server.make();
 Morph.start(~servers=[server], handler) |> Lwt_main.run;
 ```
 
@@ -87,13 +84,13 @@ Morph.start(~servers=[server], handler) |> Lwt_main.run;
 
 ```ocaml
 let () =
-  let handler request =
-    let open Morph.Request in
-    (Routes.match_with_method ~target:request.target ~meth:request.meth routes)
+  let handler (req: Morph.Request.t) =
+    (Routes.match' ~target:req.request.message.target routes)
     |> (function
-      | Some res -> res request
-      | None  -> Morph.Response.not_found Morph.Response.empty) in
-  let server = Morph_server_http.make () in
+      | Some handler -> handler req
+      | None -> Morph.Response.not_found ())
+    |> Lwt.return in
+  let server = Morph.Server.make () in
   Morph.start ~servers:[server] handler
   |> Lwt_main.run
 ```

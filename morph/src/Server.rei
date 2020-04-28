@@ -1,20 +1,25 @@
 /**
 A [handler] takes a [Request.t] and returns a [Response.t] wrapepd in a [Lwt.t]
 */
-type handler('req_body) = Request.t('req_body) => Lwt.t(Response.t);
-
-/**
-A [middleware] takes a [handler] and returns a [handler].
-*/
-type middleware('req_body) = handler('req_body) => handler('req_body);
+type handler = Piaf.Server.Service.t(Request.t, Response.t);
 
 /**
 A [Server.t] is a record that describes a server.
 */
-type t('req_body) = {
-  start: handler('req_body) => Lwt.t(unit),
+type t = {
+  start: handler => Lwt.t(unit),
   port: int,
 };
 
-let apply_all:
-  (list(middleware('req_body)), handler('req_body)) => handler('req_body);
+type middleware = handler => handler;
+
+/**
+Apply a list of middlewares to a handler
+*/
+let apply_all: (list(handler => handler), handler) => handler;
+
+/**
+Make the default server
+*/
+
+let make: (~port: int=?, ~address: Unix.inet_addr=?, unit) => t;
