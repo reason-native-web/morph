@@ -7,3 +7,9 @@ node_modules
 
 # add this if we plan on publishing to npm
 .npmignore
+.DS_Store
+_opam
+_docs
+.github
+test
+junit.xml

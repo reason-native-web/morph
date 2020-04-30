@@ -2,7 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>index</title>
-    <link rel="stylesheet" href="./odoc.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen, print"
+      href="_odoc-theme/odoc.css"
+    />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   </head>
@@ -11,20 +16,20 @@
       <h1>Morph</h1>
       <p>
         Morph is a web framework built on the notion of transforming requests
-        and responses.
+        and responses. It is built ontop of Piaf as a high performance server
+        implementation that abstracts some of the lower level concepts.
       </p>
       <div class="by-name">
         <h2>Package documentation</h2>
-        <ol>
-          <li><a href="morph/index.html">morph</a> - Core package</li>
-          <li>
-            <a href="morph_client/index.html">morph_client</a> - HTTP client
-          </li>
-          <li>
-            <a href="morph_server/index.html">morph_server</a> - Creating
-            servers
-          </li>
-        </ol>
+        <p>
+          Morph currently has 2 packages:
+          <ul>
+          <li><a href="morph/index.html">Morph</b></a>, the core package</li>
+
+          <li><a href="morph_graphql_server/index.html">Morph_graphql_server</a>,
+          a nice way to build graphql servers ontop of Morph.</li>
+        </ul>
+        </p>
       </div>
     </main>
   </body>
