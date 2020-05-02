@@ -1,23 +1,25 @@
 (lang dune 1.11)
 (name morph)
+(version 0.4.1)
+(maintainers "Ulrik Strid")
+(authors "Ulrik Strid")
 (source (github reason-native-web/morph))
 (homepage https://reason-native-web.github.io)
 (documentation https://reason-native-web.github.io/morph)
 (generate_opam_files true)
-
-(using fmt 1.2)
 
 (package
  (name morph)
  (synopsis "Abstraction on Httpaf and H2")
  (depends
   (ocaml
-   (>= 4.04.2))
+   (>= 4.06.1))
   (dune
    (>= 1.11))
   reason
-  lwt
+  (lwt (>= 4.0.0 )) 
   logs
+  fmt
   hmap
   piaf
   ))
@@ -27,7 +29,7 @@
  (synopsis "Helpers for working with graphql and morph")
  (depends
   (ocaml
-   (>= 4.04.2))
+   (>= 4.06.1))
   (dune
    (>= 1.11))
   reason
@@ -37,12 +39,3 @@
   graphql
   graphql-lwt
   ))
-
-(package
-  (name morph_test)
-  (depends
-    (ocaml (>= 4.04.2))
-    (dune (>= 1.11))
-    reason
-    rely
-    morph))

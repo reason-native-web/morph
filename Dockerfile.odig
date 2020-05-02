@@ -1,0 +1,25 @@
+FROM  ocaml/opam2
+
+ARG ODOC_THEME=odig.dark
+ENV OPAMYES=true
+
+RUN opam switch create . ocaml-base-compiler.4.09.1
+RUN opam depext conf-pkg-config conf-m4 conf-libssl
+
+RUN opam install odig
+
+COPY dune-project morph.opam morph_graphql_server.opam ./
+
+RUN opam update
+
+RUN opam install --deps-only .
+
+COPY ./morph_graphql_server ./morph_graphql_server
+COPY ./morph ./morph
+
+RUN opam pin -w morph . -k path
+RUN opam pin -w morph_graphql_server . -k path
+
+RUN opam exec -- odig odoc -v --odoc-theme=${ODOC_THEME} \
+    --index-title='Morph docs' \
+    --no-pkg-deps morph morph_graphql_server piaf bigstringaf gluten gluten-lwt gluten-lwt-unix lwt httpaf httpaf-lwt httpaf-lwt-unix hmap graphql graphql-lwt || true

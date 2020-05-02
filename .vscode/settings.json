@@ -1,7 +1,0 @@
-{
-  "ocaml.packageManager": "esy",
-  "ocaml.sandbox": {
-    "root": "/Users/ulrik.strid/dev/reason-native-web/morph",
-    "kind": "esy"
-  }
-}

@@ -1,6 +1,6 @@
 {
   "name": "@reason-native-web/morph",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "esy": {
     "build": "dune build -p morph"
   },
@@ -8,13 +8,13 @@
     "format": "dune build @fmt --auto-promote"
   },
   "dependencies": {
-    "@opam/dune": "*",
+    "@opam/dune": ">=1.11.0",
     "@opam/lwt": ">=4.0.0",
     "@opam/logs": "*",
     "@opam/fmt": "*",
     "@opam/hmap": "*",
     "@esy-ocaml/reason": "*",
-    "@reason-native-web/piaf": "*",
+    "@reason-native-web/piaf": "^1.1.0",
     "ocaml": ">=4.06.1"
   },
   "devDependencies": {}

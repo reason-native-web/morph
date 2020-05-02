@@ -18,7 +18,6 @@ stages:
     - template: .ci/build-platform.yml
       parameters:
         installFolderPath: "/3______________________________________________________________/i"
-    - template: .ci/build-docs.yml
     - template: .ci/utils/prepare-cache.yml
 
   - job: macOS
@@ -43,30 +42,3 @@ stages:
   #     parameters:
   #       esyLockPath: $(Build.SourcesDirectory)\esy.lock\index.json
   #       installFolderPath: \3_
-
-- stage: Publish_docs
-  displayName: Publish documentation
-  dependsOn: [Build]
-  jobs:
-  - deployment: Publish_docs
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-    displayName: Publish docs to Github
-    environment: gh-pages
-    pool:
-      vmImage: ubuntu-16.04
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-            - template: .ci/publish-api-docs.yml
-  - deployment: Upstream_docs
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-    displayName: Upstream docs to reason-native-web.github.io
-    environment: reason-native-web_github_io
-    pool:
-      vmImage: ubuntu-16.04
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-            - template: .ci/upstream-docs.yml

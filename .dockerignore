@@ -1,0 +1,9 @@
+esy.lock
+_esy
+_build
+_opam
+_docs
+.ci
+.github
+node_modules
+.git

@@ -2,3 +2,7 @@
  (name morph)
  (public_name morph)
  (libraries lwt logs hmap piaf))
+
+(documentation
+ (package morph)
+ (mld_files (:standard)))

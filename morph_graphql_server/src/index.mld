@@ -1,0 +1,8 @@
+{0 Morph graphql server}
+
+The entry point of this library is the module:
+{!module-Morph_graphql_server}.
+
+{1 Goals}
+
+This package aims to be a simple way of building graphql servers. You should just have to build your schema and then have it running.

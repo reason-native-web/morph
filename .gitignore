@@ -1,8 +1,16 @@
 *.install
 *.merlin
+.DS_Store
 _esy
+_docs
+_build
+_opam
+*/.opam-switch/*
 node_modules
 junit.xml
 
 */esy.lock
 *.esy.lock
+
+vendor
+.vscode/*

@@ -1,5 +1,4 @@
 (library
  (name Morph_test)
- (public_name morph_test.morph)
- (libraries lwt morph piaf morph_test.framework rely.lib)
+ (libraries lwt morph piaf TestFramework rely.lib)
  (flags -linkall -g -w -9))
