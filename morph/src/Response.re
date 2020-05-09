@@ -42,7 +42,7 @@ let add_header = ((name, value): (string, string)) =>
     Piaf.Response.create(~headers, ~body=res.body, res.message.status);
   });
 
-let add_headers = (new_headers: Header.t) =>
+let add_headers = (new_headers: list((string, string))) =>
   result_map((res: Piaf.Response.t) => {
     let headers = Piaf.Headers.add_list(res.message.headers, new_headers);
     Piaf.Response.create(~headers, ~body=res.body, res.message.status);

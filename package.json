@@ -3,7 +3,7 @@
   "version": "0.4.1",
   "esy": {
     "build": [
-      "refmterr dune build --root=."
+      "dune build --root=."
     ],
     "install": [
       "esy-installer #{self.target_dir / 'default' / 'morph.install'}"
@@ -11,7 +11,8 @@
   },
   "scripts": {
     "test": "dune exec test/test_exe/RunTests.exe",
-    "fmt": "dune build @fmt --auto-promote --root .",
+    "example": "dune exec bin/Example.exe",
+    "fmt": "dune build @fmt --auto-promote bin",
     "examples": "esy b dune build @docs-examples",
     "examples-path": "esy echo #{self.target_dir}/default/docs",
     "docs": "dune build @doc --only-packages=morph,morph_graphql_server --root=.",
@@ -27,10 +28,17 @@
     "@opam/logs": "*",
     "@opam/lwt": "^5.0.0",
     "@opam/uri": "*",
-    "@reason-native-web/piaf": "^1.0.1002",
-    "ocaml": "4.9.0"
+    "@opam/tyxml": "*",
+    "@opam/tyxml-jsx": "*",
+    "@opam/session": "*",
+    "@opam/cookie": "*",
+    "@opam/session-cookie": "*",
+    "@opam/session-cookie-lwt": "*",
+    "@reason-native-web/piaf": "^1.2.0",
+    "ocaml": "~4.10.0"
   },
   "devDependencies": {
+    "@opam/ocaml-lsp-server": "ocaml/ocaml-lsp:ocaml-lsp-server.opam#ad1e4e7ab7b168a6d4861778deae0008bb973376",
     "@opam/mdx": "*",
     "@opam/merlin": "*",
     "@opam/mtime": "*",
@@ -38,11 +46,6 @@
     "@opam/odoc": "*",
     "@opam/routes": "*",
     "@opam/utop": "*",
-    "@reason-native/rely": "*",
-    "@opam/ocaml-lsp-server": "ocaml/ocaml-lsp:ocaml-lsp-server.opam",
-    "refmterr": "*"
-  },
-  "resolutions": {
-    "@opam/angstrom": "inhabitedtype/angstrom:angstrom.opam#a5d9661"
+    "@reason-native/rely": "*"
   }
 }

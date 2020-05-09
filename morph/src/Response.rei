@@ -36,7 +36,7 @@ let add_header: ((string, string), t) => t;
 /**
 [add_header headers response] returns a copy of t of response with the headers added.
 */
-let add_headers: (Header.t, t) => t;
+let add_headers: (list((string, string)), t) => t;
 
 /**
 [set_status status response] returns a copy of t with the given status.

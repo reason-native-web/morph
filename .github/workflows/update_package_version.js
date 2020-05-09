@@ -5,14 +5,14 @@ const version = Fs.readFileSync(Path.resolve("VERSION"), { encoding: "utf8" })
   .toString()
   .trim();
 
-const updateVersion = file => {
+const updateVersion = (file) => {
   const packageJson = Fs.readFileSync(file, { encoding: "utf8" });
   const updatedPackageJson = JSON.parse(packageJson);
   updatedPackageJson.version = version;
 
-  Fs.writeFileSync(file, JSON.stringify(updatedPackageJson, null, 2));
+  Fs.writeFileSync(file, JSON.stringify(updatedPackageJson, null, 2) + "\n");
 };
 
 Fs.readdirSync(".", { encoding: "utf8" })
-  .filter(file => file.includes(".json") && file.includes("morph"))
+  .filter((file) => file.includes(".json") && file.includes("morph"))
   .map(updateVersion);
