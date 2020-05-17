@@ -58,7 +58,7 @@ let login_form_markup =
   </Layout>;
 
 let post_handler = (~session_key, req: Morph.Request.t) => {
-  let referer = Piaf.Headers.get(req.request.message.headers, "Referer");
+  let referer = Piaf.Headers.get(req.request.headers, "Referer");
 
   Lwt.bind(
     Piaf.Body.to_string(req.request.body),
@@ -121,12 +121,9 @@ let middleware =
     : Morph.Server.middleware =>
   (next, req) => {
     (
-      switch (req.request.message.meth) {
+      switch (req.request.meth) {
       | `POST =>
-        Routes.match'(
-          ~target=req.request.message.target,
-          post_routes(~session_key),
-        )
+        Routes.match'(~target=req.request.target, post_routes(~session_key))
       | _ => None
       }
     )

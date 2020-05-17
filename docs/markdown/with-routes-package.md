@@ -69,7 +69,7 @@ Lastly you create a routes callback and start the server. In this case we pass i
 
 ```reason
 let handler = {request, _} =>
-  Routes.match(~target=request.message.target, routes)
+  Routes.match(~target=request.target, routes)
   |> (
     fun
     | Some(res) => res(request)
@@ -85,7 +85,7 @@ Morph.start(~servers=[server], handler) |> Lwt_main.run;
 ```ocaml
 let () =
   let handler (req: Morph.Request.t) =
-    (Routes.match' ~target:req.request.message.target routes)
+    (Routes.match' ~target:req.request.target routes)
     |> (function
       | Some handler -> handler req
       | None -> Morph.Response.not_found ())

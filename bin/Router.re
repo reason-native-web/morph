@@ -8,9 +8,9 @@ let make =
   let post_router = Routes.one_of(post);
 
   let route_match =
-    switch (req.request.message.meth) {
-    | `GET => Routes.match'(~target=req.request.message.target, get_router)
-    | `POST => Routes.match'(~target=req.request.message.target, post_router)
+    switch (req.request.meth) {
+    | `GET => Routes.match'(~target=req.request.target, get_router)
+    | `POST => Routes.match'(~target=req.request.target, post_router)
     | _ => None
     };
 

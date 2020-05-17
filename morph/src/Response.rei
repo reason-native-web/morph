@@ -1,6 +1,11 @@
 type body = Piaf.Body.t;
 
-type failure = [ | `User(string) | `Server(string) | `Auth(string)];
+type failure = [
+  Piaf.Error.t
+  | `User(string)
+  | `Server(string)
+  | `Auth(string)
+];
 
 /**
 The core [Response.t] type

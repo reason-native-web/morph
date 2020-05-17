@@ -10,13 +10,11 @@ module MemorySession = {
   };
 
   let get_session = (backend, request: Piaf.Request.t, ~key) => {
-    let cookie_header = Piaf.Headers.get(request.message.headers, "Cookie");
+    let cookie_header = Piaf.Headers.get(request.headers, "Cookie");
     let cookie =
       Option.bind(cookie_header, value => {
         Cookie.cookies_of_header(("Cookie", value))
-        |> List.find_opt(((cookie_key, _)) => 
-          cookie_key == key
-        )
+        |> List.find_opt(((cookie_key, _)) => cookie_key == key)
       });
     switch (cookie) {
     | Some((k, v)) =>
@@ -35,7 +33,7 @@ module MemorySession = {
 
 type s = {
   session: MemorySession.t,
-  path: string
+  path: string,
 };
 
 module Key = {
@@ -51,7 +49,7 @@ let get = (request: Request.t, ~key) => {
 
 let set = (~expiry=?, ~path="/", request: Request.t, ~value, ~key) => {
   let session_p = MemorySession.generate(~expiry?, backend, value);
-  
+
   Lwt.bind(
     session_p,
     session => {

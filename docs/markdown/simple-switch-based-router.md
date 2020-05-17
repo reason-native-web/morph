@@ -15,13 +15,13 @@ The example code bellow shows some common usecases
 ```reason
 let handler = ({request, _}: Morph.Request.t) => {
   let path_parts =
-    request.message.target
+    request.target
     |> Uri.of_string
     |> Uri.path
     |> String.split_on_char('/')
     |> List.filter(s => s != "");
 
-  switch (request.message.meth, path_parts) {
+  switch (request.meth, path_parts) {
   | (_, []) => Morph.Response.text("Hello world!")
   | (_, ["greet", name]) =>
     Morph.Response.text("Hello " ++ name ++ "!")
@@ -38,12 +38,12 @@ let handler = ({request, _}: Morph.Request.t) => {
 ```ocaml
 let handler ({request; _}: Morph.Request.t) =
   let path_parts =
-      request.message.target
+      request.target
       |> Uri.of_string
       |> Uri.path
       |> String.split_on_char '/'
       |> List.filter (fun s  -> s <> "") in
-  (match (request.message.meth, path_parts) with
+  (match (request.meth, path_parts) with
   | (_,[]) ->
       Morph.Response.text "Hello world!"
   | (_,"greet"::name::[]) ->

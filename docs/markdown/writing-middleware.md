@@ -64,8 +64,8 @@ let logger service (req: Morph.Request.t) =
   Logs.info (fun m ->
       m
         ("http: %s request to %s finished in %fms")
-        (Piaf.Method.to_string req.request.message.meth)
-        req.request.message.target
+        (Piaf.Method.to_string req.request.meth)
+        req.request.target
         (Mtime.Span.abs_diff start_request end_request |> Mtime.Span.to_ms)) ;
   response;
 ```

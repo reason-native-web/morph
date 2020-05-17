@@ -1,6 +1,6 @@
 {
   "name": "@reason-native-web/morph_graphql_server",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "esy": {
     "build": "dune build -p morph_graphql_server"
   },

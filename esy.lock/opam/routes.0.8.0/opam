@@ -29,9 +29,9 @@ provided handler.
 """
 url {
   src:
-    "https://github.com/anuragsoni/routes/releases/download/0.7.3/routes-0.7.3.tbz"
+    "https://github.com/anuragsoni/routes/releases/download/0.8.0/routes-0.8.0.tbz"
   checksum: [
-    "sha256=e08028974b626f85c395d8196aef7b0052ba9a1d534b896b83015641b5dfc32e"
-    "sha512=0e10de2031b828e1eeeafbee07e42c903d18e0e6bbe90ff58ef1d28d0be10fd7d086bc771dc1ed6744cd2c42fc17e4200193942d40add52cfa048eb188479781"
+    "sha256=fa786b05d61fa08c1386bfa3259cbb9ebb129e7f8ac759a6bec0c52cc92a7c46"
+    "sha512=4ad7b8416de7acc07927f990af85821100aa1e8c2cb53c59639001b335cc472f5b42c2c9ccfd301dc59801918da250fdcf9f47874fa38452d53ea0e27766a75a"
   ]
 }

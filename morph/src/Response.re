@@ -1,6 +1,11 @@
 type body = Piaf.Body.t;
 
-type failure = [ | `User(string) | `Server(string) | `Auth(string)];
+type failure = [
+  | `User(string)
+  | `Server(string)
+  | `Auth(string)
+  | Piaf.Error.t
+];
 
 /**
 The core [Response.t] type
@@ -17,7 +22,12 @@ let response_of_failure =
       `Internal_server_error,
     )
   | `Auth(message) =>
-    Piaf.Response.create(~body=Piaf.Body.of_string(message), `Unauthorized);
+    Piaf.Response.create(~body=Piaf.Body.of_string(message), `Unauthorized)
+  | _ =>
+    Piaf.Response.create(
+      ~body=Piaf.Body.of_string("Unkown server error"),
+      `Internal_server_error,
+    );
 
 let response_of_result =
   fun
@@ -38,28 +48,24 @@ let make = (~version=?, ~headers=?, ~body=?, status) =>
 
 let add_header = ((name, value): (string, string)) =>
   result_map((res: Piaf.Response.t) => {
-    let headers = Piaf.Headers.add(res.message.headers, name, value);
-    Piaf.Response.create(~headers, ~body=res.body, res.message.status);
+    let headers = Piaf.Headers.add(res.headers, name, value);
+    Piaf.Response.create(~headers, ~body=res.body, res.status);
   });
 
 let add_headers = (new_headers: list((string, string))) =>
   result_map((res: Piaf.Response.t) => {
-    let headers = Piaf.Headers.add_list(res.message.headers, new_headers);
-    Piaf.Response.create(~headers, ~body=res.body, res.message.status);
+    let headers = Piaf.Headers.add_list(res.headers, new_headers);
+    Piaf.Response.create(~headers, ~body=res.body, res.status);
   });
 
 let set_status = (status: Piaf.Status.t) =>
   result_map((res: Piaf.Response.t) =>
-    Piaf.Response.create(~headers=res.message.headers, ~body=res.body, status)
+    Piaf.Response.create(~headers=res.headers, ~body=res.body, status)
   );
 
 let set_body = body =>
   result_map((res: Piaf.Response.t) =>
-    Piaf.Response.create(
-      ~headers=res.message.headers,
-      ~body,
-      res.message.status,
-    )
+    Piaf.Response.create(~headers=res.headers, ~body, res.status)
   );
 
 let ok = () =>

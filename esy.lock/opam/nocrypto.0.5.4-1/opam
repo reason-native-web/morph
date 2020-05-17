@@ -10,7 +10,6 @@ tags:          [ "org:mirage" ]
 build: ["ocaml" "pkg/pkg.ml" "build" "--pinned" "%{pinned}%" "--tests" "false"
                 "--jobs" "1"
                 "--with-lwt" "%{lwt:installed}%"
-                "--with-mirage" "%{mirage-entropy:installed}%"
                 "--xen" "%{mirage-xen:installed}%"
                 "--freestanding" "%{mirage-solo5:installed}%"]
 
@@ -29,10 +28,10 @@ depends: [
   "zarith"
   "lwt"
   "sexplib" {< "v0.14"}
-  "mirage-no-xen" | ("mirage-xen" & "zarith-xen")
-  "mirage-no-solo5" | ("mirage-solo5" & "zarith-freestanding")
+  "mirage-no-xen" | ("mirage-xen" & "mirage-entropy" & "zarith-xen")
+  "mirage-no-solo5" |
+  ("mirage-solo5" & "mirage-entropy" & "zarith-freestanding")
 ]
-depopts: [ "mirage-entropy" ]
 conflicts: [
   "topkg" {<"0.9.1"}
   "ocb-stubblr" {<"0.1.0"}
@@ -48,7 +47,6 @@ patches: [
     "0004-pack-package-workaround-ocamlbuild-272.patch"
     "0005-use-modern-cstruct-findlib.patch"
     "0006-explicit-dependency-on-sexplib.patch"
-    "0007-mirage-entropy.patch"
 ]
 synopsis: "Simpler crypto"
 description: """
@@ -59,10 +57,6 @@ SHA1, SHA2), public-key primitives (RSA, DSA, DH) and a strong RNG (Fortuna).
 RSA timing attacks are countered by blinding. AES timing attacks are avoided by
 delegating to AES-NI."""
 extra-files: [
-  [
-    "0007-mirage-entropy.patch"
-    "md5=bb3368e3fd64857a6d05e1a3e61f08cf"
-  ]
   [
     "0006-explicit-dependency-on-sexplib.patch"
     "md5=7f552e18ba304eb4e1e19d66d19b7888"
