@@ -1,6 +1,6 @@
 (lang dune 1.11)
 (name morph)
-(version 0.4.2)
+(version 0.5.0)
 (maintainers "Ulrik Strid")
 (authors "Ulrik Strid")
 (source (github reason-native-web/morph))
