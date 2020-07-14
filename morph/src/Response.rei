@@ -54,22 +54,30 @@ let set_status: (Piaf.Status.t, t) => t;
 let set_body: (body, t) => t;
 
 /**
-[ok response] is a conventience function to return a 200 OK response.
+[ok] is a conventience function to return a 200 OK response.
 */
 let ok: unit => t;
 
 /**
-[text text response] is a conventience function to return a text response.
+[text text_string] is a conventience function to return a text response.
 */
 let text: string => t;
 
 /**
-[json json response] is a conventience function to return a JSON response.
+[json json_string] is a conventience function to return a JSON response.
 */
 let json: string => t;
 
 /**
-[html markup response] is a conventience function to return a HTML response.
+[html markup_string] is a conventience function to return a HTML response.
+
+To make it work with [Tyxml] you can add a simple util like this;
+{[
+let respond_html = elt => {
+  Morph.Response.html(Format.asprintf("%a", Tyxml.Html.pp(), elt))
+  |> Lwt.return;
+};
+]}
 */
 let html: string => t;
 
