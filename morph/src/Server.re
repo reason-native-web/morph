@@ -8,7 +8,7 @@ type t = {
 };
 
 let apply_all = (middlewares, handler) =>
-  ListLabels.fold_left(~f=(|>), ~init=handler, middlewares);
+  ListLabels.fold_right(~f=(x, y) => x(y), ~init=handler, middlewares);
 
 let client_address_key: Hmap.key(Unix.sockaddr) = Hmap.Key.create();
 
