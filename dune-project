@@ -1,11 +1,20 @@
 (lang dune 1.11)
+
 (name morph)
-(version 0.5.0)
+
+(version 0.6.0)
+
 (maintainers "Ulrik Strid")
+
 (authors "Ulrik Strid")
-(source (github reason-native-web/morph))
+
+(source
+ (github reason-native-web/morph))
+
 (homepage https://reason-native-web.github.io)
+
 (documentation https://reason-native-web.github.io/morph)
+
 (generate_opam_files true)
 
 (package
@@ -17,15 +26,15 @@
   (dune
    (>= 1.11))
   reason
-  (lwt (>= 4.0.0 )) 
+  (lwt
+   (>= 4.0.0))
   logs
   fmt
   hmap
   piaf
   session
   session-cookie
-  cookie
-  ))
+  cookie))
 
 (package
  (name morph_graphql_server)
@@ -40,5 +49,4 @@
   logs
   morph
   graphql
-  graphql-lwt
-  ))
+  graphql-lwt))
