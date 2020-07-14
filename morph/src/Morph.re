@@ -21,3 +21,4 @@ module Request = Request;
 module Response = Response;
 
 module Session = MSession;
+module Router = Router;
