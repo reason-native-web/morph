@@ -57,11 +57,13 @@ let login_form_markup =
     </div>
   </Layout>;
 
-let post_handler = (~session_key, req: Morph.Request.t) => {
+let post_handler =
+    (~session_key, req: Morph.Request.t): Lwt.t(Morph.Response.t) => {
   let referer = Piaf.Headers.get(req.request.headers, "Referer");
 
-  Lwt.bind(
-    Piaf.Body.to_string(req.request.body),
+  Lwt_result.bind(
+    Piaf.Body.to_string(req.request.body)
+    |> Lwt_result.map_err(e => `Server(Piaf.Error.to_string(e))),
     form_data => {
       let (username, password) =
         String.split_on_char('&', form_data)
@@ -83,7 +85,7 @@ let post_handler = (~session_key, req: Morph.Request.t) => {
 
       switch (username, password) {
       | (Some("ulrik"), Some("test")) =>
-        Morph.Session.set(
+        Morph.Middlewares.Session.set(
           req,
           ~path="/",
           ~key=session_key,
@@ -110,7 +112,8 @@ let post_handler = (~session_key, req: Morph.Request.t) => {
         |> Lwt.return
       };
     },
-  );
+  )
+  |> Lwt_result.map_err(_ => `Server(""));
 };
 
 let post_routes = (~session_key) =>
@@ -124,6 +127,7 @@ let middleware =
       switch (req.request.meth) {
       | `POST =>
         Routes.match'(~target=req.request.target, post_routes(~session_key))
+
       | _ => None
       }
     )
@@ -132,7 +136,7 @@ let middleware =
       | Some(h) => h(req)
       | None =>
         Lwt.Infix.(
-          Morph.Session.get(req, ~key=session_key)
+          Morph.Middlewares.Session.get(req, ~key=session_key)
           >>= (
             fun
             | Ok("logged in") => next(req)

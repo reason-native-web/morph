@@ -34,7 +34,8 @@
     "@opam/cookie": "*",
     "@opam/session-cookie": "*",
     "@opam/session-cookie-lwt": "*",
-    "@reason-native-web/piaf": "^1.3.0",
+    "@reason-native/pastel": "^0.3.0",
+    "@reason-native-web/piaf": "^1.4.0",
     "ocaml": "~4.10.0"
   },
   "devDependencies": {

@@ -96,4 +96,4 @@ let string_stream: (~stream: Lwt_stream.t(string)) => t;
 /**
   [static file_path] is a conventience function to return a file.
   */
-let static: (~file_path: string) => t;
+let static: (~file_path: string) => Lwt.t(t);

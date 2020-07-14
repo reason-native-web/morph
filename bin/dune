@@ -1,5 +1,5 @@
 (executable
-    (name Example)
-    (libraries
-        morph nocrypto.lwt tyxml routes logs.fmt fmt fmt.tty lwt uri)
-    (preprocess (pps tyxml-jsx)))
+ (name Example)
+ (libraries morph nocrypto.lwt tyxml routes logs.fmt fmt fmt.tty lwt uri)
+ (preprocess
+  (pps tyxml-jsx)))

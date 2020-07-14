@@ -113,5 +113,8 @@ let string_stream = (~stream) => {
 };
 
 let static = (~file_path) => {
-  Ok(Piaf.Response.of_file(file_path));
+  Lwt.catch(
+    () => Piaf.Response.of_file(file_path) |> Lwt_result.ok,
+    (_) => Lwt_result.fail(`Server("File not found"))
+  );
 };
