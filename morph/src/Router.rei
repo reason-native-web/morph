@@ -39,6 +39,7 @@ let make:
     ~put: list(route)=?,
     ~del: list(route)=?,
     ~print: bool=?,
+    ~not_found_handler: Server.handler=?,
     unit
   ) =>
   Server.handler;

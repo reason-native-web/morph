@@ -24,6 +24,8 @@ let print_routes = (~routes, ~method, ()) => {
 
 type route = Routes.route(Server.handler);
 
+let default_404 = (_: Request.t) => Response.not_found() |> Lwt.return;
+
 let make =
     (
       ~get: list(route)=[],
@@ -31,6 +33,7 @@ let make =
       ~put: list(route)=[],
       ~del: list(route)=[],
       ~print=true,
+      ~not_found_handler=default_404,
       (),
     ) => {
   let get_router = Routes.one_of(get);
@@ -48,7 +51,7 @@ let make =
     };
 
     if (List.length(post) >= 1) {
-      print_routes(~routes=get, ~method="POST", ());
+      print_routes(~routes=post, ~method="POST", ());
       print_newline();
     };
 
@@ -82,7 +85,7 @@ let make =
 
     switch (route_match) {
     | Some(handler) => handler(req)
-    | None => Response.not_found() |> Lwt.return
+    | None => not_found_handler(req)
     };
   };
 };
