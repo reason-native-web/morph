@@ -43,8 +43,8 @@ Then you create a route definition. This definition will use the `root_handler` 
 let routes =
   Routes.(
     with_method([
-      root_handler / s(""),
-      greet_handler / s("greet") / str,
+      s("") /? nil @--> root_handler,
+      s("greet") / str /? nil @--> greet_handler,
     ])
   );
 ```
@@ -55,8 +55,8 @@ let routes =
 let routes =
   let open Routes in
     one_of [
-      s "" /? trail @--> root_handler;
-      s "greet" / str /? trail @--> greet_handler;
+      s "" /? nil @--> root_handler;
+      s "greet" / str /? nil @--> greet_handler;
     ]
 ```
 

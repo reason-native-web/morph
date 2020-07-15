@@ -22,14 +22,13 @@ let handler = ({request, _}: Morph.Request.t) => {
     |> List.filter(s => s != "");
 
   switch (request.meth, path_parts) {
-  | (_, []) => Morph.Response.text("Hello world!")
+  | (_, []) => Morph.Response.text("Hello world!") |> Lwt.return
   | (_, ["greet", name]) =>
-    Morph.Response.text("Hello " ++ name ++ "!")
+    Morph.Response.text("Hello " ++ name ++ "!") |> Lwt.return
   | (`GET, ["static", ...file_path]) =>
-    Morph.Response.static(~file_path=String.concat("/", file_path))
-  | (_, _) => Morph.Response.not_found()
-  }
-  |> Lwt.return;
+    Morph.Response.static(~file_path=String.concat("/", file_path)) |> Lwt.return
+  | (_, _) => Morph.Response.not_found() |> Lwt.return
+  };
 };
 ```
 
@@ -45,13 +44,12 @@ let handler ({request; _}: Morph.Request.t) =
       |> List.filter (fun s  -> s <> "") in
   (match (request.meth, path_parts) with
   | (_,[]) ->
-      Morph.Response.text "Hello world!"
+      Morph.Response.text "Hello world!" |> Lwt.return
   | (_,"greet"::name::[]) ->
-      Morph.Response.text ("Hello " ^ name ^ "!")
+      Morph.Response.text ("Hello " ^ name ^ "!") |> Lwt.return
   | (`GET, "static"::file_path) ->
       Morph.Response.static ~file_path:(String.concat "/" file_path)
-  | (_,_) -> Morph.Response.not_found ())
-  |> Lwt.return
+  | (_,_) -> Morph.Response.not_found () |> Lwt.return)
 ```
 
 <!--END_DOCUSAURUS_CODE_TABS-->
