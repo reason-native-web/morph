@@ -22,4 +22,4 @@ RUN opam pin -w morph_graphql_server . -k path
 
 RUN opam exec -- odig odoc -v --odoc-theme=${ODOC_THEME} \
     --index-title='Morph docs' \
-    --no-pkg-deps session morph morph_graphql_server piaf bigstringaf gluten gluten-lwt gluten-lwt-unix lwt httpaf httpaf-lwt httpaf-lwt-unix hmap graphql graphql-lwt || true
+    --no-pkg-deps session morph morph_graphql_server piaf bigstringaf gluten gluten-lwt gluten-lwt-unix lwt httpaf httpaf-lwt httpaf-lwt-unix hmap graphql graphql-lwt routes || true
