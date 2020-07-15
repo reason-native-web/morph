@@ -35,6 +35,7 @@
   routes
   session
   session-cookie
+  session-cookie-lwt
   cookie))
 
 (package
