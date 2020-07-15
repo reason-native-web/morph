@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Router (morph.Morph__.Router)</title><link rel="stylesheet" href="../../../odoc-theme/odoc.css"/><meta charset="utf-8"/><meta name="generator" content="odoc 1.5.1"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><script src="../../../highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body><div class="content"><header><nav><a href="../index.html">Up</a> – <a href="../../index.html">morph</a> &#x00BB; <a href="../index.html">Morph__</a> &#x00BB; Router</nav><h1>Module <code>Morph__.Router</code></h1></header><dl><dt class="spec type" id="type-route"><a href="#type-route" class="anchor"></a><code><span class="keyword">type</span> route</code><code> = <span><a href="../../Morph/Server/index.html#type-handler">Morph.Server.handler</a> <a href="../../../routes/Routes/index.html#type-route">Routes.route</a></span></code></dt></dl><dl><dt class="spec value" id="val-make"><a href="#val-make" class="anchor"></a><code><span class="keyword">val</span> make : <span>?&#8288;get:<span><a href="index.html#type-route">route</a> list</span></span> <span>&#45;&gt;</span> <span>?&#8288;post:<span><a href="index.html#type-route">route</a> list</span></span> <span>&#45;&gt;</span> <span>?&#8288;put:<span><a href="index.html#type-route">route</a> list</span></span> <span>&#45;&gt;</span> <span>?&#8288;del:<span><a href="index.html#type-route">route</a> list</span></span> <span>&#45;&gt;</span> <span>?&#8288;print:bool</span> <span>&#45;&gt;</span> <span>?&#8288;not_found_handler:<a href="../../Morph/Server/index.html#type-handler">Morph.Server.handler</a></span> <span>&#45;&gt;</span> unit <span>&#45;&gt;</span> <a href="../../Morph/Server/index.html#type-handler">Morph.Server.handler</a></code></dt><dd><p><code>make</code> takes lists of routes for each method and returns a Morph.Server.handler</p><p><code>print</code> will defaults to true which will print the routing table</p><h3 id="sample-usage:"><a href="#sample-usage:" class="anchor"></a>Sample usage:</h3><pre><code class="re">let get_routes =
+  Routes.[
+    s(&quot;greet&quot;) /? nil @--&gt; greet_handler,
+    s(&quot;set_greeting&quot;) / str /? nil @--&gt; set_greeting_handler,
+    s(&quot;secure&quot;) /? nil @--&gt; secured_handler,
+  ];
+
+let handler = Morph.Router.make(~get=get_routes, ());
+
+let server =
+  Morph.Server.make(~port=3333, ~address=Unix.inet_addr_loopback, ());
+
+server.start(handler) |&gt; Lwt_main.run</code></pre><p>Output:</p><pre><code class="re">Routing table
+
+GET
+/greet
+/secure
+/set_greeting/:string</code></pre></dd></dl></div></body></html>

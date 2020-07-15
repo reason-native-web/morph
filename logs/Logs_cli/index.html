@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Logs_cli (logs.Logs_cli)</title><link rel="stylesheet" href="../../odoc-theme/odoc.css"/><meta charset="utf-8"/><meta name="generator" content="odoc 1.5.1"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><script src="../../highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body><div class="content"><header><nav><a href="../index.html">Up</a> – <a href="../index.html">logs</a> &#x00BB; Logs_cli</nav><h1>Module <code>Logs_cli</code></h1><p><code>Cmdliner</code> support for <a href="../Logs/index.html"><code>Logs</code></a>.</p><p>See a full <a href="index.html#ex"><span>example</span></a>.</p><p><em>v0.7.0 - <a href="https://erratique.ch/software/logs">homepage</a></em></p><nav class="toc"><ul><li><a href="#options-for-setting-the-report-level">Options for setting the report level</a></li><li><a href="#ex">Example</a></li></ul></nav></header><section><header><h2 id="options-for-setting-the-report-level"><a href="#options-for-setting-the-report-level" class="anchor"></a>Options for setting the report level</h2></header><dl><dt class="spec value" id="val-level"><a href="#val-level" class="anchor"></a><code><span class="keyword">val</span> level : <span>?&#8288;env:Cmdliner.Arg.env</span> <span>&#45;&gt;</span> <span>?&#8288;docs:string</span> <span>&#45;&gt;</span> unit <span>&#45;&gt;</span> <span><span><a href="../Logs/index.html#type-level">Logs.level</a> option</span> Cmdliner.Term.t</span></code></dt><dd><p><code>level ?env ?docs ()</code> is a term for three <code>Cmdliner</code> options that can be used with <a href="../Logs/index.html#val-set_level"><code>Logs.set_level</code></a>. The options are documented under <code>docs</code> (defaults to the default of <span class="xref-unresolved" title="unresolved reference to &quot;Cmdliner.Arg.info&quot;"><span class="xref-unresolved" title="unresolved reference to &quot;Cmdliner.Arg&quot;"><code>Cmdliner</code>.Arg</span>.info</span>).</p><p>The options work as follows:</p><ul><li><code>-v</code> or <code>--verbose</code>, if it appears once, the value of the term is is <code>Some Logs.Info</code> and more than once <code>Some Logs.Debug</code>.</li><li><code>--verbosity=LEVEL</code>, the value of the term is <code>l</code> where <code>l</code> depends on on <code>LEVEL</code>. Takes over the option <code>-v</code>.</li><li><code>-q</code> or <code>--quiet</code>, the value of the term is <code>None</code>. Takes over the <code>-v</code> and <code>--verbosity</code> options.</li><li>If both options are absent the default value is <code>Some Logs.warning</code></li></ul><p>If <code>env</code> is provided, the default value in case all options are absent can be overridden by the corresponding environment variable.</p></dd></dl></section><section><header><h2 id="ex"><a href="#ex" class="anchor"></a>Example</h2><p>The following example shows how to setup <a href="../Logs/index.html"><code>Logs</code></a> and <a href="../../fmt/Fmt/index.html"><code>Fmt</code></a> so that logging is performed on standard outputs with ANSI coloring if these are <code>tty</code>s. The command line interface provides options to control the use of colors and the log reporting level.</p><pre><code class="ml">let hello () = Logs.app (fun m -&gt; m &quot;Hello horrible world!&quot;)
+
+let setup_log style_renderer level =
+  Fmt_tty.setup_std_outputs ?style_renderer ();
+  Logs.set_level level;
+  Logs.set_reporter (Logs_fmt.reporter ());
+  ()
+
+(* Command line interface *)
+
+open Cmdliner
+
+let setup_log =
+  Term.(const setup_log $ Fmt_cli.style_renderer () $ Logs_cli.level ())
+
+let main () =
+  match Term.(eval (const hello $ setup_log, Term.info &quot;tool&quot;)) with
+  | `Error _ -&gt; exit 1
+  | _ -&gt; exit (if Logs.err_count () &gt; 0 then 1 else 0)
+
+let () = main ()</code></pre></header></section></div></body></html>
