@@ -1,0 +1,26 @@
+{
+  "name": "@reason-native-web/morph_websocket",
+  "version": "0.6.2",
+  "esy": {
+    "build": "dune build -p morph_websocket"
+  },
+  "scripts": {
+    "format": "dune build @fmt --auto-promote"
+  },
+  "dependencies": {
+    "@opam/dune": ">=1.11.0",
+    "@opam/digestif": "^0.9.0",
+    "@opam/lwt": ">=4.0.0",
+    "@opam/logs": "*",
+    "@opam/fmt": "*",
+    "@opam/graphql-lwt": "^0.13.0",
+    "@opam/graphql": "^0.13.0",
+    "@reason-native-web/morph": "^0.6.1",
+    "@reason-native-web/morph_graphql_server": "^0.6.1",
+    "@reason-native-web/piaf": "^1.4.0",
+    "@reason-native-web/websocketaf": "^1.2.0",
+    "@reason-native-web/subscriptions-transport-ws": "*",
+    "ocaml": ">=4.08.0"
+  },
+  "devDependencies": {}
+}

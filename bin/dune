@@ -1,5 +1,6 @@
 (executable
  (name Example)
- (libraries morph nocrypto.lwt tyxml routes logs.fmt fmt fmt.tty lwt uri)
+ (libraries morph morph_graphql_server morph_websocket tyxml routes logs.fmt
+   fmt fmt.tty lwt uri mirage-crypto-rng.unix graphql-lwt)
  (preprocess
   (pps tyxml-jsx)))

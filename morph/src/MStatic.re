@@ -4,18 +4,22 @@ let get_static_path = (req: Request.t, path) => {
   if (target_length + 1 <= path_length) {
     None;
   } else {
-    let substr = String.sub(req.request.target, 1, path_length);
+    try({
+      let substr = String.sub(req.request.target, 1, path_length);
 
-    if (substr == path) {
-      Some(
-        String.sub(
-          req.request.target,
-          path_length + 1,
-          target_length - (path_length + 1),
-        ),
-      );
-    } else {
-      None;
+      if (substr == path) {
+        Some(
+          String.sub(
+            req.request.target,
+            path_length + 1,
+            target_length - (path_length + 1),
+          ),
+        );
+      } else {
+        None;
+      };
+    }) {
+    | _ => None
     };
   };
 };

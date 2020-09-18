@@ -35,25 +35,29 @@ let make = (schema: Graphql_lwt.Schema.schema('ctx)) => {
 
   let handler: Morph.Server.handler =
     ({ctx, request}: Morph.Request.t) => {
-      let json_body = Lwt_result.map(
-        Yojson.Basic.from_string,
-        Piaf.Body.to_string(request.body),
-      );
+      let json_body =
+        Lwt_result.map(
+          Yojson.Basic.from_string,
+          Piaf.Body.to_string(request.body),
+        );
 
-      Lwt.bind(json_body, fun
-      | Error(_) => Error(`Server("Unknown error")) |> Lwt.return
-      | Ok(json) => parse(~json, ~ctx) |> Lwt.map(result =>
-           (
-             switch (result) {
-             | Ok(`Response(json)) =>
-               Morph.Response.json(Yojson.Basic.to_string(json))
-             | Error(json) =>
-               Morph.Response.json(Yojson.Basic.to_string(json))
-               |> Morph.Response.set_status(`Internal_server_error)
-             | _ => Error(`Server("Unknown error"))
-             }
-           )
-         ));
+      Lwt.bind(
+        json_body,
+        fun
+        | Error(_) => Error(`Server("Unknown error")) |> Lwt.return
+        | Ok(json) =>
+          parse(~json, ~ctx)
+          |> Lwt.map(result =>
+               switch (result) {
+               | Ok(`Response(json)) =>
+                 Morph.Response.json(Yojson.Basic.to_string(json))
+               | Error(json) =>
+                 Morph.Response.json(Yojson.Basic.to_string(json))
+                 |> Morph.Response.set_status(`Internal_server_error)
+               | _ => Error(`Server("Unknown error"))
+               }
+             ),
+      );
     };
 
   handler;

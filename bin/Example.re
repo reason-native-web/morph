@@ -4,8 +4,6 @@ let setup_log = (~style_renderer=?, level) => {
   Logs.set_reporter(Logs_fmt.reporter());
 };
 
-let entropy = Nocrypto_entropy_lwt.initialize();
-
 let server =
   Morph.Server.make(~port=3333, ~address=Unix.inet_addr_loopback, ());
 
@@ -26,32 +24,45 @@ let greet_handler: Morph.Server.handler =
        );
   };
 
+let websocket_handler = request => {
+  Morph_websocket.handler(
+    (~send, ~reader, ~close as _) => {reader(send)},
+    request,
+  );
+};
+let graphql_handler = Morph_websocket.Graphql.request_handler(Schema.schema);
+
+let grahiql_handler = _ => {
+  Render.respond_html(GraphiQL.make());
+};
+
 let get_routes =
   Routes.[
     s("greet") /? nil @--> greet_handler,
     s("set_greeting") / str /? nil @--> set_session_handler,
     s("secure") /? nil @--> Secured.handler,
+    s("ws") /? nil @--> websocket_handler,
+    s("graphiql") /? nil @--> grahiql_handler,
+    s("graphql") /? nil @--> graphql_handler,
   ];
+
+let post_routes = Routes.[s("graphql") /? nil @--> graphql_handler];
 
 let handler =
   Morph.Server.apply_all(
     [
+      Morph.Middlewares.Static.make(~path="public", ~public_path="./bin"),
       Morph.Middlewares.Static.make(~path="docs", ~public_path="./_docs"),
       Morph.Middlewares.Session.middleware,
       Auth.middleware,
     ],
-    Morph.Router.make(
-      ~get=get_routes,
-      ~post=get_routes,
-      ~put=get_routes,
-      ~del=get_routes,
-      (),
-    ),
+    Morph.Router.make(~get=get_routes, ~post=post_routes, ()),
   );
 
 let () = {
-  open Lwt.Infix;
   setup_log(Info);
 
-  entropy >>= (() => server.start(handler)) |> Lwt_main.run;
+  let () = Mirage_crypto_rng_unix.initialize();
+
+  server.start(handler) |> Lwt_main.run;
 };

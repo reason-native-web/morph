@@ -85,7 +85,8 @@ let json = json =>
 let html = markup =>
   Ok(
     Piaf.Response.create(
-      ~headers=Piaf.Headers.(add(empty, "Content-type", "text/html")),
+      ~headers=
+        Piaf.Headers.(add(empty, "Content-type", "text/html; charset=utf-8")),
       ~body=Piaf.Body.of_string(markup),
       `OK,
     ),
@@ -115,6 +116,6 @@ let string_stream = (~stream) => {
 let static = (~file_path) => {
   Lwt.catch(
     () => Piaf.Response.of_file(file_path) |> Lwt_result.ok,
-    (_) => Lwt_result.fail(`Server("File not found"))
+    _ => Lwt_result.fail(`Server("File not found")),
   );
 };

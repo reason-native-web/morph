@@ -1,0 +1,5 @@
+(library
+ (name morph_websocket)
+ (public_name morph_websocket)
+ (libraries piaf morph lwt websocketaf digestif.c subscriptions-transport-ws
+   graphql-lwt morph_graphql_server))
