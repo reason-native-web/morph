@@ -71,12 +71,19 @@ let set_body = body =>
 let ok = () =>
   Ok(Piaf.Response.create(~body=Piaf.Body.of_string("ok"), `OK));
 let text = text =>
-  Ok(Piaf.Response.create(~body=Piaf.Body.of_string(text), `OK));
+  Ok(
+    Piaf.Response.create(
+      ~headers=
+        Piaf.Headers.(add(empty, "Content-Type", "text/plain; charset=utf-8")),
+      ~body=Piaf.Body.of_string(text),
+      `OK,
+    ),
+  );
 
 let json = json =>
   Ok(
     Piaf.Response.create(
-      ~headers=Piaf.Headers.(add(empty, "Content-type", "application/json")),
+      ~headers=Piaf.Headers.(add(empty, "Content-Type", "application/json")),
       ~body=Piaf.Body.of_string(json),
       `OK,
     ),
@@ -86,7 +93,7 @@ let html = markup =>
   Ok(
     Piaf.Response.create(
       ~headers=
-        Piaf.Headers.(add(empty, "Content-type", "text/html; charset=utf-8")),
+        Piaf.Headers.(add(empty, "Content-Type", "text/html; charset=utf-8")),
       ~body=Piaf.Body.of_string(markup),
       `OK,
     ),
