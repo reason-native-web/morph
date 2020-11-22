@@ -19,7 +19,6 @@
     "@opam/session-cookie": "*",
     "@opam/session-cookie-lwt": "*",
     "@reason-native-web/piaf": "~1.4.0",
-    "@reason-native/pastel": "^0.3.0",
     "ocaml": ">=4.06.1"
   },
   "devDependencies": {}

@@ -2,7 +2,7 @@
  (name morph)
  (public_name morph)
  (libraries lwt logs hmap piaf session cookie session-cookie
-   session-cookie-lwt routes pastel.lib))
+   session-cookie-lwt routes))
 
 (documentation
  (package morph)

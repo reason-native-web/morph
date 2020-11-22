@@ -14,8 +14,6 @@ RUN opam update
 
 RUN opam install --deps-only .
 
-RUN opam pin add pastel https://github.com/facebookexperimental/reason-native.git
-
 COPY ./morph_graphql_server ./morph_graphql_server
 COPY ./morph ./morph
 

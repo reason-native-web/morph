@@ -36,7 +36,6 @@
     "@opam/session-cookie": "*",
     "@opam/session-cookie-lwt": "*",
     "@reason-native-web/subscriptions-transport-ws": "*",
-    "@reason-native/pastel": "^0.3.0",
     "@reason-native-web/piaf": "^1.4.0",
     "@reason-native-web/websocketaf": "^1.2.0",
     "ocaml": "~4.10.0"

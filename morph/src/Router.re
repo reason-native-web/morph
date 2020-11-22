@@ -1,23 +1,9 @@
-let color_of_method = method => {
-  switch (method) {
-  | "GET" => Pastel.Green
-  | "POST" => Pastel.Magenta
-  | "PUT" => Pastel.Blue
-  | "DELETE" => Pastel.Red
-  | _ => Pastel.Yellow
-  };
-};
-
 let print_routes = (~routes, ~method, ()) => {
   let route_strings =
     List.map(r => {Format.asprintf("%a", Routes.pp_route, r)}, routes)
-    |> List.sort((a, b) => String.length(a) - String.length(b))
-    |> List.map(r => Pastel.make(~italic=true, [r]));
+    |> List.sort((a, b) => String.length(a) - String.length(b));
 
-  let pretty_method =
-    Pastel.make(~color=color_of_method(method), ~bold=true, [method, "\n"]);
-
-  let routes_string = pretty_method ++ String.concat("\n", route_strings);
+  let routes_string = method ++ String.concat("\n", route_strings);
 
   print_endline(routes_string);
 };
@@ -42,9 +28,7 @@ let make =
   let del_router = Routes.one_of(del);
 
   if (print) {
-    print_endline(
-      Pastel.make(~bold=true, ~underline=true, ["Routing table", "\n"]),
-    );
+    print_endline("Routing table");
     if (List.length(get) >= 1) {
       print_routes(~routes=get, ~method="GET", ());
       print_newline();
